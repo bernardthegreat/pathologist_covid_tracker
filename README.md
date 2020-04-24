@@ -1,5 +1,7 @@
-Pathologist Covid Tracker with Laravel and AdminLTE
+<p><center>Pathologist Covid Tracker with Laravel and AdminLTE</center></p>
 
--- Added Patients Management
--- Designed Dashboard
--- Added Search Functionality (last_name for the meantime)
+<ul>
+    <li> Added Patients Management </li>
+    <li> Designed Dashboard </li>
+    <li> Added Search Functionality (last_name for the meantime) </li>
+ </ul>
