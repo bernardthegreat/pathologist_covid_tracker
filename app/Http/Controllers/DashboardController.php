@@ -92,6 +92,8 @@ class DashboardController extends Controller
     public function search_patient(Request $request){
 
             $data = Patient::where('last_name', 'LIKE', $request->patient_info.'%')
+                ->orWhere('hospital_number', 'LIKE', $request->patient_info.'%')
+                ->orWhere('first_name', 'LIKE', $request->patient_info.'%')
                 ->get();
            
             if (count($data)>0) {
@@ -99,8 +101,8 @@ class DashboardController extends Controller
             }
             else {
                 return view('patients.create')->with('warning', 'Patient not found');
-            }
-           
-            
+            }  
     }
+
+
 }

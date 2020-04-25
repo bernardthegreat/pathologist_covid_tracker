@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Department;
-class DepartmentsController extends Controller
+use App\User;
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,10 @@ class DepartmentsController extends Controller
     public function index()
     {
         //
-        $departments = Department::all();
 
-        return view('departments/index', compact('departments'));
+        $users = User::all();
+
+        return view('users/index', compact('users'));
     }
 
     /**
@@ -39,23 +40,29 @@ class DepartmentsController extends Controller
     {
         //
 
-        //
-        $department_exist = Department::where('name', '=', $request->name)->first();
-
-        if ($department_exist === null) {
+        $pathologist_exist = User::where([
+            ['last_name', '=', $request->last_name],
+            ['first_name', '=', $request->first_name],
+        ])
+        
+        ->first();
+        
+        if ($pathologist_exist === null) {
             // User Not Found Your Stuffs Goes Here..
          
             $validatedData = $request->validate([
-                'name' => 'required|max:255',
+                'first_name' => 'required|max:255',
+                'middle_name' => 'max:255',
+                'last_name' => 'required|max:255',
+                'prefix' => 'max:255',
                 'description' => 'max:255'
             ]);
-            $show = Department::create($validatedData);
-
-            return redirect('/departments')->with('success', 'Department is successfully saved');
+            $show = User::create($validatedData);
+           return redirect('/users')->with('success', 'Pathologist is successfully saved');
         } else {
-            return redirect('/departments')->with('error', 'Department already exists');
+            echo $pathologist_exist;
+           return redirect('/users')->with('error', 'Pathologist already exists');
         }  
-
     }
 
     /**

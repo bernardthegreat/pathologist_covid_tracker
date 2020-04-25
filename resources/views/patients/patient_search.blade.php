@@ -15,9 +15,9 @@
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-12">
-                      <h4>{{$patient_info->first_name}} {{$patient_info->last_name}}</h4>
+                      <h4>{{$patient_info->first_name}} {{$patient_info->middle_name}} {{$patient_info->last_name}}</h4>
                       <ul class="ml-4 mb-0 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-hospital"></i></span> Department: Demo Street 123, Demo City 04312, NJ</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-hospital"></i></span> Department:</li>
                         <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Status #: POSNEG</li>
                       </ul>
                     </div>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                    <a href="patients/show/{{$patient_info->id}}" class="btn btn-sm bg-teal">
+                    <a href="show/{{$patient_info->id}}" class="btn btn-sm bg-teal">
                       <i class="fas fa-user"></i>
                     </a>
                     <a href="#" class="btn btn-sm btn-primary">

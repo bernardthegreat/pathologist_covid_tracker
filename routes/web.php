@@ -13,10 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* Dashboard and Patient Routes */
+
 Route::get('/', 'DashboardController@index');
 Route::resource('patients', 'PatientsController');
 Route::get('/patients/show/{id}', 'PatientsController@show');
+Route::post('/patients/search', 'DashboardController@search_patient')->name('search');
+
+/* Dashboard and Patient Routes */
+
+/* Department Routes */
+
 Route::resource('departments', 'DepartmentsController');
 
+/* Department Routes */
 
-Route::get('/{patient}', 'DashboardController@search_patient');
+
+/* Users Routes */
+
+Route::resource('users', 'UsersController');
+
+/* Users Routes */

@@ -55,7 +55,7 @@ class PatientsController extends Controller
             $show = Patient::create($validatedData);
 
     
-            return redirect('/patients')->with('success', 'Category is successfully saved');
+            return redirect('/patients')->with('success', 'Patient is successfully saved');
         } else {
             return redirect('/patients/create')->with('error', 'Hospital # already exists');
         }   
@@ -71,8 +71,6 @@ class PatientsController extends Controller
     {
         //
         $patient = Patient::findOrFail($id);
-
-
 
         return view('patients/patient_profile', compact('patient'));
     }
@@ -121,11 +119,4 @@ class PatientsController extends Controller
         //
     }
 
-
-    public function patient_info($patient) 
-    {
-        echo "Searched";
-
-        print_r($patient);
-    }
 }
