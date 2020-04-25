@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Covid19 Pathologist Tracker</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Tempusdominus Bbootstrap 4 -->
@@ -20,6 +20,10 @@
  
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <!-- jQuery -->
+  <script src="{{ asset('js/jquery.min.js') }} "></script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -38,8 +42,7 @@
     </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="{{ asset('js/jquery.min.js') }} "></script>
+
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ asset('js/jquery-ui.min.js') }}  "></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -48,12 +51,12 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('js/bootstrap.bundle.js') }}  "></script>
-<script src="{{ asset('js/moment.min.jss') }}  "></script>
+<script src="{{ asset('js/moment.min.js') }}  "></script>
 <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}  "></script>
 
 <script src="{{ asset('js/datatables-bs4/js/dataTables.bootstrap4.min.js') }}  "></script>
 <script src="{{ asset('js/datatables-responsive/js/dataTables.responsive.min.js') }}  "></script>
-<script src="{{ asset('js/datatables-responsive/js/responsive.bootstrap4.min.jss') }}  "></script>
+<script src="{{ asset('js/datatables-responsive/js/responsive.bootstrap4.min.js') }}  "></script>
 
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.js') }}"></script>
@@ -74,6 +77,11 @@
       "responsive": true,
     });
   });
+
+
+
+ 
+
 </script>
 
 </body>

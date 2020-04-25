@@ -21,131 +21,125 @@
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-orange elevation-1"><i class="fa fa-user-plus"></i></span>
 
-                <p>New Orders</p>
+              <div class="info-box-content">
+                <span class="info-box-text">Total Cases</span>
+                <span id="totalCases" class="info-box-number count"></span>
               </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-viruses"></i></span>
 
-                <p>Bounce Rate</p>
+              <div class="info-box-content">
+                <span class="info-box-text">Active Cases</span>
+                <span id="activeCases" class="info-box-number count"></span>
               </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
+          <!-- /.col -->
 
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
 
-                <p>Unique Visitors</p>
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fa fa-hand-holding-heart "></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Recoveries</span>
+                <span id="recovered" class="info-box-number count"></span>
               </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-gray-dark elevation-1"><i class="fa fa-hand-holding-medical"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Deaths</span>
+                <span id="deaths" class="info-box-number count"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
         </div>
+        <!-- /.row -->
 
 
         <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-heartbeat"></i></span>
 
-                <p>New Orders</p>
+              <div class="info-box-content">
+                <span class="info-box-text">Critical</span>
+                <span id="critical" class="info-box-number count"></span>
               </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-info elevation-1"><i class="fa fa-shield-virus"></i></span>
 
-                <p>Bounce Rate</p>
+              <div class="info-box-content">
+                <span class="info-box-text">Today's Cases</span>
+                <span id="todayCases" class="info-box-number count"></span>
               </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
+          <!-- /.col -->
 
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
 
-                <p>Unique Visitors</p>
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-maroon elevation-1"><i class="fa fa-virus-slash"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Today's Death</span>
+                <span id="todayDeaths" class="info-box-number count"></span>
               </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-purple elevation-1"><i class="fa fa-users"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Total Tested</span>
+                <span id="totaltests" class="info-box-number count"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
         </div>
+        <!-- /.row -->
 </section>
 
 
@@ -172,9 +166,9 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>1231</h3>
 
-                <p>New Orders</p>
+                <p>Swab</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -187,9 +181,9 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>53</h3>
 
-                <p>Bounce Rate</p>
+                <p>Active</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -204,7 +198,7 @@
               <div class="inner">
                 <h3>44</h3>
 
-                <p>User Registrations</p>
+                <p>Patients</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -219,7 +213,7 @@
               <div class="inner">
                 <h3>65</h3>
 
-                <p>Unique Visitors</p>
+                <p>HCW</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -243,7 +237,7 @@
             <!-- Default box -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Title</h3>
+                <h3 class="card-title">Other Information</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -256,7 +250,7 @@
 
               <div class="card">
             <div class="card-header">
-              <h3 class="card-title">DataTable with default features</h3>
+              <h3 class="card-title">Recent Patient Requests</h3>
             </div>
             
             <!-- /.card-header -->
@@ -713,5 +707,76 @@
       </div>
     </section>
     <!-- /.content -->
+
+
+  
+    
+
+
+
+<script type="text/javascript">
+
+
+$( document ).ready(function() {
+ function fetchdata(){
+ var api_url = 'https://coronavirus-19-api.herokuapp.com/countries/philippines'
+
+
+   $.ajax({
+       url: api_url,
+       contentType: "application/json",
+       dataType: 'json',
+       success: function(result){
+           
+           totalCases = result.cases;
+           activeCases = result.active;
+           recovered = result.recovered;
+           deaths	= result.deaths;
+           
+           
+           critical = result.critical;
+           todayCases = result.todayCases;
+           todayDeaths = result.todayDeaths;
+           totaltests = result.totalTests;
+           
+           
+           $("#totalCases").html(totalCases);
+           $("#activeCases").html(activeCases);
+           $("#recovered").html(recovered);
+           $("#deaths").html(deaths);
+           
+           
+           $("#critical").html(critical);
+           $("#todayCases").html(todayCases);
+           $("#todayDeaths").html(todayDeaths);
+           $("#totaltests").html(totaltests);
+           
+           
+           $('.count').each(function () {
+               $(this).prop('Counter',0).animate({
+                   Counter: $(this).html()
+               }, {
+                   duration: 4000,
+                   easing: 'swing',
+                   step: function (now) {
+                       $(this).text(Math.ceil(now));
+                   }
+               });
+           });
+           
+           
+           
+           
+          
+       }
+   });
+}
+ 
+
+    setInterval(fetchdata,3000);
+ 
+});
+
+</script>
 
 @endsection
