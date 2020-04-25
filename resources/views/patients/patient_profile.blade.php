@@ -37,7 +37,7 @@
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
-                    <b>Followers</b> <a class="float-right">1,322</a>
+                    <b>Swab Tests</b> <a class="float-right">1,322</a>
                   </li>
                 </ul>
 
@@ -63,12 +63,49 @@
                 <div class="tab-content">
                   <div class="active tab-pane" id="history">
                    
-                        History Pane
+                        Patient request history
                     <!-- /.post -->
                   </div>
                   <!-- /.tab-pane -->
+                  
+                  
                   <div class="tab-pane" id="edit_info">
-                        Edit Info Pane
+                    
+                    @if ($errors->any())
+                      <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                      </div><br />
+                    @endif
+
+                    <form role="form" method="post" action="{{ route('patients.update', $patient->id ) }}">
+
+                      <div class="card-body">
+                        
+                        <div class="form-group">
+                          @csrf
+                          @method('PATCH')
+                          <label for="exampleInputEmail1">First Name</label>
+                          <input type="text" class="form-control" name="first_name" id="" value="{{$patient->first_name}}" placeholder="First Name">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Middle Name</label>
+                          <input type="text" class="form-control" name="middle_name" id="" value="{{$patient->middle_name}}" placeholder="Middle Name">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Last Name</label>
+                          <input type="text" class="form-control"  name="last_name"  id="" value="{{$patient->last_name}}" placeholder="Last Name">
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+
+                      <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </form>
                   </div>
                   <!-- /.tab-pane -->
 

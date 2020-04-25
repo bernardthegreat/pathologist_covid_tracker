@@ -14,6 +14,8 @@ class PatientRequestDispositionsController extends Controller
     public function index()
     {
         //
+
+        
     }
 
     /**

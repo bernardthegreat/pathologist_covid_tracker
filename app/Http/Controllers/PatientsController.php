@@ -15,6 +15,11 @@ class PatientsController extends Controller
     public function index()
     {
         //
+        $patients = Patient::all();
+
+
+        return view('patients/index', compact('patients'));
+
     }
 
     /**
@@ -25,6 +30,7 @@ class PatientsController extends Controller
     public function create()
     {
         //
+        return view('patients/create');
     }
 
     /**
@@ -36,6 +42,23 @@ class PatientsController extends Controller
     public function store(Request $request)
     {
         //
+        $patient_Exists = Patient::where('hospital_number', '=', $request->hospital_number)->first();
+
+        if ($patient_Exists === null) {
+            // User Not Found Your Stuffs Goes Here..
+         
+            $validatedData = $request->validate([
+                'hospital_number' => 'required|exists:patients|max:255',
+                'first_name' => 'required|max:255',
+                'last_name' => 'required|max:255',
+            ]);
+            $show = Patient::create($validatedData);
+
+    
+            return redirect('/patients')->with('success', 'Category is successfully saved');
+        } else {
+            return redirect('/patients/create')->with('error', 'Hospital # already exists');
+        }   
     }
 
     /**
@@ -48,6 +71,8 @@ class PatientsController extends Controller
     {
         //
         $patient = Patient::findOrFail($id);
+
+
 
         return view('patients/patient_profile', compact('patient'));
     }
@@ -75,6 +100,14 @@ class PatientsController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $validatedData = $request->validate([
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+        ]);
+        Patient::whereId($id)->update($validatedData);
+
+        return redirect('/patients')->with('success', 'Patient is successfully updated');
     }
 
     /**
