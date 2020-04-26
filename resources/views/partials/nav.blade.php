@@ -5,7 +5,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       
-      <span class="brand-text font-weight-light">Covid19 Patholoist Tracker</span>
+      <span class="brand-text font-weight-light">Covid19 Pathologist Tracker</span>
     </a>
 
     <!-- Sidebar -->
@@ -29,13 +29,13 @@
               
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="nav-icon fa fa-chart-line"></i>
                   <p>Patient Census</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="./index3.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="nav-icon  fa fa-chart-line"></i>
                   <p>Patients Status</p>
                 </a>
               </li>
@@ -45,7 +45,7 @@
 
           <li class="nav-item">
             <a href="{{ route('patients.index') }}" class="nav-link">
-              <i class="fa fa-hospital-user"></i>
+              <i class="nav-icon fa fa-hospital-user"></i>
               <p>
                 Patients
                
@@ -54,23 +54,56 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('departments.index') }}" class="nav-link">
-              <i class="fa fa-hospital"></i>
+            <a href="{{ route('patient_requests.index') }}" class="nav-link">
+              <i class="nav-icon fa fa-file-medical"></i>
               <p>
-                Departments
+                Patient Requests
                
               </p>
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="{{ route('users.index') }}" class="nav-link">
-              <i class="fa fa-stethoscope"></i>
+        
+
+          
+
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fa fa-user-cog"></i>
               <p>
-                Pathologists
-               
+                Settings
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              
+              <li class="nav-item">
+                <a href="{{ route('users.index') }}" class="nav-link">
+                  <i class="nav-icon fa fa-stethoscope"></i>
+                  <p>
+                    Pathologists
+                  
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('departments.index') }}" class="nav-link">
+                  <i class="nav-icon fa fa-hospital"></i>
+                  <p>
+                    Departments
+                  
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('dispositions.index') }}" class="nav-link">
+                  <i class="nav-icon fa fa-hospital-user"></i>
+                  <p>Dispositions</p>
+                </a>
+              </li>
+
+            </ul>
           </li>
          
         </ul>

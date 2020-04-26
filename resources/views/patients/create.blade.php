@@ -37,6 +37,14 @@
 
 
         @endif
+
+        @if(session()->get('success'))
+          <div class="alert alert-success">
+            {{ session()->get('success') }}  
+          </div><br />
+        @endif
+
+        
       <form method="post" action="{{ route('patients.store') }}">
         @csrf
         <div class="input-group mb-3">

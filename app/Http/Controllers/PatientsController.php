@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Patient;
+use App\PatientRequestDisposition;
+use App\Department;
+use App\User;
 
 class PatientsController extends Controller
 {
@@ -15,10 +18,15 @@ class PatientsController extends Controller
     public function index()
     {
         //
-        $patients = Patient::all();
+        $patients = Patient::all()->where('active', 1);
 
+        $dispositions = PatientRequestDisposition::all()->where('active', 1);
 
-        return view('patients/index', compact('patients'));
+        $departments = Department::all()->where('active', 1);
+
+        $users = User::all()->where('active', 1);
+
+        return view('patients/index', compact('patients','dispositions','departments','users'));
 
     }
 
@@ -48,12 +56,13 @@ class PatientsController extends Controller
             // User Not Found Your Stuffs Goes Here..
          
             $validatedData = $request->validate([
-                'hospital_number' => 'required|exists:patients|max:255',
+                'hospital_number' => 'required|max:255',
                 'first_name' => 'required|max:255',
                 'last_name' => 'required|max:255',
+                'middle_name' => 'max:255',
             ]);
             $show = Patient::create($validatedData);
-
+                    
     
             return redirect('/patients')->with('success', 'Patient is successfully saved');
         } else {
@@ -102,6 +111,7 @@ class PatientsController extends Controller
         $validatedData = $request->validate([
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
+            'middle_name' => 'max:255',
         ]);
         Patient::whereId($id)->update($validatedData);
 

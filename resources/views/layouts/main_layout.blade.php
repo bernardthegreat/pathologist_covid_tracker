@@ -18,9 +18,6 @@
   <link rel="stylesheet" href="{{ asset('css/datatables-bs4/css/dataTables.bootstrap4.min.css') }} ">
   <link rel="stylesheet" href="{{ asset('css/datatables-responsive/css/responsive.bootstrap4.min.css') }} ">
  
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
   <!-- jQuery -->
   <script src="{{ asset('js/jquery.min.js') }} "></script>
 
@@ -29,11 +26,12 @@
     <div class="wrapper">
 
         @include('partials.nav')
+       
         <div id="right-panel" class="right-panel">   
             @include('partials.header')
              <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-                
+            @include('flash-message')
                 @yield('content')
             </div>
         </div>
@@ -80,6 +78,18 @@
 
 
 
+var numbers = /^\d{5}$/;  
+
+$('#search').blur(function(){
+
+if ($('#search').val().length===numbers){
+console.log('here');
+                alert('field ok');
+
+            } else {
+                alert('Please check criteria.');
+            }
+});
  
 
 </script>

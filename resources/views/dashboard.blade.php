@@ -710,12 +710,21 @@
 
 
   
-    
+    <button type="button" class="btn btn-default toastsDefaultAutohide">
+                  Launch Default Toasts with autohide
+                </button>
 
 
 
 <script type="text/javascript">
-
+$('.toastsDefaultAutohide').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        autohide: true,
+        delay: 750,
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
 
 $( document ).ready(function() {
  function fetchdata(){

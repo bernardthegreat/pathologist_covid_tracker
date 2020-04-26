@@ -34,3 +34,17 @@ Route::resource('departments', 'DepartmentsController');
 Route::resource('users', 'UsersController');
 
 /* Users Routes */
+
+
+/* Dispositions Routes */
+
+Route::resource('dispositions', 'PatientRequestDispositionsController');
+
+/* Dispositions Routes */
+
+
+/* PatientRequests Routes */
+
+Route::resource('patient_requests', 'PatientRequestsController');
+
+/* PatientRequests Routes */

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-
-use App\Patient;
+use App\PatientRequest;
 use DB;
-class DashboardController extends Controller
+
+class PatientRequestsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +16,16 @@ class DashboardController extends Controller
     public function index()
     {
         //
-        return view('dashboard');
+        //$patient_requests = PatientRequest::with('patients')->get();
+        $patient_requests = PatientRequest::with([
+            'patients', 
+            'departments', 
+            'users', 
+            'patient_request_dispositions'
+        ])->get();;
+        
+        return view('patient_requests/index', compact('patient_requests'));
+
     }
 
     /**
@@ -29,7 +37,7 @@ class DashboardController extends Controller
     {
         //
 
-        
+
     }
 
     /**
@@ -41,6 +49,28 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         //
+
+        
+        $validatedData = $request->validate([
+            'disposition_id' => 'required',
+            'hcw' => 'required',
+            'patient_id' => 'required',
+            'status' => 'max:255',
+            'final_result' => 'max:255',
+            'soft_copy' => 'max:255',
+            'user_id' => 'required',
+            'department_id' => 'required',
+            'expired_datetime'=>'max:255'
+            
+        ]);
+        
+
+        $show = PatientRequest::create($validatedData + [
+            'requested_date' => date('Y-m-d '),
+            'requested_time' => date('H:m:s')
+        ]);
+
+        return redirect('/patient_requests')->with('success', 'Patient request is successfully saved');
     }
 
     /**
@@ -87,25 +117,4 @@ class DashboardController extends Controller
     {
         //
     }
-
-
-    public function search_patient(Request $request){
-        if(isset($request->patient_info)) {
-            $data = Patient::where('last_name', 'LIKE', $request->patient_info.'%')
-                ->orWhere('hospital_number', 'LIKE', $request->patient_info.'%')
-                ->orWhere('first_name', 'LIKE', $request->patient_info.'%')
-                ->get();
-           
-            if (count($data)>0) {
-                return view('patients.patient_search',['result' => $data])->with('success', 'Patient found!');
-            }
-            else {
-                return view('patients.create')->with('error', 'Patient not found');
-            } 
-        } else {
-            return redirect('patients/create')->with('error', 'Patient Info not found');
-        } 
-    }
-
-
 }

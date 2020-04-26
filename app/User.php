@@ -39,6 +39,6 @@ class User extends Authenticatable
 
     public function patient_requests()
     {
-        return $this->hasMany('App\PatientRequest', 'department_id');
+        return $this->hasMany('App\PatientRequest', 'user_id');
     }
 }
