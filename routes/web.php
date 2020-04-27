@@ -48,3 +48,8 @@ Route::resource('dispositions', 'PatientRequestDispositionsController');
 Route::resource('patient_requests', 'PatientRequestsController');
 
 /* PatientRequests Routes */
+
+
+/* Analytics Routes */
+Route::get('/print/', [ 'as' => 'analytics.print', 'uses' => 'AnalyticsController@print']);
+/* Analytics Routes */

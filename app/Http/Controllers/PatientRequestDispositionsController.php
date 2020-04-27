@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\PatientRequestDisposition;
 
 class PatientRequestDispositionsController extends Controller
 {
@@ -14,7 +15,9 @@ class PatientRequestDispositionsController extends Controller
     public function index()
     {
         //
+        $disposition = PatientRequestDisposition::all();
 
+        return view('dispositions/index', compact('disposition'));
         
     }
 
@@ -36,7 +39,23 @@ class PatientRequestDispositionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $diposition = PatientRequestDisposition::where([
+            ['name', '=', $request->name],
+           
+        ])->first();
+        
+        if ($diposition === null) {
+            // User Not Found Your Stuffs Goes Here..
+         
+            $validatedData = $request->validate([
+                'name' => 'required|max:255',
+            ]);
+
+            $show = PatientRequestDisposition::create($validatedData);
+           return redirect('/dispositions')->with('success', 'Disposition is successfully saved');
+        } else {
+           return redirect('/dispositions')->with('error', 'Disposition already exists');
+        }  
     }
 
     /**
@@ -59,6 +78,10 @@ class PatientRequestDispositionsController extends Controller
     public function edit($id)
     {
         //
+
+        $dispositions = PatientRequestDisposition::findOrFail($id);
+
+        return view('dispositions/edit', compact('dispositions'));
     }
 
     /**
@@ -71,6 +94,12 @@ class PatientRequestDispositionsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+        ]);
+        PatientRequestDisposition::whereId($id)->update($validatedData);
+
+        return redirect('/dispositions')->with('success', 'Disposition is successfully updated');
     }
 
     /**
@@ -82,5 +111,9 @@ class PatientRequestDispositionsController extends Controller
     public function destroy($id)
     {
         //
+        $disposition = PatientRequestDisposition::findOrFail($id);
+        $disposition->delete();
+
+        return redirect('/dispositions')->with('success', 'Disposition is successfully deleted');
     }
 }

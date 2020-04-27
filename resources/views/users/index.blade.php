@@ -83,7 +83,7 @@
           </div>
           <div class="col-sm-9">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
               <li class="breadcrumb-item active">Pathologists</li>
             </ol>
           </div>
@@ -127,19 +127,21 @@
                   <td> {{$pathologist->last_name}} </td>
                   <td> {{$pathologist->prefix}} </td>
                   <td> 
-                      <a class="btn btn-primary btn-sm" href="users/edit/{{$pathologist->id}}">
-                          <i class="fas fa-folder">
+                      <a class="btn btn-primary btn-sm" href="{{ route('users.edit', $pathologist->id)}} ">
+                          <i class="fa fa-user">
                           </i>
                           View
                       </a>
                   </td>
                   <td>
-                    
-                      <a class="btn btn-danger btn-sm" href="users/destroy/{{$pathologist->id}}">
-                          <i class="fas fa-trash">
-                          </i>
-                          Delete
-                      </a> 
+                      <form class="delete" action="{{ route('users.destroy', $pathologist->id)}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        
+                          <button class="btn btn-danger btn-sm" type="submit"><i class="fas fa-trash">
+                          </i> Delete</button>
+                      </form>
+
                   
                   </td>
                 </tr>
@@ -167,4 +169,11 @@
 
     </section>
     <!-- /.content -->
+
+<script>
+    $(".delete").on("submit", function(){
+        return confirm("Do you want to delete this?");
+    });
+</script>
+
 @endsection

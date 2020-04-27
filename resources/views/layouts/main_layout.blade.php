@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Covid19 Pathologist Tracker</title>
+  <title>Covid19 Lab Tracker</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Tempusdominus Bbootstrap 4 -->
@@ -64,6 +64,7 @@
     $("#example1").DataTable({
       "responsive": true,
       "autoWidth": false,
+      "order": [0, "desc"],
     });
     $('#example2').DataTable({
       "paging": true,
@@ -73,23 +74,13 @@
       "info": true,
       "autoWidth": false,
       "responsive": true,
+      "order": [0, "desc"],
+      
     });
+
   });
 
 
-
-var numbers = /^\d{5}$/;  
-
-$('#search').blur(function(){
-
-if ($('#search').val().length===numbers){
-console.log('here');
-                alert('field ok');
-
-            } else {
-                alert('Please check criteria.');
-            }
-});
  
 
 </script>

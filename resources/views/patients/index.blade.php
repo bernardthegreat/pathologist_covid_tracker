@@ -12,7 +12,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
               <li class="breadcrumb-item active">Patients</li>
             </ol>
           </div>
@@ -179,18 +179,20 @@
 
                   <td> 
                       <a class="btn btn-primary btn-sm" href="patients/show/{{$patient->id}}">
-                          <i class="fas fa-folder">
+                          <i class="fa fa-user">
                           </i>
                           View
                       </a>
                   </td>
                   <td>
                     
-                      <a class="btn btn-danger btn-sm" href="patients/destroy/{{$patient->id}}">
-                          <i class="fas fa-trash">
-                          </i>
-                          Delete
-                      </a> 
+                     <form class="delete" action="{{ route('patients.destroy', $patient->id)}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        
+                          <button class="btn btn-danger btn-sm" type="submit"><i class="fas fa-trash">
+                          </i> Delete</button>
+                      </form>
                   
                   </td>
                 </tr>
@@ -207,8 +209,6 @@
                 </tfoot>
               </table>
 
-            
-
         </div>
         <!-- /.card-body -->
       </div>
@@ -221,6 +221,10 @@
 
       $(document).ready(function(){
           $('[rel="tooltip"]').tooltip({trigger: "hover"});
+      });
+
+      $(".delete").on("submit", function(){
+          return confirm("Do you want to delete this?");
       });
 
     </script>

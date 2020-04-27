@@ -3,9 +3,9 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="/" class="brand-link">
       
-      <span class="brand-text font-weight-light">Covid19 Pathologist Tracker</span>
+      <span class="brand-text font-weight-light">Covid19 Lab Tracker</span>
     </a>
 
     <!-- Sidebar -->
@@ -36,7 +36,21 @@
               <li class="nav-item">
                 <a href="./index3.html" class="nav-link">
                   <i class="nav-icon  fa fa-chart-line"></i>
-                  <p>Patients Status</p>
+                  <p>Inpatient Census</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="./index3.html" class="nav-link">
+                  <i class="nav-icon  fa fa-chart-line"></i>
+                  <p>Discharged Census</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="./index3.html" class="nav-link">
+                  <i class="nav-icon  fa fa-chart-line"></i>
+                  <p>Expired Census</p>
                 </a>
               </li>
 

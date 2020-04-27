@@ -12,7 +12,7 @@
           </div>
           <div class="col-sm-9">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
               <li class="breadcrumb-item active">Patient Requests</li>
             </ol>
           </div>
@@ -38,6 +38,7 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>Requested Date</th>
                   <th>Fullname</th>
                   <th>Pathologist</th>
                   <th >Departments</th>
@@ -49,6 +50,9 @@
                  
                   @foreach($patient_requests as $patient_request)   
                 <tr>
+                  <td>
+                    {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
+                  </td>
                   <td> 
                     {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}
                    </td>
@@ -68,6 +72,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
+                <th>Requested Date</th>
                   <th>Fullname</th>
                   <th>Pathologist</th>
                   <th >Departments</th>

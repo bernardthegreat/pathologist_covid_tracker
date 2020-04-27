@@ -11,7 +11,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item active">Patient Profile</li>
+              <li class="breadcrumb-item active">Pathologist</li>
             </ol>
           </div>
         </div>
@@ -33,7 +33,7 @@
                        alt="User profile picture">
                 </div>
 
-                <h3 class="profile-username text-center">{{$patient->first_name}} {{$patient->middle_name}} {{$patient->last_name}}</h3>
+                <h3 class="profile-username text-center">{{$users->first_name}} {{$users->middle_name}} {{$users->last_name}}, {{$users->prefix}}</h3>
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
@@ -41,8 +41,7 @@
                   </li>
                 </ul>
 
-                <a href="#" class="btn btn-primary btn-block"><b>Create request</b></a>
-              </div>
+                </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -81,7 +80,7 @@
                       </div><br />
                     @endif
 
-                    <form role="form" method="post" action="{{ route('patients.update', $patient->id ) }}">
+                    <form role="form" method="post" action="{{ route('users.update', $users->id ) }}">
 
                       <div class="card-body">
                         
@@ -89,15 +88,20 @@
                           @csrf
                           @method('PATCH')
                           <label for="exampleInputEmail1">First Name</label>
-                          <input type="text" class="form-control" name="first_name" id="" value="{{$patient->first_name}}" placeholder="First Name">
+                          <input type="text" class="form-control" name="first_name" id="" value="{{$users->first_name}}" placeholder="First Name">
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Middle Name</label>
-                          <input type="text" class="form-control" name="middle_name" id="" value="{{$patient->middle_name}}" placeholder="Middle Name">
+                          <input type="text" class="form-control" name="middle_name" id="" value="{{$users->middle_name}}" placeholder="Middle Name">
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Last Name</label>
-                          <input type="text" class="form-control"  name="last_name"  id="" value="{{$patient->last_name}}" placeholder="Last Name">
+                          <input type="text" class="form-control"  name="last_name"  id="" value="{{$users->last_name}}" placeholder="Last Name">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Prefix</label>
+                          <input type="text" class="form-control"  name="prefix"  id="" value="{{$users->prefix}}" placeholder="Prefix">
                         </div>
                       </div>
                       <!-- /.card-body -->

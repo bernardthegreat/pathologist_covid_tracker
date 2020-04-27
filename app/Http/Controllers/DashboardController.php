@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
 use App\Patient;
-use DB;
+use App\PatientRequest;
+use App\PatientRequestDisposition;
+use App\Department;
+use App\User;
+
 class DashboardController extends Controller
 {
     /**
@@ -17,7 +21,25 @@ class DashboardController extends Controller
     public function index()
     {
         //
-        return view('dashboard');
+
+        $patient_requests = PatientRequest::take(100)->with([
+            'patients', 
+            'departments', 
+            'users', 
+            'patient_request_dispositions'
+        ])->get();
+
+        $patients = Patient::where('active','=','1')->count();
+        $requests = PatientRequest::where('status','=','1')->count();
+        $inpatients = PatientRequest::where('disposition_id','=','1')->count();
+        $discharged = PatientRequest::where('disposition_id','=','2')->count();   
+        $expired = PatientRequest::where('disposition_id','=','3')->count();        
+
+        return view('dashboard', compact(
+            'patient_requests', 'patients', 
+            'requests', 'inpatients', 'discharged',
+            'expired'
+        ));
     }
 
     /**
@@ -90,6 +112,9 @@ class DashboardController extends Controller
 
 
     public function search_patient(Request $request){
+
+
+
         if(isset($request->patient_info)) {
             $data = Patient::where('last_name', 'LIKE', $request->patient_info.'%')
                 ->orWhere('hospital_number', 'LIKE', $request->patient_info.'%')
@@ -97,7 +122,19 @@ class DashboardController extends Controller
                 ->get();
            
             if (count($data)>0) {
-                return view('patients.patient_search',['result' => $data])->with('success', 'Patient found!');
+
+                $dispositions = PatientRequestDisposition::all()->where('active', 1);
+
+                $departments = Department::all()->where('active', 1);
+
+                $users = User::all()->where('active', 1);
+
+                return view('patients.patient_search',[
+                    'result' => $data, 
+                    'dispositions' => $dispositions,
+                    'departments' => $departments,
+                    'users' => $users,
+                ])->with('success', 'Patient found!');
             }
             else {
                 return view('patients.create')->with('error', 'Patient not found');

@@ -43,9 +43,7 @@ class UsersController extends Controller
         $pathologist_exist = User::where([
             ['last_name', '=', $request->last_name],
             ['first_name', '=', $request->first_name],
-        ])
-        
-        ->first();
+        ])->first();
         
         if ($pathologist_exist === null) {
             // User Not Found Your Stuffs Goes Here..
@@ -85,6 +83,10 @@ class UsersController extends Controller
     public function edit($id)
     {
         //
+        $users = User::findOrFail($id);
+
+        return view('users/edit', compact('users'));
+
     }
 
     /**
@@ -97,6 +99,15 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validatedData = $request->validate([
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'middle_name' => 'max:255',
+            'prefix' => 'required|max:255'
+        ]);
+        User::whereId($id)->update($validatedData);
+
+        return redirect('/users')->with('success', 'Pathologist is successfully updated');
     }
 
     /**
@@ -108,5 +119,9 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect('/users')->with('success', 'Pathologist is successfully deleted');
     }
 }

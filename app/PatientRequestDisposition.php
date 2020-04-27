@@ -8,8 +8,8 @@ class PatientRequestDisposition extends Model
 {
     //
 
-    protected $attributes = [
-        'name' => 'Disposition',
+    protected $fillable = [
+        'name',
     ];
 
     public function patient_requests()

@@ -11,7 +11,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item active">Departments</li>
+              <li class="breadcrumb-item active">Dispositions</li>
             </ol>
           </div>
         </div>
@@ -24,7 +24,7 @@
 <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Departments</h3>
+                <h3 class="card-title">Dispositions</h3>
 
                 <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -51,7 +51,7 @@
                         <div class="tab-content">
                             <div class="active tab-pane" id="edit_info">
 
-                                <form role="form" method="post" action="{{ route('departments.update', $departments->id ) }}">
+                                <form role="form" method="post" action="{{ route('dispositions.update', $dispositions->id ) }}">
 
                                     <div class="card-body">
                                         
@@ -59,12 +59,9 @@
                                             @csrf
                                             @method('PATCH')
                                             <label for="name">Name</label>
-                                            <input type="text" class="form-control" name="name" id="name" value="{{$departments->name}}" placeholder="Name">
+                                            <input type="text" class="form-control" name="name" id="name" value="{{$dispositions->name}}" placeholder="Name">
                                         </div>
-                                        <div class="form-group">
-                                            <label for="description">Description</label>
-                                            <textarea class="form-control" rows="3" id="description" placeholder="Description" name="description">{{$departments->description}}</textarea>
-                                        </div>
+                                        
                                     </div>
                                     <!-- /.card-body -->
 
@@ -82,7 +79,7 @@
                             
                             <div>
                             <!-- /.tab-pane -->
-                                    Census per Department
+                                    Census per Disposition
                             <!-- /.tab-pane -->
                             </div>
                         </div>

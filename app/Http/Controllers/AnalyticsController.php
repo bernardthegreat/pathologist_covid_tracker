@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Department;
-class DepartmentsController extends Controller
+use PDF;
+class AnalyticsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,6 @@ class DepartmentsController extends Controller
     public function index()
     {
         //
-        $departments = Department::all();
-
-        return view('departments/index', compact('departments'));
     }
 
     /**
@@ -38,24 +35,6 @@ class DepartmentsController extends Controller
     public function store(Request $request)
     {
         //
-
-        //
-        $department_exist = Department::where('name', '=', $request->name)->first();
-
-        if ($department_exist === null) {
-            // User Not Found Your Stuffs Goes Here..
-         
-            $validatedData = $request->validate([
-                'name' => 'required|max:255',
-                'description' => 'max:255'
-            ]);
-            $show = Department::create($validatedData);
-
-            return redirect('/departments')->with('success', 'Department is successfully saved');
-        } else {
-            return redirect('/departments')->with('error', 'Department already exists');
-        }  
-
     }
 
     /**
@@ -78,10 +57,6 @@ class DepartmentsController extends Controller
     public function edit($id)
     {
         //
-
-        $departments = Department::findOrFail($id);
-
-        return view('departments/edit', compact('departments'));
     }
 
     /**
@@ -94,13 +69,6 @@ class DepartmentsController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'max:255',
-        ]);
-        Department::whereId($id)->update($validatedData);
-
-        return redirect('/departments')->with('success', 'Department is successfully updated');
     }
 
     /**
@@ -112,10 +80,17 @@ class DepartmentsController extends Controller
     public function destroy($id)
     {
         //
+    }
 
-        $department = Department::findOrFail($id);
-        $department->delete();
-
-        return redirect('/departments')->with('success', 'Department is successfully deleted');
+    public function print()
+    {
+       // This  $data array will be passed to our PDF blade
+       $data = [
+          'title' => 'First PDF for Medium',
+          'heading' => 'Hello from 99Points.info',
+          ];
+        
+        $pdf = PDF::loadView('analytics/print', $data);  
+        return $pdf->stream('medium.pdf');
     }
 }

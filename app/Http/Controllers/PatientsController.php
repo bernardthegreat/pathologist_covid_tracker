@@ -127,6 +127,10 @@ class PatientsController extends Controller
     public function destroy($id)
     {
         //
+        $patient = Patient::findOrFail($id);
+        $patient->delete();
+
+        return redirect('/patients')->with('success', 'Patient is successfully deleted');
     }
 
 }
