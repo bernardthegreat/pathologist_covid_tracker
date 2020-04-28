@@ -17,14 +17,34 @@ class PatientRequestsController extends Controller
     {
         //
         //$patient_requests = PatientRequest::with('patients')->get();
-        $patient_requests = PatientRequest::with([
+
+        
+       
+        $patient_requests_pending = PatientRequest::with([
             'patients', 
             'departments', 
             'users', 
             'patient_request_dispositions'
-        ])->get();;
+        ])
+        ->whereNull('released_datetime')
+        ->where(function($query) {
+            $yesterday = date("Y-m-d", strtotime( '-1 days' ) );
+            $query->whereRaw('Date(created_at) = CURDATE() or Date(created_at) = CURDATE()-1')
+                
+                ->get();  
+        })->get();
+
+        $patient_requests_released = PatientRequest::with([
+            'patients', 
+            'departments', 
+            'users', 
+            'patient_request_dispositions'
+        ])
+        ->whereNotNull('released_datetime')
+        ->whereRaw('Date(released_datetime) = CURDATE()')
+        ->get();
         
-        return view('patient_requests/index', compact('patient_requests'));
+        return view('patient_requests/index', compact('patient_requests_pending', 'patient_requests_released'));
 
     }
 

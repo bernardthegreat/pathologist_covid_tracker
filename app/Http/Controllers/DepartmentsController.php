@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Department;
+use App\PatientRequest;
 class DepartmentsController extends Controller
 {
     /**
@@ -80,8 +81,11 @@ class DepartmentsController extends Controller
         //
 
         $departments = Department::findOrFail($id);
+            
+        $patient_request_per_dept = PatientRequest::where('department_id','=',$id)
+        ->count();
 
-        return view('departments/edit', compact('departments'));
+        return view('departments/edit', compact('departments', 'patient_request_per_dept'));
     }
 
     /**

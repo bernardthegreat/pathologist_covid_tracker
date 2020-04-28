@@ -21,7 +21,7 @@
     </section>
 
 <section class="content">
-<!-- Default box -->
+
 <div class="card">
         <div class="card-header">
           <h3 class="card-title">Patient Requests</h3>
@@ -34,61 +34,132 @@
           </div>
         </div>
         <div class="card-body">
-            
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Requested Date</th>
-                  <th>Fullname</th>
-                  <th>Pathologist</th>
-                  <th >Departments</th>
-                  <th >Disposition</th>
-                </tr>
-                </thead>
-                <tbody>
-                 
-                 
-                  @foreach($patient_requests as $patient_request)   
-                <tr>
-                  <td>
-                    {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
-                  </td>
-                  <td> 
-                    {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}
-                   </td>
-                  <td>  
-                    {{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }}, {{ $patient_request->users->prefix }}
-                  </td>
-                  <td> 
-                     {{ $patient_request->departments->name }}
-                  </td>
-                  <td>
-                    {{ $patient_request->patient_request_dispositions->name }}
+
+
+              <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header p-2">
+                      <ul class="nav nav-pills">
+                        <li class="nav-item"><a class="nav-link active" href="#new_request" data-toggle="tab">Pendings</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#released" data-toggle="tab">Result Availability</a></li>
+                      </ul>
+                    </div><!-- /.card-header -->
+                    
+              
+              <div class="card-body">
+                      <div class="tab-content">
+                        <div class="active tab-pane" id="new_request">
+                          
+                            <table id="example1" class="table table-bordered table-striped">
+                              <thead>
+                              <tr>
+                                <th>Requested Date</th>
+                                <th>Fullname</th>
+                                <th>Action</th>
+                                <th>Action</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              
+                              
+                                @foreach($patient_requests_pending as $patient_request)   
+                              <tr>
+                                <td>
+                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
+                                </td>
+                                <td> 
+                                  {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}
+                                </td>
+                                <td>
+                                    View  
+                                </td>
+
+                                <td>
+                                    Release  
+                                </td>
+                              </tr>
+                                @endforeach
+                              
+                              </tbody>
+                              <tfoot>
+                              <tr>
+                                <th>Requested Date</th>
+                                <th>Fullname</th>
+                                <th>Action</th>
+                                <th>Action</th>
+                              </tr>
+                              </tfoot>
+                            </table>
+
+
+
+                        </div>
                   
-                  </td>
-                </tr>
-                  @endforeach
-                
-                </tbody>
-                <tfoot>
-                <tr>
-                <th>Requested Date</th>
-                  <th>Fullname</th>
-                  <th>Pathologist</th>
-                  <th >Departments</th>
-                  <th >Disposition</th>
-                </tr>
-                </tfoot>
-              </table>
+
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="released">
+                          
 
 
+                        <table id="example3" class="table table-bordered table-striped">
+                              <thead>
+                              <tr>
+                                <th>Requested Date</th>
+                                <th>Released Date</th>
+                                <th>Fullname</th>
+                                <th> Actions </th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              
+                              
+                                @foreach($patient_requests_released as $patient_request)   
+                              <tr>
+                                <td>
+                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
+                                </td>
+                                <td>
+                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->released_datetime)) }}
+                                </td>
+                                <td> 
+                                  {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}
+                                </td>
+                                <td>
+                                  View
+                                
+                                </td>
+                              </tr>
+                                @endforeach
+                              
+                              </tbody>
+                              <tfoot>
+                              <tr>
+                                <th>Requested Date</th>
+                                <th>Released Date</th>
+                                <th>Fullname</th>
+                                <th> Actions </th>
+                              </tr>
+                              </tfoot>
+                            </table>
+        
 
-              </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
 
-    </section>
-    <!-- /.content -->
+                          
+                        </div>
+                        <!-- /.tab-pane -->
+
+                        
+                        <!-- /.tab-pane -->
+                      </div>
+                      <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                  </div>
+                  <!-- /.nav-tabs-custom -->
+                </div>
+                <!-- /.col -->  
+
+        </div>
+</div>
+
 
 @endsection

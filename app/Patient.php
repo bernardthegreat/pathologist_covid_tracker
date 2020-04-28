@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     //
-    protected $fillable = ['hospital_number','first_name','middle_name', 'last_name'];
+    protected $fillable = [
+        'hospital_number',
+        'first_name',
+        'middle_name', 
+        'last_name',
+        'age',
+        'gender'
+    ];
     //
     public function patient_requests()
     {

@@ -16,7 +16,7 @@
     <form class="form-inline ml-3" method="POST" action="{{ route('search') }}">
         @csrf
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" id="search" name="patient_info" type="search" placeholder="Search" aria-label="Search" autocomplete="off" maxlength="5" required>
+        <input class="form-control form-control-navbar" id="search" name="patient_info" type="search" placeholder="Search" aria-label="Search" autocomplete="off" maxlength="10" required>
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
             <i class="fas fa-search"></i>

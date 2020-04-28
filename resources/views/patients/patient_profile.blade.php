@@ -22,7 +22,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-4">
 
             <!-- Profile Image -->
             <div class="card card-primary card-outline">
@@ -35,11 +35,37 @@
 
                 <h3 class="profile-username text-center">{{$patient->first_name}} {{$patient->middle_name}} {{$patient->last_name}}</h3>
 
-                <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b>Swab Tests</b> <a class="float-right">1,322</a>
-                  </li>
-                </ul>
+              
+
+                <div class="col-md-12">
+                  <div class="info-box bg-danger">
+                    <span class="info-box-icon"><i class="fa fa-user-times"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Positive</span>
+                      <span class="info-box-number">{{$positive}}</span>
+
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+
+                <div class="col-md-12">
+                  <div class="info-box bg-success">
+                    <span class="info-box-icon"><i class="fa fa-user-check"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Negative</span>
+                      <span class="info-box-number">{{$negative}}</span>
+
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+
+
 
                 <a href="#" class="btn btn-primary btn-block"><b>Create request</b></a>
               </div>
@@ -49,7 +75,7 @@
 
           </div>
           <!-- /.col -->
-          <div class="col-md-9">
+          <div class="col-md-8">
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
@@ -60,10 +86,102 @@
               
 			  
 			  <div class="card-body">
+
+           
+
+
                 <div class="tab-content">
                   <div class="active tab-pane" id="history">
                    
-                        Patient request history
+                  <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Requested Date</th>
+                  <th>Pathologist</th>
+                  <th >Other Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                 
+                 
+                  @foreach($patient_requests as $patient_request)   
+                <tr>
+                  <td>
+                    {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
+                  </td>
+                
+                  <td>  
+                    {{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }}, {{ $patient_request->users->prefix }}
+                  </td>
+                  <td>
+                      <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#modal-lg-{{$patient_request->id}}">
+                          <i class="fa fa-user">
+                          </i>
+                          View
+                      </a>
+
+
+
+                      <div class="modal fade" id="modal-lg-{{$patient_request->id}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Other Details</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                  <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                                
+                                    <tr>
+                                      <th>Disposition</th>
+                                      <td>{{ $patient_request->patient_request_dispositions->name }}</td>
+                                    </tr>
+
+                                    <tr>
+                                      <th>Departments</th>
+                                      <td>{{ $patient_request->departments->name }}</td>
+                                    </tr>
+                                
+                                  
+
+                                  </table>
+
+                                </div>
+
+                                  <div class="modal-footer justify-content-between">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                            </div>
+                            <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+
+                            
+                    </div>
+                    <!-- /.modal -->
+
+
+
+
+
+                  </td>
+                </tr>
+                  @endforeach
+                
+                </tbody>
+                <tfoot>
+                <tr>
+                <th>Requested Date</th>
+                  <th>Pathologist</th>
+                  <th >Other Details</th>
+                </tr>
+                </tfoot>
+              </table>
+
+
                     <!-- /.post -->
                   </div>
                   <!-- /.tab-pane -->

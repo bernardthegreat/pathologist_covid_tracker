@@ -10,6 +10,8 @@ class PatientRequest extends Model
 
     protected $fillable = [
         'patient_id',
+        'specimen_no',
+        'control_no',
         'disposition_id',
         'hcw', 
         'status',
@@ -19,7 +21,8 @@ class PatientRequest extends Model
         'department_id',
         'expired_datetime',
         'requested_date',
-        'requested_time'
+        'requested_time',
+        'released_datetime'
     ];
    
 

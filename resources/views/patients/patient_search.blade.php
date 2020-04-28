@@ -104,13 +104,10 @@
 
                   <label class="col-form-label" for="final_result"><i class="fas fa-check"></i> Final Result</label>
                   <div class="input-group mb-3">
-                      
-                      <input type="text" name="final_result" id="final_result" class="form-control" autocomplete="off">
-                      <div class="input-group-append">
-                          <div class="input-group-text">
-                          <span class="fas fa-hospital"></span>
-                          </div>
-                      </div>
+                      <select name="final_result" class="custom-select" id="hcw">
+                            <option value="1">POSITIVE</option>
+                            <option value="0">NEGATIVE</option>
+                      </select>
                   </div>
 
 

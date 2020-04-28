@@ -7,6 +7,7 @@ use App\Patient;
 use App\PatientRequestDisposition;
 use App\Department;
 use App\User;
+use App\PatientRequest;
 
 class PatientsController extends Controller
 {
@@ -81,7 +82,15 @@ class PatientsController extends Controller
         //
         $patient = Patient::findOrFail($id);
 
-        return view('patients/patient_profile', compact('patient'));
+        $patient_requests = PatientRequest::with([ 
+            'departments', 
+            'users', 
+            'patient_request_dispositions'
+        ])->where('patient_id', $id)->get();
+
+        $positive = PatientRequest::where('patient_id','=',$id)->where('final_result','=',1)->count();
+        $negative = PatientRequest::where('patient_id','=',$id)->where('final_result','=',0)->count();
+        return view('patients/patient_profile', compact('patient', 'patient_requests', 'positive', 'negative'));
     }
 
     /**
