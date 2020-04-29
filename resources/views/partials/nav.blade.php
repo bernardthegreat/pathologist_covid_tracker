@@ -28,31 +28,25 @@
             <ul class="nav nav-treeview">
               
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/analytics/patient_analytics" class="nav-link">
                   <i class="nav-icon fa fa-chart-line"></i>
-                  <p>Patient Census</p>
+                  <p>Patient Analytics</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="./index3.html" class="nav-link">
                   <i class="nav-icon  fa fa-chart-line"></i>
-                  <p>Inpatient Census</p>
+                  <p>Department Analytics</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="./index3.html" class="nav-link">
                   <i class="nav-icon  fa fa-chart-line"></i>
-                  <p>Discharged Census</p>
+                  <p>Disposition Analytics</p>
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
-                  <i class="nav-icon  fa fa-chart-line"></i>
-                  <p>Expired Census</p>
-                </a>
-              </li>
 
             </ul>
           </li>
@@ -113,9 +107,12 @@
               <li class="nav-item">
                 <a href="{{ route('dispositions.index') }}" class="nav-link">
                   <i class="nav-icon fa fa-hospital-user"></i>
-                  <p>Dispositions</p>
+                  <p>
+                    Dispositions
+                  </p>
                 </a>
               </li>
+              
 
             </ul>
           </li>

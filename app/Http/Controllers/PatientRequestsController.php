@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PatientRequest;
+use App\Patient;
+use App\Department;
+use App\User;
+use App\PatientRequestDisposition;
 use DB;
 
 class PatientRequestsController extends Controller
@@ -27,6 +31,8 @@ class PatientRequestsController extends Controller
             'patient_request_dispositions'
         ])
         ->whereNull('released_datetime')
+        ->whereNull('expired_datetime')
+        ->whereRaw('disposition_id <> 3')
         ->where(function($query) {
             $yesterday = date("Y-m-d", strtotime( '-1 days' ) );
             $query->whereRaw('Date(created_at) = CURDATE() or Date(created_at) = CURDATE()-1')
@@ -43,8 +49,21 @@ class PatientRequestsController extends Controller
         ->whereNotNull('released_datetime')
         ->whereRaw('Date(released_datetime) = CURDATE()')
         ->get();
+
+        $patient_requests_expired = PatientRequest::with([
+            'patients', 
+            'departments', 
+            'users', 
+            'patient_request_dispositions'
+        ])
+        ->whereRaw('disposition_id = 3')
+        ->whereRaw('Date(expired_datetime) = CURDATE()')
+        ->get();
         
-        return view('patient_requests/index', compact('patient_requests_pending', 'patient_requests_released'));
+        return view('patient_requests/dashboard_requests', compact(
+            'patient_requests_pending', 
+            'patient_requests_released',
+            'patient_requests_expired'));
 
     }
 
@@ -53,12 +72,31 @@ class PatientRequestsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $patient = Patient::findOrFail($id);
 
+        $specimen_number = PatientRequest::where('patient_id','=',$id)->count()+1;        
+        
+        $dispositions = PatientRequestDisposition::all()->where('active', 1);
+
+        $departments = Department::all()->where('active', 1);
+
+        $users = User::all()->where('active', 1);
+
+        return view('patient_requests/create',[
+            'dispositions' => $dispositions,
+            'departments' => $departments,
+            'users' => $users,
+            'specimen_number' => $specimen_number,
+            'patient' => $patient
+        ]);
 
     }
+
+ 
+
 
     /**
      * Store a newly created resource in storage.
@@ -66,11 +104,12 @@ class PatientRequestsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     
     public function store(Request $request)
     {
         //
 
-        
         $validatedData = $request->validate([
             'disposition_id' => 'required',
             'hcw' => 'required',
@@ -80,7 +119,8 @@ class PatientRequestsController extends Controller
             'soft_copy' => 'max:255',
             'user_id' => 'required',
             'department_id' => 'required',
-            'expired_datetime'=>'max:255'
+            'expired_datetime'=>'max:255',
+            'specimen_no'=>'required|max:255'
             
         ]);
         
@@ -102,6 +142,7 @@ class PatientRequestsController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**
@@ -136,5 +177,24 @@ class PatientRequestsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function release($id)
+    {
+
+        PatientRequest::where('id', $id)->update(array('released_datetime' => date('Y-m-d H:m:s')));
+        return redirect('/patient_requests')->with('success', 'Patient released');
+    }
+
+
+    public function expired($id)
+    {
+
+        PatientRequest::where('id', $id)->update(array(
+            'expired_datetime' => date('Y-m-d H:m:s'),
+            'disposition_id' => 3,
+        ));
+        return redirect('/patient_requests')->with('success', 'Patient expired');
     }
 }

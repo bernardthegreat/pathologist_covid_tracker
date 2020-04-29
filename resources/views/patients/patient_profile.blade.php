@@ -206,16 +206,42 @@
                         <div class="form-group">
                           @csrf
                           @method('PATCH')
-                          <label for="exampleInputEmail1">First Name</label>
-                          <input type="text" class="form-control" name="first_name" id="" value="{{$patient->first_name}}" placeholder="First Name">
+                          <label for="first_name">First Name</label>
+                          <input type="text" class="form-control" name="first_name" id="first_name" value="{{$patient->first_name}}" placeholder="First Name">
                         </div>
                         <div class="form-group">
-                          <label for="exampleInputEmail1">Middle Name</label>
-                          <input type="text" class="form-control" name="middle_name" id="" value="{{$patient->middle_name}}" placeholder="Middle Name">
+                          <label for="middle_name">Middle Name</label>
+                          <input type="text" class="form-control" name="middle_name" id="middle_name" value="{{$patient->middle_name}}" placeholder="Middle Name">
                         </div>
                         <div class="form-group">
-                          <label for="exampleInputEmail1">Last Name</label>
-                          <input type="text" class="form-control"  name="last_name"  id="" value="{{$patient->last_name}}" placeholder="Last Name">
+                          <label for="exampleInputEmalast_namel1">Last Name</label>
+                          <input type="text" class="form-control"  name="last_name"  id="last_name" value="{{$patient->last_name}}" placeholder="Last Name">
+                        </div>
+                        <div class="form-group">
+                          <label for="age">Age</label>
+                          <input type="text" class="form-control"  name="age"  id="age" value="{{$patient->age}}" placeholder="Age">
+                        </div>
+                        <div class="form-group">
+                          <label for="gender">Gender</label>
+                          <select name="gender" class="custom-select" id="gender">
+                            @if(isset($patient->gender))
+                              @if($patient->gender == 'M')
+                                <option>Select Gender</option>
+                                <option value="M" selected>Male</option>
+                                <option value="F">Female</option>
+                              @else
+                                <option value="M">Select Gender</option>
+                                <option value="M">Male</option>
+                                <option value="F" selected>Female</option>
+                              @endif
+                            @else
+                                <option>Select Gender</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                            @endif
+
+
+                          </select>
                         </div>
                       </div>
                       <!-- /.card-body -->

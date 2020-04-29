@@ -61,11 +61,14 @@ class PatientsController extends Controller
                 'first_name' => 'required|max:255',
                 'last_name' => 'required|max:255',
                 'middle_name' => 'max:255',
+                'age' => 'max:255',
+                'gender' => 'max:255',
             ]);
             $show = Patient::create($validatedData);
-                    
-    
-            return redirect('/patients')->with('success', 'Patient is successfully saved');
+            
+            return redirect()->route('create_request', [$show->id])->with('success', 'Patient is successfully saved');    
+            //return redirect()->route('patient_requests.create', array('nick' => $show->id));
+            //return redirect('/patient_requests/create/')->with('success', 'Patient is successfully saved');
         } else {
             return redirect('/patients/create')->with('error', 'Hospital # already exists');
         }   
@@ -121,6 +124,8 @@ class PatientsController extends Controller
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'middle_name' => 'max:255',
+            'age' => 'max:255',
+            'gender' => 'max:255',
         ]);
         Patient::whereId($id)->update($validatedData);
 

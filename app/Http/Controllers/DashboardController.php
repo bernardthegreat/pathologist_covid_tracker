@@ -116,11 +116,14 @@ class DashboardController extends Controller
 
 
         if(isset($request->patient_info)) {
+
+
             $data = Patient::where('last_name', 'LIKE', $request->patient_info.'%')
-                ->orWhere('hospital_number', 'LIKE', $request->patient_info.'%')
-                ->orWhere('first_name', 'LIKE', $request->patient_info.'%')
-                ->get();
-           
+                    ->orWhere('hospital_number', 'LIKE', $request->patient_info.'%')
+                    ->orWhere('first_name', 'LIKE', $request->patient_info.'%')
+                    ->get();
+                    
+
             if (count($data)>0) {
 
                 $dispositions = PatientRequestDisposition::all()->where('active', 1);
@@ -129,11 +132,13 @@ class DashboardController extends Controller
 
                 $users = User::all()->where('active', 1);
 
+              
                 return view('patients.patient_search',[
                     'result' => $data, 
                     'dispositions' => $dispositions,
                     'departments' => $departments,
                     'users' => $users,
+                   
                 ])->with('success', 'Patient found!');
             }
             else {

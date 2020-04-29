@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PDF;
+use App\Patient;
 class AnalyticsController extends Controller
 {
     /**
@@ -13,7 +14,7 @@ class AnalyticsController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -92,5 +93,40 @@ class AnalyticsController extends Controller
         
         $pdf = PDF::loadView('analytics/print', $data);  
         return $pdf->stream('medium.pdf');
+    }
+
+    public function patient_analytics() 
+    {
+        return view('analytics/patient_analytics');
+    }
+
+    public function patient_analytics_get(Request $request)
+    {
+        //
+        $patient_census = Patient::whereRaw(
+            'Date(created_at) = CURDATE()'
+        )->get();
+
+        return view('analytics/patient_analytics', compact(
+            'patient_census',));
+
+    }
+
+    public function patient_analytics_print(Request $request)
+    {
+        //
+        $patient_census = Patient::whereRaw(
+            'Date(created_at) = CURDATE()'
+        )->get();
+
+        $data = [
+            'title' => 'First PDF for Medium',
+            'heading' => 'Hello from 99Points.info',
+            ];
+        
+        
+        $pdf = PDF::loadView('analytics/print', compact('patient_census') );  
+       return $pdf->stream('patients.pdf');
+
     }
 }

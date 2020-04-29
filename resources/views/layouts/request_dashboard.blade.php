@@ -22,7 +22,7 @@
   <script src="{{ asset('js/jquery.min.js') }} "></script>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
     <div class="wrapper">
 
         @include('partials.nav')
@@ -55,7 +55,7 @@
 <script src="{{ asset('js/datatables-bs4/js/dataTables.bootstrap4.min.js') }}  "></script>
 <script src="{{ asset('js/datatables-responsive/js/dataTables.responsive.min.js') }}  "></script>
 <script src="{{ asset('js/datatables-responsive/js/responsive.bootstrap4.min.js') }}  "></script>
-<script src="{{ asset('js/daterangepicker/daterangepicker.js') }}"></script>
+
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.js') }}"></script>
 
@@ -84,12 +84,9 @@
       "order": [0, "desc"],
     });
 
-
-    
   });
 
-  
-  
+
  
 
 </script>

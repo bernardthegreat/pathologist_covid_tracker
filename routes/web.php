@@ -46,10 +46,17 @@ Route::resource('dispositions', 'PatientRequestDispositionsController');
 /* PatientRequests Routes */
 
 Route::resource('patient_requests', 'PatientRequestsController');
+Route::get('/patient_requests/create/{id}', array('as' => 'create_request', 'uses' => 'PatientRequestsController@create'));
+//Route::get('/patient_requests/create/{id}', 'PatientRequestsController@create');
+Route::post('/patient_requests/release/{id}', [ 'as' => 'patient_requests.release', 'uses' => 'PatientRequestsController@release'] );
+Route::post('/patient_requests/expired/{id}', [ 'as' => 'patient_requests.expired', 'uses' => 'PatientRequestsController@expired'] );
 
 /* PatientRequests Routes */
 
 
 /* Analytics Routes */
-Route::get('/print/', [ 'as' => 'analytics.print', 'uses' => 'AnalyticsController@print']);
+Route::get('/analytics/patient_analytics', 'AnalyticsController@patient_analytics');
+Route::post('/analytics/patient_analytics_get', [ 'as' => 'analytics.patient_analytics_get', 'uses' => 'AnalyticsController@patient_analytics_get'] );
+
+Route::get('/patient_analytics_print/', [ 'as' => 'analytics.patient_analytics_print', 'uses' => 'AnalyticsController@patient_analytics_print']);
 /* Analytics Routes */

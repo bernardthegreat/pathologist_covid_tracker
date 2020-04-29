@@ -83,6 +83,24 @@
           </div>
         </div>
 
+        <div class="input-group mb-3">
+          <input type="text" name="age" class="form-control" placeholder="Age">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="input-group mb-3">
+            <select name="gender" class="custom-select" id="gender">
+              <option>Select Gender</option>
+              <option value="M" selected>Male</option>
+              <option value="F">Female</option>
+             </select>
+        </div>
+
         <div class="row">
           
           <!-- /.col -->

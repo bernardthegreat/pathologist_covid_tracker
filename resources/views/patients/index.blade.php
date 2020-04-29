@@ -55,127 +55,14 @@
                 <tr>
                   <td> {{$patient->hospital_number}} </td>
                   <td>  
-                  <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#modal-default_{{$patient->id}}" data-placement="top" rel="tooltip" title="Create Request">
+                  <a class="btn btn-primary btn-sm" href="/patient_requests/create/{{$patient->id}}" data-placement="top" rel="tooltip" title="Create Request">
                     <i class="fa fa-plus-circle"></i>
                   </a>
                   {{$patient->first_name}} {{$patient->middle_name}} {{$patient->last_name}} </td>
                   
 
 
-                      <div class="modal fade" id="modal-default_{{$patient->id}}">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Create Request</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    
-
-                                <form method="post" action="{{ route('patient_requests.store') }}">
-                                    @csrf
-                                    <label class="col-form-label" for="disposition"><i class="fas fa-check"></i> Disposition</label>
-                                    <div class="input-group mb-3">
-                                        <input type="hidden" name="patient_id" class="form-control" value="{{$patient->id}}" autocomplete="off">
-                                        
-                                        <select name="disposition_id" class="custom-select" id="dispositions">
-                                          @foreach($dispositions as $disposition)
-                                              <option value="{{$disposition->id}}">{{$disposition->name}}</option>
-                                          @endforeach
-                                        </select>
-
-                                    </div>
-                                      
-                                    <label class="col-form-label" for="hcw"><i class="fas fa-check"></i> Health Care Worker</label>
-                                    <div class="input-group mb-3">
-                                        
-                                        <select name="hcw" class="custom-select" id="hcw">
-                                          
-                                              <option value="1">HCW</option>
-                                              <option value="0">Non-HCW</option>
-                                        
-                                        </select>
-                                    </div>
-
-
-                                    <label class="col-form-label" for="status"><i class="fas fa-check"></i> Status</label>
-                                    <div class="input-group mb-3">
-                                       
-                                        <input type="text" name="status"  id="status" class="form-control" autocomplete="off">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                            <span class="fas fa-hospital"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <label class="col-form-label" for="final_result"><i class="fas fa-check"></i> Final Result</label>
-                                    <div class="input-group mb-3">
-                                       
-                                        <input type="text" name="final_result" id="final_result" class="form-control" autocomplete="off">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                            <span class="fas fa-hospital"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <label class="col-form-label" for="soft_copy"><i class="fas fa-check"></i> Soft Copy</label>
-                                    <div class="input-group mb-3">
-                                       
-                                        <input type="text" name="soft_copy" id="soft_copy" class="form-control" autocomplete="off">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                            <span class="fas fa-hospital"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-
-                                    <label class="col-form-label" for="user_id"><i class="fas fa-check"></i> Pathologist </label>
-                                    <div class="input-group mb-3">
-                                        
-                                        <select name="user_id" class="custom-select" id="dispositions">
-                                          @foreach($users as $user)
-                                              <option value="{{$user->id}}">{{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}, {{$user->prefix}}</option>
-                                          @endforeach
-                                        </select>
-
-                                    </div>
-
-                                    <label class="col-form-label" for="department_id"><i class="fas fa-check"></i> Department </label>
-                                    <div class="input-group mb-3">
-
-                                        <select name="department_id" class="custom-select" id="department_id">
-                                          @foreach($departments as $department)
-                                              <option value="{{$department->id}}">{{$department->name}}</option>
-                                          @endforeach
-                                        
-                                        </select>
-
-                                    </div>
-
-
-
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                    </div>
-                                </form>
-                                </div>
-                            </div>
-                            <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-
-                            
-                    </div>
-                    <!-- /.modal -->
+                      
 
                   <td> 
                       <a class="btn btn-primary btn-sm" href="patients/show/{{$patient->id}}">
