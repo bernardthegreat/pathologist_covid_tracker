@@ -26,7 +26,8 @@
 
 <div class="card">
   <div class="card-header">
-        <h3 class="card-title">Patient Analytics</h3>
+        <h3 class="card-title">Department Analytics -- <a href="{{route ('analytics.department_analytics_print')}}" target="_blank"> Print
+        <i class="fa fa-print"></i></a></h3>
 
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -36,21 +37,36 @@
         </div>
     </div>
 
-    @if(isset($patient_census))
+    @if(isset($department))
     <div class="card-body">
-        <a href="{{route ('analytics.patient_analytics_print')}}"> Print
-        <i class="fa fa-print"></i></a>
-        <table>
-        <tr>
-          <td> Patient </td>
-        <tr>
-        @foreach($patient_census as $patient)  
-        <tr>
-            <td> {{$patient->disposition_name}} </td>
-            <td> {{$patient->total}} </td>
-        </tr>
-        @endforeach
+
+        <table id="example2" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Department</th>
+                <th>Total Count</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($department as $patient)  
+            <tr>
+                <td> {{$patient->department_name}} </td>
+                <td> {{$patient->total}} </td>
+            </tr>
+            @endforeach
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Department</th>
+                <th>Total Count</th>
+            </tr>
+            </tfoot>
         </table>
+            
+
+
+
     </div>
     @endif
   <!-- /.card-body -->

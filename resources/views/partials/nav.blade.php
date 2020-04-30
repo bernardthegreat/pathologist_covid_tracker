@@ -34,14 +34,14 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="/analytics/department_analytics" class="nav-link">
                   <i class="nav-icon  fa fa-chart-line"></i>
                   <p>Department Analytics</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="/analytics/disposition_analytics" class="nav-link">
                   <i class="nav-icon  fa fa-chart-line"></i>
                   <p>Disposition Analytics</p>
                 </a>

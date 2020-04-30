@@ -56,7 +56,11 @@ Route::post('/patient_requests/expired/{id}', [ 'as' => 'patient_requests.expire
 
 /* Analytics Routes */
 Route::get('/analytics/patient_analytics', 'AnalyticsController@patient_analytics');
-Route::post('/analytics/patient_analytics_get', [ 'as' => 'analytics.patient_analytics_get', 'uses' => 'AnalyticsController@patient_analytics_get'] );
+Route::get('/analytics/disposition_analytics', 'AnalyticsController@disposition_analytics');
+Route::get('/analytics/disposition_analytics_print', [ 'as' => 'analytics.disposition_analytics_print', 'uses' => 'AnalyticsController@disposition_analytics_print']);
+
+Route::get('/analytics/department_analytics', 'AnalyticsController@department_analytics');
+Route::get('/analytics/department_analytics_print', [ 'as' => 'analytics.department_analytics_print', 'uses' => 'AnalyticsController@department_analytics_print']);
 
 Route::get('/patient_analytics_print/', [ 'as' => 'analytics.patient_analytics_print', 'uses' => 'AnalyticsController@patient_analytics_print']);
 /* Analytics Routes */
