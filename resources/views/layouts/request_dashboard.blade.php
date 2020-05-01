@@ -84,6 +84,13 @@
       "order": [0, "desc"],
     });
 
+    $("#example4").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+      "order": [0, "desc"],
+    });
+
+
   });
 
 
