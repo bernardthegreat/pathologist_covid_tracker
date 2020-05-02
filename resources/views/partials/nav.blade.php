@@ -28,7 +28,7 @@
             <ul class="nav nav-treeview">
               
               <li class="nav-item">
-                <a href="/analytics/patient_analytics" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="nav-icon fa fa-chart-line"></i>
                   <p>Patient Analytics</p>
                 </a>
