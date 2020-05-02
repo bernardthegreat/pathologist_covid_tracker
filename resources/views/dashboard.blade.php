@@ -17,7 +17,7 @@
       </div><!-- /.container-fluid -->
     </div>
     
-<section class="content">
+<section class="content" id="app">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
@@ -27,7 +27,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Total Cases</span>
-                <span id="totalCases" class="info-box-number count"></span>
+                <span id="cases" class="info-box-number count"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -40,7 +40,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Active Cases</span>
-                <span id="activeCases" class="info-box-number count"></span>
+                <span id="active" class="info-box-number count"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -70,7 +70,9 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Deaths</span>
-                <span id="deaths" class="info-box-number count"></span>
+                <span id="deaths" class="info-box-number count">
+                  
+                </span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -88,7 +90,9 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Critical</span>
-                <span id="critical" class="info-box-number count"></span>
+                <span id="critical" class="info-box-number count">
+                    
+                </span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -118,7 +122,9 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Today's Death</span>
-                <span id="todayDeaths" class="info-box-number count"></span>
+                <span id="todayDeaths" class="info-box-number count">
+
+                </span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -131,7 +137,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Total Tested</span>
-                <span id="totaltests" class="info-box-number count"></span>
+                <span id="totalTests" class="info-box-number count"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -329,64 +335,142 @@
 
 
 $( document ).ready(function() {
- function fetchdata(){
- var api_url = 'https://coronavirus-19-api.herokuapp.com/countries/philippines'
-
-
-   $.ajax({
-       url: api_url,
-       contentType: "application/json",
-       dataType: 'json',
-       success: function(result){
-           
-           totalCases = result.cases;
-           activeCases = result.active;
-           recovered = result.recovered;
-           deaths	= result.deaths;
-           
-           
-           critical = result.critical;
-           todayCases = result.todayCases;
-           todayDeaths = result.todayDeaths;
-           totaltests = result.totalTests;
-           
-           
-           $("#totalCases").html(totalCases);
-           $("#activeCases").html(activeCases);
-           $("#recovered").html(recovered);
-           $("#deaths").html(deaths);
-           
-           
-           $("#critical").html(critical);
-           $("#todayCases").html(todayCases);
-           $("#todayDeaths").html(todayDeaths);
-           $("#totaltests").html(totaltests);
-           
-           
-           $('.count').each(function () {
-               $(this).prop('Counter',0).animate({
-                   Counter: $(this).html()
-               }, {
-                   duration: 4000,
-                   easing: 'swing',
-                   step: function (now) {
-                       $(this).text(Math.ceil(now));
-                   }
-               });
-           });
-           
-           
-           
-           
-          
-       }
-   });
-}
  
 
-    setInterval(fetchdata,3000);
+
+const url = "https://coronavirus-19-api.herokuapp.com/countries/philippines";
+
+const vm = new Vue({
+        el: '#app',
+        data: {
+          results: []
+        },
+        mounted() {
+
+
+          this.interval = setInterval(() => {
+		        axios.get(url).then(response => { 
+		        this.results = response.data;
+            
+            console.log(this.results);
+
+            cases = this.results.cases;
+            active = this.results.active;
+            recovered = this.results.recovered;
+            deaths = this.results.deaths;
+            critical = this.results.critical;
+            todayCases = this.results.todayCases;
+            todayDeaths = this.results.todayDeaths;
+            totalTests = this.results.totalTests;
+
+            $('#cases').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: cases 
+                }, {
+                    duration: 4000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+
+
+            $('#active').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: active 
+                }, {
+                    duration: 4000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+
+            $('#recovered').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: recovered 
+                }, {
+                    duration: 4000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+
+            $('#deaths').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: deaths 
+                }, {
+                    duration: 4000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+
+            $('#critical').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: critical 
+                }, {
+                    duration: 4000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+
+            $('#todayCases').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: todayCases 
+                }, {
+                    duration: 4000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+
+            $('#todayDeaths').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: todayDeaths 
+                }, {
+                    duration: 4000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+
+            $('#totalTests').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: totalTests 
+                }, {
+                    duration: 4000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+		        /* do something */
+		    	});
+		    }, 3000 );
+
+          	
+        }
+
+      });
  
 });
+
+
 
 </script>
 
