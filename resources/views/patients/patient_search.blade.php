@@ -40,10 +40,13 @@
                     <br>
                 </span>
 
-                <a href="show/{{$patient_info->id}}" class="btn btn-sm bg-teal">
+                <a href="show/{{$patient_info->id}}" class="btn btn-sm bg-teal" data-placement="top" rel="tooltip" title="View {{$patient_info->first_name}}'s Info">
                   <i class="fas fa-user"></i>
                 </a>
-                <a href="/patient_requests/create/{{$patient_info->id}}" class="btn btn-sm btn-danger" >
+                <a href="/patient_requests/show/{{$patient_info->id}}" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" rel="tooltip" title="View all request of {{$patient_info->first_name}}">
+                  <i class="fas fa-search"></i>
+                </a>
+                <a href="/patient_requests/create/{{$patient_info->id}}" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" rel="tooltip" title="Create Request for {{$patient_info->first_name}}">
                   <i class="fas fa-document"></i> Create request
                 </a>
 
@@ -66,6 +69,13 @@
 
 </section>
 
+<script>
+
+$(document).ready(function(){
+          $('[rel="tooltip"]').tooltip({trigger: "hover"});
+      });
+
+</script>
     
        
     

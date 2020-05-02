@@ -66,16 +66,10 @@
       "autoWidth": false,
       "order": [0, "desc"],
     });
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
+    $("#example2").DataTable({
       "responsive": true,
+      "autoWidth": false,
       "order": [0, "desc"],
-      
     });
 
     $("#example3").DataTable({

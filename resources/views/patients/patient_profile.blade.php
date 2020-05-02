@@ -1,4 +1,4 @@
-@extends('layouts.main_layout')
+@extends('layouts.request_dashboard')
 
 @section('content')
 
@@ -66,8 +66,38 @@
                 </div>
 
 
+                <div class="col-md-12">
+                  <div class="info-box bg-secondary">
+                    <span class="info-box-icon"><i class="fa fa-user-minus"></i></span>
 
-                <a href="#" class="btn btn-primary btn-block"><b>Create request</b></a>
+                    <div class="info-box-content">
+                      <span class="info-box-text">N/A</span>
+                      <span class="info-box-number">{{$not_applicable}}</span>
+
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+
+
+                <div class="col-md-12">
+                  <div class="info-box bg-warning">
+                    <span class="info-box-icon"><i class="fa fa-user-minus"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Pending</span>
+                      <span class="info-box-number">{{$pending}}</span>
+
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+
+  
+                <a href="/patient_requests/create/{{$patient_requests[0]->patients->id}}" class="btn btn-primary btn-block"><b>Create request</b></a>
+              
               </div>
               <!-- /.card-body -->
             </div>
@@ -93,12 +123,13 @@
                 <div class="tab-content">
                   <div class="active tab-pane" id="history">
                    
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="example2" class="table table-bordered table-hover table-striped text-center">
                 <thead>
                 <tr>
+                  <th>Specimen  #</th>
                   <th>Requested Date</th>
-                  <th>Pathologist</th>
-                  <th >Other Details</th>
+                  <th>Result</th>
+                  <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -106,12 +137,20 @@
                  
                   @foreach($patient_requests as $patient_request)   
                 <tr>
+                <td>
+                    {{ $patient_request->specimen_no }}
+                  </td>
                   <td>
                     {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
                   </td>
                 
                   <td>  
-                    {{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }}, {{ $patient_request->users->prefix }}
+                    @if($patient_request->final_result == '1')
+                      POSITIVE
+                    @elseif($patient_request->final_result == '0')
+                      NEGATIVE
+                    @endif
+                   
                   </td>
                   <td>
                       <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#modal-lg-{{$patient_request->id}}">
@@ -126,7 +165,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Other Details</h4>
+                                    <h4 class="modal-title">{{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }} </h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -134,7 +173,14 @@
                                 <div class="modal-body">
                                     
                                   <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
-                                
+
+
+
+                                    <tr>
+                                      <th>Pathologist</th>
+                                      <td>{{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }} {{ $patient_request->users->prefix }}</td>
+                                    </tr>
+
                                     <tr>
                                       <th>Disposition</th>
                                       <td>{{ $patient_request->patient_request_dispositions->name }}</td>
@@ -174,9 +220,10 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                <th>Requested Date</th>
-                  <th>Pathologist</th>
-                  <th >Other Details</th>
+                  <th>Specimen  #</th>
+                  <th>Requested Date</th>
+                  <th>Result</th>
+                  <th></th>
                 </tr>
                 </tfoot>
               </table>

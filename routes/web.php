@@ -50,6 +50,8 @@ Route::get('/patient_requests/create/{id}', array('as' => 'create_request', 'use
 //Route::get('/patient_requests/create/{id}', 'PatientRequestsController@create');
 Route::post('/patient_requests/release/{id}', [ 'as' => 'patient_requests.release', 'uses' => 'PatientRequestsController@release'] );
 Route::post('/patient_requests/expired/{id}', [ 'as' => 'patient_requests.expired', 'uses' => 'PatientRequestsController@expired'] );
+Route::get('/patient_requests/show/{id}', [ 'as' => 'patient_requests.show', 'uses' => 'PatientRequestsController@show'] );
+
 
 /* PatientRequests Routes */
 

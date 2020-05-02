@@ -117,12 +117,11 @@
             <label class="col-form-label" for="soft_copy"><i class="fas fa-check"></i> Soft Copy</label>
             <div class="input-group mb-3">
                 
-                <input type="text" name="soft_copy" id="soft_copy" class="form-control" autocomplete="off">
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                    <span class="fas fa-hospital"></span>
-                    </div>
-                </div>
+                <select name="soft_copy" class="custom-select" id="soft_copy">
+                    <option value="0">Not yet available</option>
+                    <option value="1">Available</option>
+                </select>
+
             </div>
 
             <label class="col-form-label" for="hcw"><i class="fas fa-check"></i> Health Care Worker</label>
@@ -139,11 +138,16 @@
 
             <label class="col-form-label" for="final_result"><i class="fas fa-check"></i> Final Result</label>
             <div class="input-group mb-3">
-                <select name="final_result" class="custom-select" id="hcw">
+                <select name="final_result" class="custom-select" id="final_result">
+                    <option value="3">PENDING</option>
                     <option value="1">POSITIVE</option>
                     <option value="0">NEGATIVE</option>
+                    <option value="2">NOT APPLICABLE</option>
+                    
                 </select>
             </div>
+
+            
 
             
 

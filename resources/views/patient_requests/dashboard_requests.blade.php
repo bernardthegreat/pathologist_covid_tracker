@@ -303,7 +303,7 @@
                           
 
 
-                        <table id="example3" class="table table-bordered table-striped">
+                        <table id="example2" class="table table-bordered table-striped">
                               <thead>
                               <tr>
                                 <th>Requested Date</th>
@@ -472,7 +472,7 @@
                           
 
 
-                        <table id="example4" class="table table-bordered table-striped">
+                        <table id="example3" class="table table-bordered table-striped">
                               <thead>
                               <tr>
                                 <th>Requested Date</th>

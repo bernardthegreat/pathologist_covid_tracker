@@ -127,7 +127,7 @@ class PatientRequestsController extends Controller
 
         $show = PatientRequest::create($validatedData + [
             'requested_date' => date('Y-m-d '),
-            'requested_time' => date('H:m:s')
+            'requested_time' => date('H:i:s')
         ]);
 
         return redirect('/patient_requests')->with('success', 'Patient request is successfully saved');
@@ -142,7 +142,19 @@ class PatientRequestsController extends Controller
     public function show($id)
     {
         //
-        
+        $patient = Patient::findOrFail($id);
+
+        $patient_requests = PatientRequest::with([
+            'patients', 
+            'departments', 
+            'users', 
+            'patient_request_dispositions'
+        ])
+        ->where('patient_id', $id)->get();
+
+        return view('patient_requests/show',[
+            'patient_requests' => $patient_requests
+        ]);
     }
 
     /**
@@ -183,7 +195,8 @@ class PatientRequestsController extends Controller
     public function release($id)
     {
 
-        PatientRequest::where('id', $id)->update(array('released_datetime' => date('Y-m-d H:m:s')));
+        PatientRequest::where('id', $id)->update(array(
+            'released_datetime' => date('Y-m-d H:i:s')));
         return redirect('/patient_requests')->with('success', 'Patient released');
     }
 
@@ -192,7 +205,7 @@ class PatientRequestsController extends Controller
     {
 
         PatientRequest::where('id', $id)->update(array(
-            'expired_datetime' => date('Y-m-d H:m:s'),
+            'expired_datetime' => date('Y-m-d H:i:s'),
             'disposition_id' => 3,
         ));
         return redirect('/patient_requests')->with('error', 'Patient expired');
