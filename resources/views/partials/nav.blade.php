@@ -65,8 +65,7 @@
             <a href="{{ route('patient_requests.index') }}" class="nav-link">
               <i class="nav-icon fa fa-file-medical"></i>
               <p>
-                Patient Requests
-               
+                Requests Dashboard
               </p>
             </a>
           </li>

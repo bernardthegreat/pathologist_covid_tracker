@@ -195,6 +195,6 @@ class PatientRequestsController extends Controller
             'expired_datetime' => date('Y-m-d H:m:s'),
             'disposition_id' => 3,
         ));
-        return redirect('/patient_requests')->with('success', 'Patient expired');
+        return redirect('/patient_requests')->with('error', 'Patient expired');
     }
 }

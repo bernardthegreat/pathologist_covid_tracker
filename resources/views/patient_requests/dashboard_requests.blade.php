@@ -136,6 +136,111 @@
                                     <i class="fa fa-search-plus"></i>
                                   </a>
                                   {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}
+                                
+
+
+                                  <div class="modal fade" id="modal-pending-{{$patient_request->id}}">
+                                    <div class="modal-dialog modal-lg">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title"> {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}</h4>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+
+
+                                        <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+
+                                            <tr> 
+                                              <th>Age</th>
+                                              <td>{{ $patient_request->patients->age }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Gender</th>
+                                              <td>{{ $patient_request->patients->gender }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Control No.</th>
+                                              <td>{{ $patient_request->control_no }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Specimen No.</th>
+                                              <td>{{ $patient_request->specimen_no }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>HCW</th>
+                                              <td>
+                                                @if($patient_request->hcw == 1)
+                                                  HCW
+                                                @else 
+                                                  NON-HCW
+                                                @endif
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Status</th>
+                                              <td>
+                                                {{ $patient_request->status }}
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Final Result</th>
+                                              <td>
+                                                @if($patient_request->final_result == 1)
+                                                  POSITIVE
+                                                @else 
+                                                  NEGATIVE
+                                                @endif
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Softcopy</th>
+                                              <td>
+                                                {{ $patient_request->soft_copy }}
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr>
+                                              <th>Disposition</th>
+                                              <td>{{ $patient_request->patient_request_dispositions->name }}</td>
+                                            </tr>
+
+                                            <tr>
+                                              <th>Department</th>
+                                              <td>{{ $patient_request->departments->name }}</td>
+                                            </tr>
+                                        
+                                          
+
+                                          </table>
+                                          
+
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                          <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                        </div>
+                                      </div>
+                                      <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                  </div>
+                                  <!-- /.modal -->
+                                
+                                
                                 </td>
                                 <td> 
                                   {{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }} {{ $patient_request->users->prefix }}
@@ -170,28 +275,7 @@
 
 
 
-                              <div class="modal fade" id="modal-pending-{{$patient_request->id}}">
-                                <div class="modal-dialog modal-lg">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title"> {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}</h4>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <p>One fine body&hellip;</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                      <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                  </div>
-                                  <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                              </div>
-                              <!-- /.modal -->
+                              
 
 
 
@@ -244,47 +328,114 @@
                                     <i class="fa fa-search-plus"></i>
                                   </a>
                                   {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}
+                                
+
+                                  <div class="modal fade" id="modal-released-{{$patient_request->id}}">
+                                    <div class="modal-dialog modal-lg">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title"> {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}</h4>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+
+
+                                        <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+
+                                            <tr> 
+                                              <th>Age</th>
+                                              <td>{{ $patient_request->patients->age }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Gender</th>
+                                              <td>{{ $patient_request->patients->gender }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Control No.</th>
+                                              <td>{{ $patient_request->control_no }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Specimen No.</th>
+                                              <td>{{ $patient_request->specimen_no }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>HCW</th>
+                                              <td>
+                                                @if($patient_request->hcw == 1)
+                                                  HCW
+                                                @else 
+                                                  NON-HCW
+                                                @endif
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Status</th>
+                                              <td>
+                                                {{ $patient_request->status }}
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Final Result</th>
+                                              <td>
+                                                @if($patient_request->final_result == 1)
+                                                  POSITIVE
+                                                @else 
+                                                  NEGATIVE
+                                                @endif
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Softcopy</th>
+                                              <td>
+                                                {{ $patient_request->soft_copy }}
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr>
+                                              <th>Disposition</th>
+                                              <td>{{ $patient_request->patient_request_dispositions->name }}</td>
+                                            </tr>
+
+                                            <tr>
+                                              <th>Department</th>
+                                              <td>{{ $patient_request->departments->name }}</td>
+                                            </tr>
+                                        
+                                          
+
+                                          </table>
+                                          
+
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                          <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                        </div>
+                                      </div>
+                                      <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                  </div>
+                                  <!-- /.modal -->
+                                
                                 </td>
                                 <td> 
                                 {{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }} {{ $patient_request->users->prefix }}
                                 </td>
                               </tr>
-
-
-
-
-                              <div class="modal fade" id="modal-released-{{$patient_request->id}}">
-                                <div class="modal-dialog modal-lg">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title"> {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}</h4>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <p>One fine body&hellip;</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                      <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                  </div>
-                                  <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                              </div>
-                              <!-- /.modal -->
-
-
-
-
-
-
-
-
-
-
 
 
                                 @endforeach
@@ -359,11 +510,89 @@
                                           </button>
                                         </div>
                                         <div class="modal-body">
-                                          <p>One fine body&hellip;</p>
+
+
+                                        <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+
+                                            <tr> 
+                                              <th>Age</th>
+                                              <td>{{ $patient_request->patients->age }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Gender</th>
+                                              <td>{{ $patient_request->patients->gender }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Control No.</th>
+                                              <td>{{ $patient_request->control_no }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Specimen No.</th>
+                                              <td>{{ $patient_request->specimen_no }}</td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>HCW</th>
+                                              <td>
+                                                @if($patient_request->hcw == 1)
+                                                  HCW
+                                                @else 
+                                                  NON-HCW
+                                                @endif
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Status</th>
+                                              <td>
+                                                {{ $patient_request->status }}
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Final Result</th>
+                                              <td>
+                                                @if($patient_request->final_result == 1)
+                                                  POSITIVE
+                                                @else 
+                                                  NEGATIVE
+                                                @endif
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr> 
+                                              <th>Softcopy</th>
+                                              <td>
+                                                {{ $patient_request->soft_copy }}
+                                              
+                                              </td>
+                                            </tr>
+
+                                            <tr>
+                                              <th>Disposition</th>
+                                              <td>{{ $patient_request->patient_request_dispositions->name }}</td>
+                                            </tr>
+
+                                            <tr>
+                                              <th>Department</th>
+                                              <td>{{ $patient_request->departments->name }}</td>
+                                            </tr>
+                                        
+                                          
+
+                                          </table>
+                                          
+
                                         </div>
                                         <div class="modal-footer justify-content-between">
                                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary">Save changes</button>
+                                          <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                                         </div>
                                       </div>
                                       <!-- /.modal-content -->

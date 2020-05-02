@@ -24,26 +24,6 @@
     <div class="card-body register-card-body">
   
 
-        @if(session()->get('error'))
-  
-
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Error!</strong> {{ session()->get('error') }} 
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <br />
-
-
-        @endif
-
-        @if(session()->get('success'))
-          <div class="alert alert-success">
-            {{ session()->get('success') }}  
-          </div><br />
-        @endif
-
         
       <form method="post" action="{{ route('patients.store') }}">
         @csrf
