@@ -32,10 +32,10 @@ class PatientRequestsController extends Controller
         ])
         ->whereNull('released_datetime')
         ->whereNull('expired_datetime')
+        ->whereNull('failed_datetime')
         ->whereRaw('disposition_id <> 3')
         ->where(function($query) {
-            $yesterday = date("Y-m-d", strtotime( '-1 days' ) );
-            $query->whereRaw('Date(created_at) = CURDATE() or Date(created_at) = CURDATE()-1')
+            $query->whereRaw('DATE(created_at) >= CURDATE()  - 7')
                 
                 ->get();  
         })->get();
@@ -59,11 +59,31 @@ class PatientRequestsController extends Controller
         ->whereRaw('disposition_id = 3')
         ->whereRaw('Date(expired_datetime) = CURDATE()')
         ->get();
+
+        $patient_requests_failed = PatientRequest::with([
+            'patients', 
+            'departments', 
+            'users', 
+            'patient_request_dispositions'
+        ])
+        ->whereRaw('remarks IS NOT NULL')
+        ->whereRaw('Date(failed_datetime) = CURDATE()')
+        ->get();
+
+        $dispositions = PatientRequestDisposition::all()->where('active', 1);
+
+        $departments = Department::all()->where('active', 1);
+
+        $users = User::all()->where('active', 1);
         
         return view('patient_requests/dashboard_requests', compact(
             'patient_requests_pending', 
             'patient_requests_released',
-            'patient_requests_expired'));
+            'patient_requests_expired',
+            'patient_requests_failed',
+            'dispositions',
+            'departments',
+            'users'));
 
     }
 
@@ -117,17 +137,45 @@ class PatientRequestsController extends Controller
             'status' => 'max:255',
             'final_result' => 'max:255',
             'soft_copy' => 'max:255',
-            'user_id' => 'required',
-            'department_id' => 'required',
             'expired_datetime'=>'max:255',
-            'specimen_no'=>'required|max:255'
+            'specimen_no'=>'required|max:255',
+            'control_no'=>'required|max:255'
+            
             
         ]);
         
 
+        
+
+        $department_exist = Department::where('name', '=', $request->department_remarks)->first();
+
+        if ($department_exist === null) {
+            $department_id = DB::table('departments')->insertGetId(
+                [ 
+                    'name' => $request->department_remarks,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]
+            );
+
+        } else {
+            $department_id = Department::where('name', '=', $request->department_remarks)->first();//$department_id = Department::find($request->department_remarks, ['name']);
+            
+            if(isset($department_id['id'])) {
+                $department_id = $department_id['id'];
+            }
+        
+        }
+        
+       
+        
+
+        
         $show = PatientRequest::create($validatedData + [
             'requested_date' => date('Y-m-d '),
-            'requested_time' => date('H:i:s')
+            'requested_time' => date('H:i:s'),
+            'department_id' => $department_id,
+            'final_result' => 0,
         ]);
 
         return redirect('/patient_requests')->with('success', 'Patient request is successfully saved');
@@ -166,6 +214,29 @@ class PatientRequestsController extends Controller
     public function edit($id)
     {
         //
+        
+        $patient_request = PatientRequest::with([
+            'patients', 
+            'departments',
+            'users',
+            'patient_request_dispositions'
+            
+        ])
+        ->where('id', '=', $id)->get();
+        
+        
+        $dispositions = PatientRequestDisposition::all()->where('active', 1);
+
+        $departments = Department::all()->where('active', 1);
+
+        $users = User::all()->where('active', 1);
+     
+
+        return view('patient_requests/edit', compact(
+            'dispositions',
+            'departments',
+            'users',
+            'patient_request'));
     }
 
     /**
@@ -178,6 +249,21 @@ class PatientRequestsController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $validatedData = $request->validate([
+            'specimen_no' => 'required|max:255',
+            'control_no' => 'required|max:255',
+            'disposition_id' => 'required|max:255',
+            'status' => 'max:255',
+            'user_id' => 'max:255',
+            'department_id' => 'max:255',
+            'soft_copy' => 'max:255',
+            'hcw' => 'max:255',
+            'final_result' => 'max:255',
+        ]);
+        PatientRequest::whereId($id)->update($validatedData);
+
+        return redirect()->back()->with('success', 'Request is successfully updated');
     }
 
     /**
@@ -208,6 +294,94 @@ class PatientRequestsController extends Controller
             'expired_datetime' => date('Y-m-d H:i:s'),
             'disposition_id' => 3,
         ));
-        return redirect('/patient_requests')->with('error', 'Patient expired');
+        return redirect('/patient_requests')->with('error', 'Patient transferred to the expired tab');
+    }
+
+    public function patient_expired($id)
+    {
+        $this->expired($id);
+        return redirect()->back();
+    }
+
+    public function patient_release($id)
+    {
+        $this->release($id);
+        return redirect()->back();
+    }
+
+    public function save_remarks(Request $request, $id)
+    {
+
+        PatientRequest::where('id', $id)->update(array(
+            'updated_at' => date('Y-m-d H:i:s'),
+            'remarks' => $request->remarks,
+            'failed_datetime' => date('Y-m-d H:i:s'),
+            'final_result' => 2
+        ));
+        return redirect()->back()->with('warning', 'Patient transferred to the rejected tab');
+    }
+
+    public function save_details(Request $request, $id)
+    {
+        if(isset($request->save_only)) { 
+            if(!is_null($request->swab_date) && !is_null($request->swab_time)) {
+                $swab_datetime = $request->swab_date.' '.$request->swab_time;
+
+                PatientRequest::where('id', $id)->update(array(
+                    'swab_requested_datetime' => $swab_datetime,
+                    'user_id' => $request->user_id,
+                    'final_result' => $request->final_result
+                ));
+            } else if(!is_null($request->result_date) && !is_null($request->result_time)) {
+                $result_availability_datetime = $request->result_date.' '.$request->result_time;
+                
+                PatientRequest::where('id', $id)->update(array(
+                    'result_availability_datetime' => $result_availability_datetime,
+                    'soft_copy'=>1,
+                    'user_id' => $request->user_id,
+                ));
+            } else {
+                PatientRequest::where('id', $id)->update(array(
+                    'user_id' => $request->user_id,
+                    'final_result' => $request->final_result
+                ));
+            }
+
+            return redirect()->back()->with('info', 'Patient request updated');
+
+        } else if(isset($request->save_and_release)) {
+ 
+            if(!is_null($request->swab_date) && !is_null($request->swab_time)) {
+                $swab_datetime = $request->swab_date.' '.$request->swab_time;
+
+                PatientRequest::where('id', $id)->update(array(
+                    'swab_requested_datetime' => $swab_datetime,
+                    'user_id' => $request->user_id,
+                    'final_result' => $request->final_result,
+                    'released_datetime' => date('Y-m-d H:i:s')
+                ));
+            } else if(!is_null($request->result_date) && !is_null($request->result_time)) {
+                $result_availability_datetime = $request->result_date.' '.$request->result_time;
+                
+                PatientRequest::where('id', $id)->update(array(
+                    'result_availability_datetime' => $result_availability_datetime,
+                    'soft_copy'=>1,
+                    'user_id' => $request->user_id,
+                    'released_datetime' => date('Y-m-d H:i:s')
+                ));
+            } else {
+                PatientRequest::where('id', $id)->update(array(
+                    'user_id' => $request->user_id,
+                    'final_result' => $request->final_result,
+                    'released_datetime' => date('Y-m-d H:i:s')
+                ));
+            }
+
+            return redirect()->back()->with('success', 'Patient request updated and completed');
+        }
+
+       
+
+        
     }
 }

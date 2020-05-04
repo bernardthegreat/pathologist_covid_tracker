@@ -22,7 +22,11 @@ class PatientRequest extends Model
         'expired_datetime',
         'requested_date',
         'requested_time',
-        'released_datetime'
+        'released_datetime',
+        'result_availability_datetime',
+        'swab_requested_datetime',
+        'remarks',
+        'failed_datetime'
     ];
    
 

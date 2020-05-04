@@ -122,4 +122,12 @@ class DepartmentsController extends Controller
 
         return redirect('/departments')->with('success', 'Department is successfully deleted');
     }
+
+    public function get_departments()
+    {
+        //
+        $departments = Department::all();
+
+        return $departments;
+    }
 }

@@ -57,7 +57,10 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Recoveries</span>
-                <span id="recovered" class="info-box-number count"></span>
+                <span id="recovered" class="info-box-number count">
+
+                </span>
+                
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -146,6 +149,12 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
+
+
+
+     
+
+
       </div>
 </section>
 
@@ -179,7 +188,6 @@
               <div class="icon">
                 <i class="fa fa-hospital-user"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -187,14 +195,13 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>{{ $inpatients }}</h3>
+                <h3>{{ $requests }}</h3>
 
-                <p>Inpatients</p>
+                <p>Patient Requests</p>
               </div>
               <div class="icon">
                 <i class="fa fa-book-medical"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -203,13 +210,12 @@
             <div class="small-box bg-warning">
               <div class="inner">
                 <h3>{{ $discharged }}</h3>
-
                 <p>Discharged</p>
+                
               </div>
               <div class="icon">
                 <i class="fa fa-briefcase-medical"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -224,7 +230,7 @@
               <div class="icon">
                 <i class="fa fa-skull-crossbones"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+             
             </div>
           </div>
           <!-- ./col -->
@@ -287,7 +293,9 @@
                     {{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }}
                    </td>
                   <td>  
+                  @if(isset($patient_request->user_id))
                     {{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }}, {{ $patient_request->users->prefix }}
+                  @endif
                   </td>
                   <td> 
                      {{ $patient_request->departments->name }}
@@ -466,6 +474,94 @@ const vm = new Vue({
         }
 
       });
+
+
+
+
+      const new_url = "https://coronavirus-ph-api.herokuapp.com/total";
+
+      const vm_new = new Vue({
+              el: '#app',
+              data: {
+                covid_results: []
+              },
+              mounted() {
+
+
+                  this.interval = setInterval(() => {
+                  axios.get(new_url).then(response => { 
+                  this.covid_results = response.data;
+                  
+                  console.log(this.covid_results);
+
+                  recoveries_today = this.covid_results.data.recoveries_today;
+                  admitted = this.covid_results.data.admitted;
+                  fatality_rate = this.covid_results.data.fatality_rate;
+                  recovery_rate = this.covid_results.data.recovery_rate;
+
+                  
+
+                  $('#recoveries_today').each(function () {
+                      $(this).prop('Counter',0).animate({
+                          Counter: recoveries_today 
+                      }, {
+                          duration: 4000,
+                          easing: 'swing',
+                          step: function (now) {
+                              $(this).text(Math.ceil(now));
+                          }
+                      });
+                  });
+
+
+                  $('#admitted').each(function () {
+                      $(this).prop('Counter',0).animate({
+                          Counter: admitted 
+                      }, {
+                          duration: 4000,
+                          easing: 'swing',
+                          step: function (now) {
+                              $(this).text(Math.ceil(now));
+                          }
+                      });
+                  });
+
+                  $('#fatality_rate').each(function () {
+                      $(this).prop('Counter',0).animate({
+                          Counter: fatality_rate 
+                      }, {
+                          duration: 4000,
+                          easing: 'swing',
+                          step: function (now) {
+                              $(this).text(Math.ceil(now));
+                          }
+                      });
+                  });
+
+                  $('#recovery_rate').each(function () {
+                      $(this).prop('Counter',0).animate({
+                          Counter: recovery_rate 
+                      }, {
+                          duration: 4000,
+                          easing: 'swing',
+                          step: function (now) {
+                              $(this).text(Math.ceil(now));
+                          }
+                      });
+                  });
+                  /* do something */
+                });
+              }, 3000 );
+
+                  
+              }
+
+      });
+ 
+
+
+
+
  
 });
 

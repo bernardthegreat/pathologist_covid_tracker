@@ -30,7 +30,7 @@ class DashboardController extends Controller
         ])->get();
 
         $patients = Patient::where('active','=','1')->count();
-        $requests = PatientRequest::where('status','=','1')->count();
+        $requests = PatientRequest::count();
         $inpatients = PatientRequest::where('disposition_id','=','1')->count();
         $discharged = PatientRequest::where('disposition_id','=','2')->count();   
         $expired = PatientRequest::where('disposition_id','=','3')->count();        

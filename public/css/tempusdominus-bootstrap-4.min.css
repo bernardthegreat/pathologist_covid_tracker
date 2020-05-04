@@ -204,3 +204,12 @@
 
 .input-group [data-toggle="datetimepicker"] {
   cursor: pointer; }
+
+
+  .layout-footer-fixed .wrapper .main-footer {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 1032;
+}

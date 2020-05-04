@@ -71,7 +71,7 @@
                     <span class="info-box-icon"><i class="fa fa-user-minus"></i></span>
 
                     <div class="info-box-content">
-                      <span class="info-box-text">N/A</span>
+                      <span class="info-box-text">Rejected</span>
                       <span class="info-box-number">{{$not_applicable}}</span>
 
                     </div>
@@ -96,7 +96,7 @@
                 </div>
 
   
-                <a href="/patient_requests/create/{{$patient_requests[0]->patients->id}}" class="btn btn-primary btn-block"><b>Create request</b></a>
+                <a href="/patient_requests/create/{{$patient->id}}" class="btn btn-primary btn-block"><b>Create request</b></a>
               
               </div>
               <!-- /.card-body -->
@@ -145,10 +145,14 @@
                   </td>
                 
                   <td>  
-                    @if($patient_request->final_result == '1')
+                    @if($patient_request->final_result == '0')
+                      PENDING
+                    @elseif($patient_request->final_result == '1')
                       POSITIVE
-                    @elseif($patient_request->final_result == '0')
-                      NEGATIVE
+                    @elseif($patient_request->final_result == '2')
+                      POSITIVE
+                    @elseif($patient_request->final_result == '3')
+                      REJECTED
                     @endif
                    
                   </td>
@@ -178,7 +182,12 @@
 
                                     <tr>
                                       <th>Pathologist</th>
-                                      <td>{{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }} {{ $patient_request->users->prefix }}</td>
+                                      <td>
+                                      @if(isset($patient_request->user_id)) 
+                                        {{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }} {{ $patient_request->users->prefix }}
+                                      @endif
+                                      </td>
+                                    
                                     </tr>
 
                                     <tr>

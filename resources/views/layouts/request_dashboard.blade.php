@@ -22,7 +22,7 @@
   <script src="{{ asset('js/jquery.min.js') }} "></script>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
 
         @include('partials.nav')
@@ -48,7 +48,7 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="{{ asset('js/bootstrap.bundle.js') }}  "></script>
+<script src="{{ asset('js/bootstrap/bootstrap.bundle.js') }}  "></script>
 <script src="{{ asset('js/moment.min.js') }}  "></script>
 <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}  "></script>
 
@@ -58,6 +58,8 @@
 
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.js') }}"></script>
+<script src="{{ asset('js/vue.js') }}"></script>
+<script src="{{ asset('js/axios.min.js') }}"></script>
 
 <script>
   $(function () {

@@ -92,9 +92,9 @@ class PatientsController extends Controller
         ])->where('patient_id', $id)->get();
 
         $positive = PatientRequest::where('patient_id','=',$id)->where('final_result','=',1)->count();
-        $negative = PatientRequest::where('patient_id','=',$id)->where('final_result','=',0)->count();
-        $pending = PatientRequest::where('patient_id','=',$id)->where('final_result','=',3)->count();
-        $not_applicable = PatientRequest::where('patient_id','=',$id)->where('final_result','=',2)->count();
+        $negative = PatientRequest::where('patient_id','=',$id)->where('final_result','=',2)->count();
+        $pending = PatientRequest::where('patient_id','=',$id)->where('final_result','=',0)->count();
+        $not_applicable = PatientRequest::where('patient_id','=',$id)->where('final_result','=',3)->whereRaw('failed_datetime IS NOT NULL')->count();
         return view('patients/patient_profile', compact(
             'patient', 
             'patient_requests',

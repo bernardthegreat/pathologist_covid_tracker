@@ -22,7 +22,8 @@
   <script src="{{ asset('js/jquery.min.js') }} "></script>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+
     <div class="wrapper">
 
         @include('partials.nav')
@@ -35,6 +36,7 @@
                 @yield('content')
             </div>
         </div>
+       
         @include('partials.footer')
 
     </div>
@@ -48,7 +50,7 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="{{ asset('js/bootstrap.bundle.js') }}  "></script>
+<script src="{{ asset('js/bootstrap/bootstrap.bundle.js') }}  "></script>
 <script src="{{ asset('js/moment.min.js') }}  "></script>
 <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}  "></script>
 
@@ -58,9 +60,8 @@
 <script src="{{ asset('js/daterangepicker/daterangepicker.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.js') }}"></script>
-<script src="https://unpkg.com/vue"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"></script>
+<script src="{{ asset('js/vue.js') }}"></script>
+<script src="{{ asset('js/axios.min.js') }}"></script>
 
 <script>
   $(function () {
@@ -86,6 +87,21 @@
       "autoWidth": false,
       "order": [0, "desc"],
     });
+
+
+    $('#analytics1').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "order": [1, "desc"],
+    });
+
+
+
 
     
   });

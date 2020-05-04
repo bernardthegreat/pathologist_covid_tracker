@@ -49,8 +49,15 @@ Route::resource('patient_requests', 'PatientRequestsController');
 Route::get('/patient_requests/create/{id}', array('as' => 'create_request', 'uses' => 'PatientRequestsController@create'));
 //Route::get('/patient_requests/create/{id}', 'PatientRequestsController@create');
 Route::post('/patient_requests/release/{id}', [ 'as' => 'patient_requests.release', 'uses' => 'PatientRequestsController@release'] );
+Route::post('/patient_requests/patient_release/{id}', [ 'as' => 'patient_requests.patient_release', 'uses' => 'PatientRequestsController@patient_release'] );
 Route::post('/patient_requests/expired/{id}', [ 'as' => 'patient_requests.expired', 'uses' => 'PatientRequestsController@expired'] );
+Route::post('/patient_requests/patient_expired/{id}', [ 'as' => 'patient_requests.patient_expired', 'uses' => 'PatientRequestsController@patient_expired'] );
+Route::post('/patient_requests/save_details/{id}', [ 'as' => 'patient_requests.save_details', 'uses' => 'PatientRequestsController@save_details'] );
 Route::get('/patient_requests/show/{id}', [ 'as' => 'patient_requests.show', 'uses' => 'PatientRequestsController@show'] );
+Route::get('/patient_requests/edit/{id}', [ 'as' => 'patient_requests.edit', 'uses' => 'PatientRequestsController@edit'] );
+Route::post('/patient_requests/update/{id}', [ 'as' => 'patient_requests.update', 'uses' => 'PatientRequestsController@update'] );
+Route::post('/patient_requests/save_remarks/{id}', [ 'as' => 'patient_requests.save_remarks', 'uses' => 'PatientRequestsController@save_remarks'] );
+
 
 
 /* PatientRequests Routes */

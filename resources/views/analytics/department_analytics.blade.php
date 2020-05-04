@@ -40,7 +40,7 @@
     @if(isset($department))
     <div class="card-body">
 
-        <table id="example2" class="table table-bordered table-hover">
+        <table id="analytics1" class="table table-bordered table-hover">
             <thead>
             <tr>
                 <th>Department</th>
