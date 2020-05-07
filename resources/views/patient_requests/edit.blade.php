@@ -39,6 +39,17 @@
             <form method="post" action="{{ route('patient_requests.update', $patient_request[0]->id) }}">
             @csrf
             
+            <label class="col-form-label" for="control_no"><i class="fas fa-check"></i> Control Number</label>
+            <div class="input-group mb-3">
+                
+                <input type="text" name="control_no"  id="control_no" class="form-control" autocomplete="off" value="{{$patient_request[0]->control_no}}" >
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                    <span class="fas fa-hospital"></span>
+                    </div>
+                </div>
+            </div>
+
             <label class="col-form-label" for="specimen_no"><i class="fas fa-check"></i> Specimen Number</label>
             <div class="input-group mb-3">
                 
@@ -50,13 +61,23 @@
                 </div>
             </div>
 
-            <label class="col-form-label" for="control_no"><i class="fas fa-check"></i> Control Number</label>
+            <label class="col-form-label" for="swab_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fas fa-check"></i> Swab Date</label>
             <div class="input-group mb-3">
-                
-                <input type="text" name="control_no"  id="control_no" class="form-control" autocomplete="off" value="{{$patient_request[0]->control_no}}" >
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                    <span class="fas fa-hospital"></span>
+                <div class="input-group date" id="swab_datetime" data-target-input="nearest">
+                    <input type="text" value="{{date('m/d/Y H:i A', strtotime($patient_request[0]->swab_requested_datetime))}}" class="form-control datetimepicker-input" name="swab_requested_datetime" data-target="#swab_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar" required>
+                    <div class="input-group-append" data-target="#swab_datetime" data-toggle="datetimepicker">
+                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <label class="col-form-label" for="result_availability_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fas fa-check"></i> Result Availability Date</label>
+            <div class="input-group mb-3">
+                <div class="input-group date" id="result_availability_datetime" data-target-input="nearest">
+                    <input type="text" value="{{ ( $patient_request[0]->result_availability_datetime) ? date('m/d/Y H:i A', strtotime($patient_request[0]->result_availability_datetime)) : '' }}"
+                     class="form-control datetimepicker-input" name="result_availability_datetime" data-target="#result_availability_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar" required>
+                    <div class="input-group-append" data-target="#result_availability_datetime" data-toggle="datetimepicker">
+                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
                     </div>
                 </div>
             </div>
@@ -106,7 +127,7 @@
                 <input list="departments" name="department_remarks" class="col-sm-12 custom-select " autocomplete="off" value="{{$patient_request[0]->departments->name}}">
                     <datalist id="departments" style="width: 100px;">
                     @foreach($departments as $department)
-                        <option data-value="{{$department->id}}" >{{$department->name}}</option>
+                        <option data-value="{{$department->id}} " >{{$department->name}}</option>
                     @endforeach
                 </datalist>
 
@@ -170,8 +191,10 @@
        </div>
     </section>
 
-
-
-
+<script>
+$(document).ready(function () {
+ $('[rel="tooltip"]').tooltip({trigger: "hover"});
+});
+ </script>
 
 @endsection

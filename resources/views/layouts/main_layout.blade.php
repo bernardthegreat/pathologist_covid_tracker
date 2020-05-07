@@ -6,13 +6,15 @@
   <title>Covid19 Lab Tracker</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ asset('css/daterangepicker/daterangepicker.css') }}">
+  
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="{{ asset('css/tempusdominus-bootstrap-4.min.css') }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('css/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<!-- Theme style -->
+
+  
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
 
   <link rel="stylesheet" href="{{ asset('css/datatables-bs4/css/dataTables.bootstrap4.min.css') }} ">
@@ -43,6 +45,7 @@
 <!-- ./wrapper -->
 
 
+
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ asset('js/jquery-ui.min.js') }}  "></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -51,13 +54,18 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('js/bootstrap/bootstrap.bundle.js') }}  "></script>
-<script src="{{ asset('js/moment.min.js') }}  "></script>
+
 <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}  "></script>
 
 <script src="{{ asset('js/datatables-bs4/js/dataTables.bootstrap4.min.js') }}  "></script>
 <script src="{{ asset('js/datatables-responsive/js/dataTables.responsive.min.js') }}  "></script>
 <script src="{{ asset('js/datatables-responsive/js/responsive.bootstrap4.min.js') }}  "></script>
+<script src="{{ asset('js/moment.min.js') }}  "></script>
+<script src="{{ asset('js/bootstrap/tempusdominus-bootstrap-4.min.js') }}  "></script>
+
+<script src="{{ asset('js/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>
 <script src="{{ asset('js/daterangepicker/daterangepicker.js') }}"></script>
+
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.js') }}"></script>
 <script src="{{ asset('js/vue.js') }}"></script>
@@ -100,9 +108,8 @@
       "order": [1, "desc"],
     });
 
-
-
-
+    $('#swab_datetime').datetimepicker();
+    $('#result_availability_datetime').datetimepicker();
     
   });
 

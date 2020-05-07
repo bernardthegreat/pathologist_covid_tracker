@@ -39,7 +39,7 @@
             <form method="post" action="{{ route('patient_requests.store') }}">
             @csrf
             
-            <label class="col-form-label" for="specimen_no"><i class="fas fa-check"></i> Specimen Number</label>
+            <label class="col-form-label" for="specimen_no"><i class="fas fa-check"></i> Specimen Number <span style="color:red">*</span></label>
             <div class="input-group mb-3">
                 
                 <input type="text" name="specimen_no"  id="specimen_no" class="form-control" autocomplete="off" value="{{$specimen_number}}" required>
@@ -50,10 +50,10 @@
                 </div>
             </div>
 
-            <label class="col-form-label" for="control_no"><i class="fas fa-check"></i> Control Number</label>
+            <label class="col-form-label" for="control_no"><i class="fas fa-check"></i> Control Number <span style="color:red">*</span></label>
             <div class="input-group mb-3">
                 
-                <input type="text" name="control_no"  id="control_no" class="form-control" autocomplete="off" >
+                <input type="text" name="control_no"  id="control_no" class="form-control" autocomplete="off" required>
                 <div class="input-group-append">
                     <div class="input-group-text">
                     <span class="fas fa-hospital"></span>
@@ -74,11 +74,11 @@
             </div>
             
 
-            <label class="col-form-label" for="department_id"><i class="fas fa-check"></i> Department </label>
+            <label class="col-form-label" for="department_id"><i class="fas fa-check"></i> Department <span style="color:red">*</span></label>
             <div class="input-group mb-3">
 
 
-                <input list="departments" name="department_remarks" class="col-sm-12 custom-select " autocomplete="off">
+                <input list="departments" name="department_remarks" class="col-sm-12 custom-select " autocomplete="off" required>
                     <datalist id="departments" style="width: 100px;">
                     @foreach($departments as $department)
                         <option data-value="{{$department->id}}" style="width: 100px;">{{$department->name}}</option>
@@ -99,9 +99,21 @@
                 </select>
             </div>
 
+            <label class="col-form-label" for="swab_date"><i class="fas fa-check"></i> Swab Date and Time <span style="color:red">*</span></label>
+             
+            <div class="input-group mb-3">
+
+               <input type="date" name="swab_date"  id="swab_date" class="form-control" autocomplete="off" required>
+ 
+                <input type="time" name="swab_time"  id="swab_time" class="form-control" autocomplete="off" required>
+               
+
+            </div>
+
 
             <div class="modal-footer justify-content-between">
                 <button type="submit" class="btn btn-primary">Save</button>
+                <small style="color:red"><em>* Fields required</em></small>
             </div>
         </form>
 
