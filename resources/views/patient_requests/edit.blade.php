@@ -141,11 +141,15 @@
             <label class="col-form-label" for="final_result"><i class="fas fa-check"></i> Final Result</label>
             <div class="input-group mb-3">
                 <select name="final_result" class="custom-select" id="final_result">
-                    <option value="0" {{ ( $patient_request[0]->final_result == 3) ? 'selected' : '' }}>PENDING</option>
+                    <!--
+                    <option value="0" {{ ( $patient_request[0]->final_result == 0) ? 'selected' : '' }}>PENDING</option>
+                    -->
                     <option value="1" {{ ( $patient_request[0]->final_result == 1) ? 'selected' : '' }}>POSITIVE</option>
-                    <option value="2" {{ ( $patient_request[0]->final_result == 0) ? 'selected' : '' }}>NEGATIVE</option>
-                    <option value="3" {{ ( $patient_request[0]->final_result == 2) ? 'selected' : '' }}>REJECTED</option>
                     
+                    <option value="2" {{ ( $patient_request[0]->final_result == 2) ? 'selected' : '' }}>NEGATIVE</option>
+                    <!--
+                    <option value="3" {{ ( $patient_request[0]->final_result == 3) ? 'selected' : '' }}>REJECTED</option>
+                    -->
                 </select>
             </div>
 
