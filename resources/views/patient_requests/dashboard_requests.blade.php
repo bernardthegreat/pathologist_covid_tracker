@@ -1019,7 +1019,7 @@
 
                     <a class="btn btn-info btn-sm view-patient-request" data-placement="top" rel="tooltip" 
                     title="View All Patient Request" data-original-title="View All Patient Request" 
-                    href="/patient_requests/show/{{$patient_request->patient_id}}">
+                    href="">
                         <i class="fa fa-users">
                         </i>
                     </a>
@@ -1232,7 +1232,7 @@
 
                     <a class="btn btn-success btn-sm view-patient-request" data-placement="top" rel="tooltip" 
                     title="View All Patient Request" data-original-title="View All Patient Request" 
-                    href="/patient_requests/show/{{$patient_request->patient_id}}">
+                    href="">
                         <i class="fa fa-users">
                         </i>
                     </a>
@@ -1671,7 +1671,7 @@
                   </div>
                 </div>
 
-           </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
