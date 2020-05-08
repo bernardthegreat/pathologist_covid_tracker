@@ -258,7 +258,7 @@
 
                                   @endphp
 
-                                  <a class="btn btn-primary btn-sm request_info_button" href="#" data-placement="top" rel="tooltip" title="" data-original-title="View Info of {{ $patient_request->patients->first_name }}"
+                                  <a class="btn btn-info btn-sm request_info_button" href="#" data-placement="top" rel="tooltip" title="" data-original-title="View Info of {{ $patient_request->patients->first_name }}"
                                    data-toggle="modal" data-target="#modal-request-info"
                                    data-hospital_number="{{$patient_request->patients->hospital_number}}"
                                    data-patient="{{$patient_request->patients->first_name}} {{$patient_request->patients->middle_name}} {{$patient_request->patients->last_name}}"
@@ -306,6 +306,63 @@
                               
 
                                 <td>
+                                  
+                                @php
+                                    if(isset($patient_request->swab_requested_datetime)) {
+                                      $date_swab = date('m/d/Y h:i:s A', strtotime($patient_request->swab_requested_datetime));
+                                    }
+
+                                    if(isset($patient_request->result_availability_datetime)) {
+                                      $result_availability = date('m/d/Y h:i:s A', strtotime($patient_request->result_availability_datetime));
+                                    }
+                                    
+
+                                    if($patient_request->hcw == 1) {
+                                      $hcw_val = 'HCW';
+                                    } else {
+                                      $hcw_val = 'NON-HCW';
+                                    }
+
+                                    if($patient_request->status == 1) {
+                                      $request_status = 'AVAILABLE';
+                                    } else {
+                                      $request_status = 'PENDING';
+                                    }
+
+                                    if($patient_request->final_result == 0) {
+                                      $final_result = 'PENDING';
+                                    } elseif($patient_request->final_result == 1) {
+                                      $final_result = 'POSITIVE';
+                                    } elseif($patient_request->final_result == 2) {
+                                      $final_result = 'NEGATIVE';
+                                    } elseif($patient_request->final_result == 3) {
+                                      $final_result = 'REJECTED';
+                                    }
+
+                                    if($patient_request->soft_copy == 1) {
+                                      $soft_copy = 'AVAILABLE';
+                                    } else {
+                                      $soft_copy = 'NOT YET AVAILABLE';
+                                    }
+                                    
+                                    if(isset($patient_request->released_datetime)) {
+                                      $comp_exp_rej_datetime = 'Completed: '.date('m/d/Y h:i:s A', strtotime($patient_request->released_datetime));
+                                    } elseif(isset($patient_request->expired_datetime)) {
+                                      $comp_exp_rej_datetime = 'Expired: '.date('m/d/Y h:i:s A', strtotime($patient_request->expired_datetime));
+                                    } elseif(isset($patient_request->failed_datetime)) {
+                                      $comp_exp_rej_datetime = 'Rejected: '.date('m/d/Y h:i:s A', strtotime($patient_request->failed_datetime));
+                                    }
+
+                                    if(isset($patient_request->remarks)) {
+                                      $remarks = $patient_request->remarks;
+                                    }
+
+                                    if(isset($patient_request->user_id)) {
+                                      $pathologist = $patient_request->users->first_name.' '.$patient_request->users->middle_name.' '.$patient_request->users->last_name.', '.$patient_request->users->prefix;
+                                    }
+
+                                  @endphp
+
                                   <div class="btn-group">
                                       <button class="btn btn-success btn-sm completed_button" 
                                         type="button" data-placement="top" rel="tooltip" title="Completed" 
@@ -314,6 +371,30 @@
                                         data-patient-completed="{{ $patient_request->patients->first_name }} "
                                         data-patient-id="{{ $patient_request->patients->id }}"
                                         data-url="{{ route('patient_requests.release', $patient_request->id) }}"
+
+                                        data-hospital_number="{{$patient_request->patients->hospital_number}}"
+                                        data-patient="{{$patient_request->patients->first_name}} {{$patient_request->patients->middle_name}} {{$patient_request->patients->last_name}}"
+                                        data-url-patient-info="{{ route('patients.show', $patient_request->patients->id)}} " 
+                                        data-patient-age="{{$patient_request->patients->age}}"
+                                        data-patient-gender="{{$patient_request->patients->gender}}"
+                                        data-url-edit-patient-request="{{ route('patient_requests.edit', $patient_request->id)}} "
+                                        data-url-create-patient-request="/patient_requests/create/{{$patient_request->patient_id}}"
+                                        data-url-view-patient-request="/patient_requests/show/{{$patient_request->patient_id}}"
+                                        data-control-no="{{$patient_request->control_no}}"
+                                        data-swab-date="{{ $date_swab ?? '' }}"
+                                        data-specimen-no="{{$patient_request->specimen_no}}"
+                                        data-hcw="{{$hcw_val}}"
+                                        data-status="{{$request_status}}"
+                                        data-final_result="{{$final_result}}"
+                                        data-soft_copy="{{$soft_copy}}"
+                                        data-result_availability="{{$result_availability ?? ''}}"
+                                        data-disposition="{{ $patient_request->patient_request_dispositions->name }}"
+                                        data-department="{{ $patient_request->departments->name }}"
+                                        data-pathologist="{{$pathologist  ?? ''}}"
+                                        data-comp_exp_rej_datetime = "{{$comp_exp_rej_datetime ?? ''}}"
+                                        data-remarks = "{{$remarks ?? ''}}"
+                                        data-save-data-url = "{{ route('patient_requests.save_details', $patient_request->id)}}"
+                                        
                                       > 
                                         <i class="fa fa-user-check"></i> 
                                       </button>
@@ -324,6 +405,30 @@
                                         data-url="{{ route('patient_requests.expired', $patient_request->id) }}"
                                         data-patient-expired="{{ $patient_request->patients->first_name }} " 
                                         data-patient-id="{{$patient_request->patients->id}}"
+
+                                        data-hospital_number="{{$patient_request->patients->hospital_number}}"
+                                        data-patient="{{$patient_request->patients->first_name}} {{$patient_request->patients->middle_name}} {{$patient_request->patients->last_name}}"
+                                        data-url-patient-info="{{ route('patients.show', $patient_request->patients->id)}} " 
+                                        data-patient-age="{{$patient_request->patients->age}}"
+                                        data-patient-gender="{{$patient_request->patients->gender}}"
+                                        data-url-edit-patient-request="{{ route('patient_requests.edit', $patient_request->id)}} "
+                                        data-url-create-patient-request="/patient_requests/create/{{$patient_request->patient_id}}"
+                                        data-url-view-patient-request="/patient_requests/show/{{$patient_request->patient_id}}"
+                                        data-control-no="{{$patient_request->control_no}}"
+                                        data-swab-date="{{ $date_swab ?? '' }}"
+                                        data-specimen-no="{{$patient_request->specimen_no}}"
+                                        data-hcw="{{$hcw_val}}"
+                                        data-status="{{$request_status}}"
+                                        data-final_result="{{$final_result}}"
+                                        data-soft_copy="{{$soft_copy}}"
+                                        data-result_availability="{{$result_availability ?? ''}}"
+                                        data-disposition="{{ $patient_request->patient_request_dispositions->name }}"
+                                        data-department="{{ $patient_request->departments->name }}"
+                                        data-pathologist="{{$pathologist  ?? ''}}"
+                                        data-comp_exp_rej_datetime = "{{$comp_exp_rej_datetime ?? ''}}"
+                                        data-remarks = "{{$remarks ?? ''}}"
+                                        data-save-data-url = "{{ route('patient_requests.save_details', $patient_request->id)}}"
+                                        
                                       > 
                                         <i class="fa fa-user-times"></i> 
                                       </button>
@@ -440,7 +545,7 @@
 
                                   @endphp
 
-                                  <a class="btn btn-primary btn-sm request_info_button" href="#" data-placement="top" rel="tooltip" title="" data-original-title="View Info of {{ $patient_request->patients->first_name }}"
+                                  <a class="btn btn-info btn-sm request_info_button" href="#" data-placement="top" rel="tooltip" title="" data-original-title="View Info of {{ $patient_request->patients->first_name }}"
                                    data-toggle="modal" data-target="#modal-request-info"
                                    data-hospital_number="{{$patient_request->patients->hospital_number}}"
                                    data-patient="{{$patient_request->patients->first_name}} {{$patient_request->patients->middle_name}} {{$patient_request->patients->last_name}}"
@@ -601,7 +706,7 @@
 
                                   @endphp
 
-                                  <a class="btn btn-primary btn-sm request_info_button" href="#" data-placement="top" rel="tooltip" title="" data-original-title="View Info of {{ $patient_request->patients->first_name }}"
+                                  <a class="btn btn-info btn-sm request_info_button" href="#" data-placement="top" rel="tooltip" title="" data-original-title="View Info of {{ $patient_request->patients->first_name }}"
                                    data-toggle="modal" data-target="#modal-request-info"
                                    data-hospital_number="{{$patient_request->patients->hospital_number}}"
                                    data-patient="{{$patient_request->patients->first_name}} {{$patient_request->patients->middle_name}} {{$patient_request->patients->last_name}}"
@@ -752,7 +857,7 @@
 
                                   @endphp
 
-                                  <a class="btn btn-primary btn-sm request_info_button" href="#" data-placement="top" rel="tooltip" title="" data-original-title="View Info of {{ $patient_request->patients->first_name }}"
+                                  <a class="btn btn-info btn-sm request_info_button" href="#" data-placement="top" rel="tooltip" title="" data-original-title="View Info of {{ $patient_request->patients->first_name }}"
                                    data-toggle="modal" data-target="#modal-request-info"
                                    data-hospital_number="{{$patient_request->patients->hospital_number}}"
                                    data-patient="{{$patient_request->patients->first_name}} {{$patient_request->patients->middle_name}} {{$patient_request->patients->last_name}}"
@@ -846,9 +951,8 @@
       
       </div>
       <div class="modal-body">
-    
-        <div class="card-body">
-          <div id="accordion">
+            
+      <div id="accordion">
               <!-- we are adding the .class so bootstrap.js collapse plugin detects it -->
               <div class="card card-info">
                 <div class="card-header">
@@ -872,16 +976,16 @@
                     <table class="table table-bordered table-striped table-hover dataTable dtr-inline text-center" role="grid" aria-describedby="example2_info">
                       <tr> 
                         <th width="50%">Hospital #</th>
-                        <td width="50%" id="patient_id"></td>
+                        <td width="50%" id="info_patient_id"></td>
                       </tr>
                       <tr> 
                         <th width="50%">Age</th>
-                        <td width="50%" id="patient_age"></td>
+                        <td width="50%" id="info_patient_age"></td>
                       </tr>
 
                       <tr> 
                         <th>Gender</th>
-                        <td id="patient_gender"></td>
+                        <td id="info_patient_gender"></td>
                       </tr>
                     </table>
 
@@ -931,12 +1035,12 @@
                       <table class="table table-bordered table-striped table-hover dataTable dtr-inline text-center" role="grid" aria-describedby="example2_info">
                         <tr> 
                           <th width="50%">Control No.</th>
-                          <td width="50%" id="control_number"></td>
+                          <td width="50%" id="info_control_number"></td>
                         </tr>
 
                         <tr> 
                           <th>Swab Date</th>
-                          <td id="swab_date">
+                          <td id="info_swab_date">
                             
                           </td>
                         </tr>
@@ -944,19 +1048,19 @@
 
                         <tr> 
                           <th>Specimen No.</th>
-                          <td id="specimen_no"></td>
+                          <td id="info_specimen_no"></td>
                         </tr>
 
                         <tr> 
                           <th>HCW</th>
-                          <td id="hcw">
+                          <td id="info_hcw">
                            
                           </td>
                         </tr>
 
                         <tr> 
                           <th>Status</th>
-                          <td id="status"> 
+                          <td id="info_status"> 
                             
                           
                           </td>
@@ -964,49 +1068,49 @@
 
                         <tr> 
                           <th>Final Result</th>
-                          <td id="final_result">
+                          <td id="info_final_result">
                             
                           </td>
                         </tr>
 
                         <tr> 
                           <th>Softcopy</th>
-                          <td id="soft_copy">
+                          <td id="info_soft_copy">
                            
                             
                           </td>
                         </tr>
                         <tr> 
                           <th>Result Availability Date</th>
-                          <td id="result_availability_date">
+                          <td id="info_result_availability_date">
                            
                           </td>
                         </tr>
 
                         <tr>
                           <th>Disposition</th>
-                          <td id="disposition">
+                          <td id="info_disposition">
                           
                           </td>
                         </tr>
 
                         <tr>
                           <th>Department</th>
-                          <td id="department">
+                          <td id="info_department">
                           
                           </td>
                         </tr>
 
                         <tr>
                           <th>Pathologist</th>
-                          <td id="pathologist">
+                          <td id="info_pathologist">
                            
                           </td>
                         </tr>
 
                         <tr> 
                           <th>Completion / Expiration / Rejected Date</th>
-                          <td id="comp_exp_rej_date">
+                          <td id="info_comp_exp_rej_date">
                            
                           </td>
                         </tr>
@@ -1014,7 +1118,7 @@
                        
                         <tr>
                           <th>Remarks</th>
-                          <td id="remarks"> 
+                          <td id="info_remarks"> 
                               
                           </td>
                         </tr>
@@ -1025,11 +1129,8 @@
                   </div>
                 </div>
               </div>
-
-
-          </div>
-          
-        </div>
+            </div>
+        
 
       </div>
       <div class="modal-footer justify-content">
@@ -1050,125 +1151,264 @@
 <!-- Buttons -->
 
 
-<form action="" method="post" id="expired_form">
-@csrf 
-@method('POST')
-  <div class="modal fade" id="expired_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class='col-12 modal-title text-center'> Expire </h3>
-         
-        </div>
-        <div class="modal-body text-center">
-          Are you sure you want to expire Patient Request of  
-          <span id="patient_expired_name">
-          
-          </span> ?
-
-          <br>
-          <br>
-            <input type="hidden" value="" name="patient_id" id="expired_patient_id_val">
-            <div class="form-group">
-              <label for="patho_id">Pathologist</label>
-              <select name="user_id" class="custom-select text-center" id="patho_id">
-                  @foreach($users as $user)
-                      <option value="{{$user->id}}" >{{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}, {{$user->prefix}}</option>
-                  @endforeach
-              </select>
-            </div>
-
-            <div class="form-group">
-            <label for="final_result_id">Result</label>
-              <select name="final_result" class="custom-select" id="final_result_id">
-                  <option value="1">POSITIVE</option>
-                  <option value="2">NEGATIVE</option>
-              </select>
-            </div>
-            
-            <div class="form-group">
-              <label for="soft_copy">Result Availability</label>
-              <select name="soft_copy" class="custom-select" id="expired_availability">
-                  <option value="0">NOT AVAILABLE</option>
-                  <option value="1">AVAILABLE</option>
-              </select>
-            </div>
-
-            <div id="expired_result_available">
-              <label for="result_availability_datetime">Result Availability Date</label>
-              <div class="form-group">
-                <div class="input-group date" id="result_availability_date1" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" autocomplete="off" name="result_availability_datetime" data-target="#result_availability_date1" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
-                    <div class="input-group-append" data-target="#result_availability_date1" data-toggle="datetimepicker">
-                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
-                    </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-danger">Expired</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
-
 <form action="" method="post" id="completed_form">
   @csrf 
   @method('POST')
   <div class="modal fade " id="completed" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class='col-12 modal-title text-center'> Complete </h3>
+          <h3 class='col-12 modal-title text-center'> Complete Patient Request of <span id="completed_header_modal_patient"> </span> </h3>
           
         </div>
         <div class="modal-body text-center">
-          Are you sure you want to complete Patient Request of  
-          <span id="patient_completed_name">
+        
+ 
+        <div class="card-body">
+          <div id="accordion">
+              <!-- we are adding the .class so bootstrap.js collapse plugin detects it -->
+              <div class="card card-success">
+                <div class="card-header">
+                  <h4 class="card-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapsePatient" data-placement="top" rel="tooltip" title="Click to toggle" data-original-title="Click to toggle">
           
-          </span> ?
-          <br>
-          <br>
-            <input type="hidden" value="" name="patient_id" id="completed_patient_id_val">
-            <div class="form-group">
-              <label for="patho_id">Pathologist</label>
-              <select name="user_id" class="custom-select text-center" id="patho_id_{{$user->id}}">
-                  @foreach($users as $user)
-                      <option value="{{$user->id}}" >{{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}, {{$user->prefix}}</option>
-                  @endforeach
-              </select>
-            </div>
+                      Patient Details 
+                    </a>
 
-            <div class="form-group">
-            <label for="final_result">Result</label>
-              <select name="final_result" class="custom-select" id="final_result">
-                  <option value="1">POSITIVE</option>
-                  <option value="2">NEGATIVE</option>
-              </select>
-            </div>
-            
-            <div class="form-group">
-            <label for="soft_copy">Result Availability</label>
-              <select name="soft_copy" class="custom-select" id="completed_availability">
-                  <option value="0">NOT AVAILABLE</option>
-                  <option value="1">AVAILABLE</option>
-              </select>
-            </div>
+                    <a class="btn btn-success btn-sm patient_info_btn" data-placement="top" rel="tooltip" title="Go to Patients Profile" 
+                        href="">
+                        <i class="fa fa-user-edit">
+                        </i>
+                    </a>
+                  </h4>
+                </div>
 
-            <div id="completed_result_available">
-              <label for="result_availability_datetime">Result Availability Date</label>
-              <div class="form-group">
-                <div class="input-group date" id="result_availability_date2" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" autocomplete="off" name="result_availability_datetime" data-target="#result_availability_date2" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
-                    <div class="input-group-append" data-target="#result_availability_date2" data-toggle="datetimepicker">
-                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
-                    </div>
+                <div id="collapsePatient" class="panel-collapse collapse in">
+                  <div class="card-body">
+
+                    <table class="table table-bordered table-striped table-hover dataTable dtr-inline text-center" role="grid" aria-describedby="example2_info">
+                      <tr> 
+                        <th width="50%">Hospital #</th>
+                        <td width="50%" id="completed_hospital_number"></td>
+                      </tr>
+                      <tr> 
+                        <th width="50%">Age</th>
+                        <td width="50%" id="completed_patient_age"></td>
+                      </tr>
+
+                      <tr> 
+                        <th>Gender</th>
+                        <td id="completed_patient_gender"></td>
+                      </tr>
+                    </table>
+
+
+                  </div>
                 </div>
               </div>
-            </div>
+
+
+              <div class="card card-success">
+                <div class="card-header">
+                  <h4 class="card-title">
+                  
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" data-placement="top" rel="tooltip" title="Click to toggle" data-original-title="Click to toggle">
+                      Patient Request Details 
+                    </a>
+
+                    <a class="btn btn-success btn-sm edit-patient-request" data-placement="top" rel="tooltip" 
+                    title="Edit Patient Request" data-original-title="Edit Patient Request" 
+                    href="">
+                        <i class="fa fa-user-edit">
+                        </i>
+                    </a>
+
+                    <a class="btn btn-success btn-sm create-patient-request" data-placement="top" rel="tooltip" 
+                    title="Create New Patient Request" data-original-title="Create New Patient Request" 
+                    href="">
+                        <i class="fa fa-user-plus">
+                        </i>
+                    </a>
+
+                    <a class="btn btn-success btn-sm view-patient-request" data-placement="top" rel="tooltip" 
+                    title="View All Patient Request" data-original-title="View All Patient Request" 
+                    href="/patient_requests/show/{{$patient_request->patient_id}}">
+                        <i class="fa fa-users">
+                        </i>
+                    </a>
+
+                    
+                  </h4>
+                </div>
+
+                
+                <div id="collapseOne" class="panel-collapse collapse in">
+                  <div class="card-body">
+                    
+                      <table class="table table-bordered table-striped table-hover dataTable dtr-inline text-center" role="grid" aria-describedby="example2_info">
+                        <tr> 
+                          <th width="50%">Control No.</th>
+                          <td width="50%" id="completed_control_number"></td>
+                        </tr>
+
+                        <tr> 
+                          <th>Swab Date</th>
+                          <td id="completed_swab_date">
+                            
+                          </td>
+                        </tr>
+
+
+                        <tr> 
+                          <th>Specimen No.</th>
+                          <td id="completed_specimen_no"></td>
+                        </tr>
+
+                        <tr> 
+                          <th>HCW</th>
+                          <td id="completed_hcw">
+                           
+                          </td>
+                        </tr>
+
+                        <tr> 
+                          <th>Status</th>
+                          <td id="completed_status"> 
+                            
+                          
+                          </td>
+                        </tr>
+
+                        <tr> 
+                          <th>Final Result</th>
+                          <td id="completed_final_result">
+                            
+                          </td>
+                        </tr>
+
+                        <tr> 
+                          <th>Softcopy</th>
+                          <td id="completed_soft_copy">
+                           
+                            
+                          </td>
+                        </tr>
+                        <tr> 
+                          <th>Result Availability Date</th>
+                          <td id="completed_result_availability_date">
+                           
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>Disposition</th>
+                          <td id="completed_disposition">
+                          
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>Department</th>
+                          <td id="completed_department">
+                          
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>Pathologist</th>
+                          <td id="completed_pathologist">
+                           
+                          </td>
+                        </tr>
+
+                        <tr> 
+                          <th>Completion / Expiration / Rejected Date</th>
+                          <td id="completed_comp_exp_rej_date">
+                           
+                          </td>
+                        </tr>
+
+                       
+                        <tr>
+                          <th>Remarks</th>
+                          <td id="completed_remarks"> 
+                              
+                          </td>
+                        </tr>
+                     
+
+                      </table>                                                  
+
+                  </div>
+                </div>
+              </div>
+
+
+              
+                <div class="card card-success">
+                  <div class="card-header">
+                    <h4 class="card-title">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#completed_accordion" data-placement="top" rel="tooltip" title="Click to toggle" data-original-title="Click to toggle">
+            
+                        For Completion 
+                      </a>
+                    </h4>
+                  </div>
+
+                  <div id="completed_accordion" class="panel-collapse collapse in show">
+                    <div class="card-body">
+
+                      <input type="hidden" value="" name="patient_id" id="completed_patient_id_val">
+                      <div class="form-group">
+                        <label for="patho_id">Pathologist</label>
+                        <select name="user_id" class="custom-select text-center" id="patho_id_completed">
+                            @foreach($users as $user)
+                                <option value="{{$user->id}}" >{{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}, {{$user->prefix}}</option>
+                            @endforeach
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                      <label for="final_result">Result</label>
+                        <select name="final_result" class="custom-select" id="final_result">
+                            <option value="1">POSITIVE</option>
+                            <option value="2">NEGATIVE</option>
+                        </select>
+                      </div>
+                      
+                      <div class="form-group">
+                      <label for="soft_copy">Result Availability</label>
+                        <select name="soft_copy" class="custom-select" id="completed_availability">
+                            <option value="0">NOT AVAILABLE</option>
+                            <option value="1">AVAILABLE</option>
+                        </select>
+                      </div>
+
+                      <div id="completed_result_available">
+                        <label for="result_availability_datetime">Result Availability Date</label>
+                        <div class="form-group">
+                          <div class="input-group date" id="result_availability_date2" data-target-input="nearest">
+                              <input type="text" class="form-control datetimepicker-input" autocomplete="off" name="result_availability_datetime" data-target="#result_availability_date2" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
+                              <div class="input-group-append" data-target="#result_availability_date2" data-toggle="datetimepicker">
+                                  <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+
+
+          </div>
+          
+        </div>
+
+
+          
+            
                   
 
         </div>
@@ -1180,6 +1420,268 @@
     </div>
   </div>
 </form>
+
+
+
+<form action="" method="post" id="expired_form">
+@csrf 
+@method('POST')
+  <div class="modal fade" id="expired_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class='col-12 modal-title text-center'> Expire Patient Request of <span id="expired_header_modal_patient"> </span> </h3>
+         
+        </div>
+        <div class="modal-body text-center">
+            
+
+            
+          <div id="accordion">
+              <!-- we are adding the .class so bootstrap.js collapse plugin detects it -->
+              <div class="card card-danger">
+                <div class="card-header">
+                  <h4 class="card-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapsePatient" data-placement="top" rel="tooltip" title="Click to toggle" data-original-title="Click to toggle">
+          
+                      Patient Details 
+                    </a>
+
+                    <a class="btn btn-danger btn-sm patient_info_btn" data-placement="top" rel="tooltip" title="Go to Patients Profile" 
+                        href="">
+                        <i class="fa fa-user-edit">
+                        </i>
+                    </a>
+                  </h4>
+                </div>
+
+                <div id="collapsePatient" class="panel-collapse collapse in">
+                  <div class="card-body">
+
+                    <table class="table table-bordered table-striped table-hover dataTable dtr-inline text-center" role="grid" aria-describedby="example2_info">
+                      <tr> 
+                        <th width="50%">Hospital #</th>
+                        <td width="50%" id="expired_hospital_number"></td>
+                      </tr>
+                      <tr> 
+                        <th width="50%">Age</th>
+                        <td width="50%" id="expired_patient_age"></td>
+                      </tr>
+
+                      <tr> 
+                        <th>Gender</th>
+                        <td id="expired_patient_gender"></td>
+                      </tr>
+                    </table>
+
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card card-danger">
+                <div class="card-header">
+                  <h4 class="card-title">
+                  
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" data-placement="top" rel="tooltip" title="Click to toggle" data-original-title="Click to toggle">
+                      Patient Request Details 
+                    </a>
+
+                    <a class="btn btn-danger btn-sm edit-patient-request" data-placement="top" rel="tooltip" 
+                    title="Edit Patient Request" data-original-title="Edit Patient Request" 
+                    href="">
+                        <i class="fa fa-user-edit">
+                        </i>
+                    </a>
+
+                    <a class="btn btn-danger btn-sm create-patient-request" data-placement="top" rel="tooltip" 
+                    title="Create New Patient Request" data-original-title="Create New Patient Request" 
+                    href="">
+                        <i class="fa fa-user-plus">
+                        </i>
+                    </a>
+
+                    <a class="btn btn-danger btn-sm view-patient-request" data-placement="top" rel="tooltip" 
+                    title="View All Patient Request" data-original-title="View All Patient Request" 
+                    href="">
+                        <i class="fa fa-users">
+                        </i>
+                    </a>
+
+                    
+                  </h4>
+                </div>
+
+                
+                <div id="collapseOne" class="panel-collapse collapse in">
+                  <div class="card-body">
+                    
+                      <table class="table table-bordered table-striped table-hover dataTable dtr-inline text-center" role="grid" aria-describedby="example2_info">
+                        <tr> 
+                          <th width="50%">Control No.</th>
+                          <td width="50%" id="expired_control_number"></td>
+                        </tr>
+
+                        <tr> 
+                          <th>Swab Date</th>
+                          <td id="expired_swab_date">
+                            
+                          </td>
+                        </tr>
+
+
+                        <tr> 
+                          <th>Specimen No.</th>
+                          <td id="expired_specimen_no"></td>
+                        </tr>
+
+                        <tr> 
+                          <th>HCW</th>
+                          <td id="expired_hcw">
+                           
+                          </td>
+                        </tr>
+
+                        <tr> 
+                          <th>Status</th>
+                          <td id="expired_status"> 
+                            
+                          
+                          </td>
+                        </tr>
+
+                        <tr> 
+                          <th>Final Result</th>
+                          <td id="expired_final_result">
+                            
+                          </td>
+                        </tr>
+
+                        <tr> 
+                          <th>Softcopy</th>
+                          <td id="expired_soft_copy">
+                           
+                            
+                          </td>
+                        </tr>
+                        <tr> 
+                          <th>Result Availability Date</th>
+                          <td id="expired_result_availability_date">
+                           
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>Disposition</th>
+                          <td id="expired_disposition">
+                          
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>Department</th>
+                          <td id="expired_department">
+                          
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>Pathologist</th>
+                          <td id="expired_pathologist">
+                           
+                          </td>
+                        </tr>
+
+                        <tr> 
+                          <th>Completion / Expiration / Rejected Date</th>
+                          <td id="expired_comp_exp_rej_date">
+                           
+                          </td>
+                        </tr>
+
+                       
+                        <tr>
+                          <th>Remarks</th>
+                          <td id="expired_remarks"> 
+                              
+                          </td>
+                        </tr>
+                     
+
+                      </table>                                                  
+
+                  </div>
+                </div>
+              </div>
+
+
+                <div class="card card-danger">
+                  <div class="card-header">
+                    <h4 class="card-title">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#completed_accordion" data-placement="top" rel="tooltip" title="Click to toggle" data-original-title="Click to toggle">
+            
+                        For Expiration 
+                      </a>
+                    </h4>
+                  </div>
+
+                  <div id="completed_accordion" class="panel-collapse collapse in show">
+                    <div class="card-body">
+
+                          
+                        <input type="hidden" value="" name="patient_id" id="expired_patient_id_val">
+                        <div class="form-group">
+                          <label for="patho_id">Pathologist</label>
+                          <select name="user_id" class="custom-select text-center" id="patho_id">
+                              @foreach($users as $user)
+                                  <option value="{{$user->id}}" >{{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}, {{$user->prefix}}</option>
+                              @endforeach
+                          </select>
+                        </div>
+
+                        <div class="form-group">
+                        <label for="final_result_id">Result</label>
+                          <select name="final_result" class="custom-select" id="final_result_id">
+                              <option value="1">POSITIVE</option>
+                              <option value="2">NEGATIVE</option>
+                          </select>
+                        </div>
+                        
+                        <div class="form-group">
+                          <label for="soft_copy">Result Availability</label>
+                          <select name="soft_copy" class="custom-select" id="expired_availability">
+                              <option value="0">NOT AVAILABLE</option>
+                              <option value="1">AVAILABLE</option>
+                          </select>
+                        </div>
+
+                        <div id="expired_result_available">
+                          <label for="result_availability_datetime">Result Availability Date</label>
+                          <div class="form-group">
+                            <div class="input-group date" id="result_availability_date1" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" autocomplete="off" name="result_availability_datetime" data-target="#result_availability_date1" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
+                                <div class="input-group-append" data-target="#result_availability_date1" data-toggle="datetimepicker">
+                                    <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger">Expired</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
 
 
 <form action="" method="post" id="rejected_form">
@@ -1249,6 +1751,54 @@ $(document).ready(function () {
                 $('#completed_result_available').hide(); 
             } 
         }); 
+
+
+        var hospital_number = $(this).attr('data-hospital_number');
+        var patient = $(this).attr('data-patient');
+        var patient_info = $(this).attr('data-url-patient-info');
+        var patient_age = $(this).attr('data-patient-age');
+        var patient_gender = $(this).attr('data-patient-gender');
+        var url_edit_patient_request = $(this).attr('data-url-edit-patient-request');
+        var url_create_patient_request = $(this).attr('data-url-create-patient-request');
+        var url_view_patient_request = $(this).attr('data-url-view-patient-request');
+        var control_number = $(this).attr('data-control-no');
+        var swab_date = $(this).attr('data-swab-date');
+        var specimen_no = $(this).attr('data-specimen-no');
+        var hcw = $(this).attr('data-hcw');
+        var status = $(this).attr('data-status');
+        var final_result = $(this).attr('data-final_result');
+        var soft_copy = $(this).attr('data-soft_copy');
+        var result_availability = $(this).attr('data-result_availability');
+        var disposition = $(this).attr('data-disposition');
+        var department = $(this).attr('data-department');
+        var pathologist = $(this).attr('data-pathologist');
+        var comp_exp_rej_datetime = $(this).attr('data-comp_exp_rej_datetime');
+        var remarks = $(this).attr('data-remarks');
+        var save_details_url = $(this).attr('data-save-data-url');
+
+        
+        $("#completed_hospital_number").html(hospital_number);
+        $("#completed_header_modal_patient").html(patient);
+        $(".patient_info_btn").attr("href", patient_info);
+        $("#completed_patient_age").html(patient_age);
+        $("#completed_patient_gender").html(patient_gender);
+        $(".edit-patient-request").attr("href", url_edit_patient_request);
+        $(".create-patient-request").attr("href", url_create_patient_request);
+        $(".view-patient-request").attr("href", url_view_patient_request);
+        $("#completed_control_number").html(control_number);
+        $("#completed_swab_date").html(swab_date);
+        $("#completed_specimen_no").html(specimen_no);
+        $("#completed_hcw").html(hcw);
+        $("#completed_status").html(status);
+        $("#completed_final_result").html(final_result);
+        $("#completed_soft_copy").html(soft_copy);
+        $("#completed_result_availability_date").html(result_availability);
+        $("#completed_department").html(department);
+        $("#completed_disposition").html(disposition);
+        $("#completed_pathologist").html(pathologist);
+        $("#completed_comp_exp_rej_date").html(comp_exp_rej_datetime);
+        $("#completed_remarks").html(remarks);
+        
     });
 
     $('.expired_button').click(function () {
@@ -1267,7 +1817,54 @@ $(document).ready(function () {
             } else {
                 $('#expired_result_available').hide(); 
             } 
-        }); 
+        });
+
+
+        var hospital_number = $(this).attr('data-hospital_number');
+        var patient = $(this).attr('data-patient');
+        var patient_info = $(this).attr('data-url-patient-info');
+        var patient_age = $(this).attr('data-patient-age');
+        var patient_gender = $(this).attr('data-patient-gender');
+        var url_edit_patient_request = $(this).attr('data-url-edit-patient-request');
+        var url_create_patient_request = $(this).attr('data-url-create-patient-request');
+        var url_view_patient_request = $(this).attr('data-url-view-patient-request');
+        var control_number = $(this).attr('data-control-no');
+        var swab_date = $(this).attr('data-swab-date');
+        var specimen_no = $(this).attr('data-specimen-no');
+        var hcw = $(this).attr('data-hcw');
+        var status = $(this).attr('data-status');
+        var final_result = $(this).attr('data-final_result');
+        var soft_copy = $(this).attr('data-soft_copy');
+        var result_availability = $(this).attr('data-result_availability');
+        var disposition = $(this).attr('data-disposition');
+        var department = $(this).attr('data-department');
+        var pathologist = $(this).attr('data-pathologist');
+        var comp_exp_rej_datetime = $(this).attr('data-comp_exp_rej_datetime');
+        var remarks = $(this).attr('data-remarks');
+        var save_details_url = $(this).attr('data-save-data-url');
+
+        
+        $("#expired_hospital_number").html(hospital_number);
+        $("#expired_header_modal_patient").html(patient);
+        $(".patient_info_btn").attr("href", patient_info);
+        $("#expired_patient_age").html(patient_age);
+        $("#expired_patient_gender").html(patient_gender);
+        $(".edit-patient-request").attr("href", url_edit_patient_request);
+        $(".create-patient-request").attr("href", url_create_patient_request);
+        $(".view-patient-request").attr("href", url_view_patient_request);
+        $("#expired_control_number").html(control_number);
+        $("#expired_swab_date").html(swab_date);
+        $("#expired_specimen_no").html(specimen_no);
+        $("#expired_hcw").html(hcw);
+        $("#expired_status").html(status);
+        $("#expired_final_result").html(final_result);
+        $("#expired_soft_copy").html(soft_copy);
+        $("#expired_result_availability_date").html(result_availability);
+        $("#expired_department").html(department);
+        $("#expired_disposition").html(disposition);
+        $("#expired_pathologist").html(pathologist);
+        $("#expired_comp_exp_rej_date").html(comp_exp_rej_datetime);
+        $("#expired_remarks").html(remarks); 
     });
 
     $('.rejected_button').click(function () {
@@ -1304,29 +1901,28 @@ $(document).ready(function () {
         var save_details_url = $(this).attr('data-save-data-url');
 
         
-        $("#patient_id").html(patient_id);
-        $("#header_modal_patient").html(patient);
+        $("#info_patient_id").html(patient_id);
+        $("#info_header_modal_patient").html(patient);
         $(".patient_info_btn").attr("href", patient_info);
         $("#header_modal_patient").html(patient);
-        $("#patient_age").html(patient_age);
-        $("#patient_gender").html(patient_gender);
+        $("#info_patient_age").html(patient_age);
+        $("#info_patient_gender").html(patient_gender);
         $(".edit-patient-request").attr("href", url_edit_patient_request);
         $(".create-patient-request").attr("href", url_create_patient_request);
         $(".view-patient-request").attr("href", url_view_patient_request);
-        $("#control_number").html(control_number);
-        $("#swab_date").html(swab_date);
-        $("#specimen_no").html(specimen_no);
-        $("#hcw").html(hcw);
-        $("#status").html(status);
-        $("#final_result").html(final_result);
-        $("#soft_copy").html(soft_copy);
-        $("#result_availability_date").html(result_availability);
-        $("#department").html(department);
-        $("#disposition").html(disposition);
-        $("#pathologist").html(pathologist);
-        $("#comp_exp_rej_date").html(comp_exp_rej_datetime);
-        $("#remarks").html(remarks);
-        $("#save_details").attr("href", save_details_url);
+        $("#info_control_number").html(control_number);
+        $("#info_swab_date").html(swab_date);
+        $("#info_specimen_no").html(specimen_no);
+        $("#info_hcw").html(hcw);
+        $("#info_status").html(status);
+        $("#info_final_result").html(final_result);
+        $("#info_soft_copy").html(soft_copy);
+        $("#info_result_availability_date").html(result_availability);
+        $("#info_department").html(department);
+        $("#info_disposition").html(disposition);
+        $("#info_pathologist").html(pathologist);
+        $("#info_comp_exp_rej_date").html(comp_exp_rej_datetime);
+        $("#info_remarks").html(remarks);
         
 
     });

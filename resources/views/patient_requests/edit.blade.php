@@ -73,7 +73,7 @@
 
             <label class="col-form-label" for="result_availability_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fas fa-check"></i> Result Availability Date</label>
             <div class="input-group mb-3">
-                <div class="input-group date" id="result_availability_datetime" data-target-input="nearest">
+                <div class="input-group date" id="result_availability_datetime" data-target-input="nearest" autcomplete="off">
                     <input type="text" value="{{ ( $patient_request[0]->result_availability_datetime) ? date('m/d/Y H:i A', strtotime($patient_request[0]->result_availability_datetime)) : '' }}"
                      class="form-control datetimepicker-input" name="result_availability_datetime" data-target="#result_availability_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar" required>
                     <div class="input-group-append" data-target="#result_availability_datetime" data-toggle="datetimepicker">

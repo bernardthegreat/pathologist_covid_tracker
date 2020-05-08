@@ -40,7 +40,7 @@
                 <div class="inner">
                   <h3 class="count">{{$tests}}</h3>
 
-                  <p>Tested</p>
+                  <p>Requests</p>
                 </div>
                 <div class="icon">
                   <i class="fa fa-microscope"></i>
