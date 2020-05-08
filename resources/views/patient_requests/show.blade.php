@@ -2,10 +2,101 @@
 
 @section('content')
 
- <!-- Content Header (Page header) -->
- <section class="content-header">
-      
-    </section>
+
+
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            
+          </div><!-- /.col -->
+          
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+
+
+
+<section class="content">
+  <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Tracker of {{ $patient_requests[0]->patients->first_name }} {{ $patient_requests[0]->patients->middle_name }} {{ $patient_requests[0]->patients->last_name }}</h3>
+
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+            <i class="fas fa-minus"></i></button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+            <i class="fas fa-times"></i></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3 class="count">{{$tests}}</h3>
+
+                  <p>Tested</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-microscope"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3 class="count">{{$completed}}</h3>
+
+                  <p>Completed</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-check"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3 class="count">{{$positive}}</h3>
+                  <p>Positive</p>
+                  
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-plus"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3 class="count">{{$negative}}</h3>
+
+                  <p>Negative</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-minus"></i>
+                </div>
+              
+              </div>
+            </div>
+            <!-- ./col -->
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
 
 <section class="content">
 
@@ -23,8 +114,7 @@
         </div>
         <div class="card-body">
 
-     
-
+        
                   <table id="pending_table" class="table table-bordered table-striped text-center">
                               <thead>
                               <tr>
@@ -303,8 +393,8 @@
 
                             
               
-
-        </div>
+        
+      </div>
 </div>
 
 
@@ -543,17 +633,31 @@
             </div>
 
             <div class="form-group">
-            <label for="final_result">Final Result</label>
-              <select name="final_result" class="custom-select" id="final_result">
+            <label for="final_result_id">Final Result</label>
+              <select name="final_result" class="custom-select" id="final_result_id">
                   <option value="1">POSITIVE</option>
                   <option value="2">NEGATIVE</option>
               </select>
             </div>
             
-            <label for="result_availability_datetime">Result Availability Date</label>
             <div class="form-group">
-                <input type='date' name="result_date" class="form-control" id="result_availability_datetime" required />
-                <input type='time' name="result_time" class="form-control" required />
+              <label for="soft_copy">Result Availability</label>
+              <select name="soft_copy" class="custom-select" id="expired_availability">
+                  <option value="0">NOT AVAILABLE</option>
+                  <option value="1">AVAILABLE</option>
+              </select>
+            </div>
+
+            <div id="expired_result_available">
+              <label for="result_availability_datetime">Result Availability Date</label>
+              <div class="form-group">
+                <div class="input-group date" id="result_availability_date1" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" autocomplete="off" name="result_availability_datetime" data-target="#result_availability_date1" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
+                    <div class="input-group-append" data-target="#result_availability_date1" data-toggle="datetimepicker">
+                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+              </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -599,10 +703,24 @@
               </select>
             </div>
             
-            <label for="result_availability_datetime">Result Availability Date</label>
             <div class="form-group">
-                <input type='date' name="result_date" class="form-control" id="result_availability_datetime" required />
-                <input type='time' name="result_time" class="form-control" required />
+            <label for="soft_copy">Result Availability</label>
+              <select name="soft_copy" class="custom-select" id="completed_availability">
+                  <option value="0">NOT AVAILABLE</option>
+                  <option value="1">AVAILABLE</option>
+              </select>
+            </div>
+
+            <div id="completed_result_available">
+              <label for="result_availability_datetime">Result Availability Date</label>
+              <div class="form-group">
+                <div class="input-group date" id="result_availability_date2" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" autocomplete="off" name="result_availability_datetime" data-target="#result_availability_date2" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
+                    <div class="input-group-append" data-target="#result_availability_date2" data-toggle="datetimepicker">
+                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+              </div>
             </div>
                   
 
@@ -660,11 +778,22 @@
 $(document).ready(function () {
   $('[rel="tooltip"]').tooltip({trigger: "hover"});
 
+  $('#completed_result_available').hide(); 
+    $('#expired_result_available').hide();
+
   $('.completed_button').click(function () {
       var url = $(this).attr('data-url');
       var completed_patient = $(this).attr('data-patient-completed');
       $("#patient_completed_name").html(completed_patient);
       $("#completed_form").attr("action", url);
+
+      $('#completed_availability').change(function(){
+        if($('#completed_availability').val() == '1') {
+            $('#completed_result_available').show(); 
+        } else {
+            $('#completed_result_available').hide(); 
+        } 
+      }); 
   });
 
   $('.expired_button').click(function () {
@@ -673,6 +802,14 @@ $(document).ready(function () {
       $("#patient_expired_name").html(expired_patient);
       console.log(expired_patient);
       $("#expired_form").attr("action", url);
+
+      $('#expired_availability').change(function(){
+        if($('#expired_availability').val() == '1') {
+            $('#expired_result_available').show(); 
+        } else {
+            $('#expired_result_available').hide(); 
+        } 
+      });
   });
 
   $('.rejected_button').click(function () {
@@ -735,6 +872,22 @@ $(document).ready(function () {
       
 
   });
+
+
+
+    $('.count').each(function () {
+        $(this).prop('Counter',0).animate({
+            Counter: $(this).html()
+        }, {
+            duration: 2000,
+            easing: 'swing',
+            step: function (now) {
+                $(this).text(Math.ceil(now));
+            }
+        });
+    });
+
+
 });
 
 

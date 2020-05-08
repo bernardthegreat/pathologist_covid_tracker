@@ -102,12 +102,12 @@
             <label class="col-form-label" for="swab_date"><i class="fas fa-check"></i> Swab Date and Time <span style="color:red">*</span></label>
              
             <div class="input-group mb-3">
-
-               <input type="date" name="swab_date"  id="swab_date" class="form-control" autocomplete="off" required>
- 
-                <input type="time" name="swab_time"  id="swab_time" class="form-control" autocomplete="off" required>
-               
-
+                <div class="input-group date" id="swab_datetime" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" name="swab_requested_datetime" data-target="#swab_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar" required autocomplete="off">
+                    <div class="input-group-append" data-target="#swab_datetime" data-toggle="datetimepicker">
+                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
             </div>
 
 
@@ -127,6 +127,11 @@
     </section>
 
 
+    <script>
+$(document).ready(function () {
+ $('[rel="tooltip"]').tooltip({trigger: "hover"});
+});
+ </script>
 
 
 

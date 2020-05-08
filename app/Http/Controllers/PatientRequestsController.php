@@ -21,7 +21,15 @@ class PatientRequestsController extends Controller
     {
         //
         //$patient_requests = PatientRequest::with('patients')->get();
-
+      
+        $dashboard_patient_request = PatientRequest::count();
+        $dashboard_completed = PatientRequest::whereRaw('released_datetime IS NOT NULL')->count();
+        $dashboard_expired = PatientRequest::whereRaw('expired_datetime IS NOT NULL')->count();
+        $dashboard_rejected = PatientRequest::where('final_result','=',3)->whereRaw('failed_datetime IS NOT NULL')->count();
+        $dashboard_patient =  Patient::count();
+        $dashboard_positive = Patient::where('latest_result','=',1)->count();
+        $dashboard_negative = Patient::where('latest_result','=',2)->count();
+        $dashboard_pending = PatientRequest::where('final_result','=',0)->count();
         
        
         $patient_requests_pending = PatientRequest::with([
@@ -83,7 +91,16 @@ class PatientRequestsController extends Controller
             'patient_requests_failed',
             'dispositions',
             'departments',
-            'users'));
+            'users',
+            'dashboard_patient_request',
+            'dashboard_completed',
+            'dashboard_expired',
+            'dashboard_rejected',
+            'dashboard_patient',
+            'dashboard_positive',
+            'dashboard_negative',
+            'dashboard_pending'
+        ));
 
     }
 
@@ -193,10 +210,13 @@ class PatientRequestsController extends Controller
         $patient = Patient::findOrFail($id);
         
         $dispositions = PatientRequestDisposition::all()->where('active', 1);
-
-       
         $users = User::all()->where('active', 1);
-     
+        
+        $tests = PatientRequest::where('patient_id','=',$id)->count();
+        $positive = PatientRequest::where('patient_id','=',$id)->where('final_result','=',1)->count();
+        $negative = PatientRequest::where('patient_id','=',$id)->where('final_result','=',2)->count();
+        $completed = PatientRequest::where('patient_id','=',$id)->whereRaw('released_datetime IS NOT NULL')->count();
+        
 
         $patient_requests = PatientRequest::with([
             'patients', 
@@ -208,7 +228,11 @@ class PatientRequestsController extends Controller
 
         return view('patient_requests/show', compact(
             'patient_requests',
-            'users'
+            'users',
+            'tests',
+            'positive',
+            'negative',
+            'completed'
         ));
     }
 
@@ -288,22 +312,43 @@ class PatientRequestsController extends Controller
 
     public function release(Request $request, $id)
     {
-        $result_availability_datetime = $request->result_date.' '.$request->result_time;
+        if(isset($request->result_availability_datetime))
+        {
+            $result_availability_datetime = date('Y-m-d H:i:s', strtotime($request->result_availability_datetime));
+            $soft_copy = 1;
+        } else {
+            $result_availability_datetime = NULL;
+            $soft_copy = 0;
+        }
 
         PatientRequest::where('id', $id)->update(array(
             'released_datetime' => date('Y-m-d H:i:s'),
             'user_id' => $request->user_id,
             'final_result' => $request->final_result,
             'result_availability_datetime' => $result_availability_datetime,
-            'soft_copy' => 1
+            'soft_copy' => $soft_copy
         ));
+
+        Patient::where('id', $request->patient_id)->update(array(
+            'latest_result' => $request->final_result
+        ));
+
+        
+
         return redirect()->back()->with('success', 'Patient transferred to the completed tab');
     }
 
 
     public function expired(Request $request, $id)
     {
-        $result_availability_datetime = $request->result_date.' '.$request->result_time;
+        if(isset($request->result_availability_datetime))
+        {
+            $result_availability_datetime = date('Y-m-d H:i:s', strtotime($request->result_availability_datetime));
+            $soft_copy = 1;
+        } else {
+            $result_availability_datetime = NULL;
+            $soft_copy = 0;
+        }
 
         PatientRequest::where('id', $id)->update(array(
             'expired_datetime' => date('Y-m-d H:i:s'),
@@ -311,8 +356,14 @@ class PatientRequestsController extends Controller
             'user_id' => $request->user_id,
             'final_result' => $request->final_result,
             'result_availability_datetime' => $result_availability_datetime,
-            'soft_copy' => 1
+            'soft_copy' => $soft_copy
         ));
+
+        Patient::where('id', $request->patient_id)->update(array(
+            'latest_result' => $request->final_result
+        ));
+
+
         return redirect()->back()->with('error', 'Patient transferred to the expired tab');
     }
 

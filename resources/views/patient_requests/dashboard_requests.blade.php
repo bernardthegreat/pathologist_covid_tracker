@@ -7,6 +7,151 @@
       
     </section>
 
+
+
+
+<section class="content">
+  <div class="card card collapsed-card">
+      <div class="card-header" data-placement="top" rel="tooltip" title="" data-original-title="Click the toggle button to show the Hospital Tracker" >
+        <h3 class="card-title" >Hospital Tracker</h3>
+
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" data-placement="top" rel="tooltip" title="" data-original-title="Toggle to show the Hospital Tracker">
+            <i class="fas fa-minus"></i></button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+            <i class="fas fa-times"></i></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3 class="count">{{$dashboard_patient_request}}</h3>
+                  <p>Patient Request</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-microscope"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3 class="count">{{$dashboard_completed}}</h3>
+
+                  <p>Completed</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-check"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3 class="count">{{$dashboard_expired}}</h3>
+                  <p>Expired</p>
+                  
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-times"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-secondary">
+                <div class="inner">
+                  <h3 class="count">{{$dashboard_rejected}}</h3>
+
+                  <p>Rejected</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-slash"></i>
+                </div>
+              
+              </div>
+            </div>
+            <!-- ./col -->
+          </div>
+
+          <div class="row">
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-lightblue">
+                <div class="inner">
+                  <h3 class="count">{{$dashboard_patient}}</h3>
+
+                  <p>Patients</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-hospital-user"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-maroon">
+                <div class="inner">
+                  <h3 class="count">{{$dashboard_positive}}</h3>
+
+                  <p>Positive</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-plus"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-olive">
+                <div class="inner">
+                  <h3 class="count">{{$dashboard_negative}}</h3>
+                  <p>Negative</p>
+                  
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-minus"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3 class="count">{{$dashboard_pending}}</h3>
+
+                  <p>Pending</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-undo"></i>
+                </div>
+              
+              </div>
+            </div>
+            <!-- ./col -->
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+</section>
+
+
+
 <section class="content" id="app">
 
 
@@ -22,80 +167,6 @@
           </div>
         </div>
         <div class="card-body">
-
-        <div class="container-fluid">
-        
-
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-orange elevation-1"><i class="fa fa-user-plus"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Total Cases</span>
-                <span id="cases" class="info-box-number count"></span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-info elevation-1"><i class="fa fa-shield-virus"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Today's Cases</span>
-                <span id="todayCases" class="info-box-number count"></span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-
-          <!-- fix for small devices only -->
-          <div class="clearfix hidden-md-up"></div>
-
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-maroon elevation-1"><i class="fa fa-virus-slash"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Today's Death</span>
-                <span id="todayDeaths" class="info-box-number count"></span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-purple elevation-1"><i class="fa fa-users"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Total Tested</span>
-                <span id="totalTests" class="info-box-number count"></span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-
-
-
-
-
-
-
-
-
-
 
 
               <div class="col-md-12">
@@ -241,6 +312,7 @@
                                         data-original-title="Completed" 
                                         data-toggle="modal" data-target="#completed" 
                                         data-patient-completed="{{ $patient_request->patients->first_name }} "
+                                        data-patient-id="{{ $patient_request->patients->id }}"
                                         data-url="{{ route('patient_requests.release', $patient_request->id) }}"
                                       > 
                                         <i class="fa fa-user-check"></i> 
@@ -251,6 +323,7 @@
                                         data-original-title="Expired" data-toggle="modal" data-target="#expired_modal" 
                                         data-url="{{ route('patient_requests.expired', $patient_request->id) }}"
                                         data-patient-expired="{{ $patient_request->patients->first_name }} " 
+                                        data-patient-id="{{$patient_request->patients->id}}"
                                       > 
                                         <i class="fa fa-user-times"></i> 
                                       </button>
@@ -770,9 +843,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="col-12 modal-title text-center" id="header_modal_patient"><i class="fa fa-hospital-user"> </i> </h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      
       </div>
       <div class="modal-body">
     
@@ -997,6 +1068,7 @@
 
           <br>
           <br>
+            <input type="hidden" value="" name="patient_id" id="expired_patient_id_val">
             <div class="form-group">
               <label for="patho_id">Pathologist</label>
               <select name="user_id" class="custom-select text-center" id="patho_id">
@@ -1007,17 +1079,31 @@
             </div>
 
             <div class="form-group">
-            <label for="final_result">Final Result</label>
-              <select name="final_result" class="custom-select" id="final_result">
+            <label for="final_result_id">Result</label>
+              <select name="final_result" class="custom-select" id="final_result_id">
                   <option value="1">POSITIVE</option>
                   <option value="2">NEGATIVE</option>
               </select>
             </div>
             
-            <label for="result_availability_datetime">Result Availability Date</label>
             <div class="form-group">
-                <input type='date' name="result_date" class="form-control" id="result_availability_datetime" required />
-                <input type='time' name="result_time" class="form-control" required />
+              <label for="soft_copy">Result Availability</label>
+              <select name="soft_copy" class="custom-select" id="expired_availability">
+                  <option value="0">NOT AVAILABLE</option>
+                  <option value="1">AVAILABLE</option>
+              </select>
+            </div>
+
+            <div id="expired_result_available">
+              <label for="result_availability_datetime">Result Availability Date</label>
+              <div class="form-group">
+                <div class="input-group date" id="result_availability_date1" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" autocomplete="off" name="result_availability_datetime" data-target="#result_availability_date1" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
+                    <div class="input-group-append" data-target="#result_availability_date1" data-toggle="datetimepicker">
+                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+              </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -1046,9 +1132,10 @@
           </span> ?
           <br>
           <br>
+            <input type="hidden" value="" name="patient_id" id="completed_patient_id_val">
             <div class="form-group">
               <label for="patho_id">Pathologist</label>
-              <select name="user_id" class="custom-select text-center" id="patho_id">
+              <select name="user_id" class="custom-select text-center" id="patho_id_{{$user->id}}">
                   @foreach($users as $user)
                       <option value="{{$user->id}}" >{{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}, {{$user->prefix}}</option>
                   @endforeach
@@ -1056,17 +1143,31 @@
             </div>
 
             <div class="form-group">
-            <label for="final_result">Final Result</label>
+            <label for="final_result">Result</label>
               <select name="final_result" class="custom-select" id="final_result">
                   <option value="1">POSITIVE</option>
                   <option value="2">NEGATIVE</option>
               </select>
             </div>
             
-            <label for="result_availability_datetime">Result Availability Date</label>
             <div class="form-group">
-                <input type='date' name="result_date" class="form-control" id="result_availability_datetime" required />
-                <input type='time' name="result_time" class="form-control" required />
+            <label for="soft_copy">Result Availability</label>
+              <select name="soft_copy" class="custom-select" id="completed_availability">
+                  <option value="0">NOT AVAILABLE</option>
+                  <option value="1">AVAILABLE</option>
+              </select>
+            </div>
+
+            <div id="completed_result_available">
+              <label for="result_availability_datetime">Result Availability Date</label>
+              <div class="form-group">
+                <div class="input-group date" id="result_availability_date2" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" autocomplete="off" name="result_availability_datetime" data-target="#result_availability_date2" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
+                    <div class="input-group-append" data-target="#result_availability_date2" data-toggle="datetimepicker">
+                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+              </div>
             </div>
                   
 
@@ -1127,19 +1228,46 @@ $(document).ready(function () {
 
     $('[rel="tooltip"]').tooltip({trigger: "hover"});
 
+    $('#completed_result_available').hide(); 
+    $('#expired_result_available').hide(); 
+    
+
     $('.completed_button').click(function () {
         var url = $(this).attr('data-url');
+        var patient_id = $(this).attr('data-patient-id');
         var completed_patient = $(this).attr('data-patient-completed');
         $("#patient_completed_name").html(completed_patient);
+        $("#completed_patient_id_val").attr("value", patient_id);
         $("#completed_form").attr("action", url);
+
+       
+        $('#completed_availability').change(function(){
+
+            if($('#completed_availability').val() == '1') {
+                $('#completed_result_available').show(); 
+            } else {
+                $('#completed_result_available').hide(); 
+            } 
+        }); 
     });
 
     $('.expired_button').click(function () {
         var url = $(this).attr('data-url');
         var expired_patient = $(this).attr('data-patient-expired');
+        var patient_id = $(this).attr('data-patient-id');
         $("#patient_expired_name").html(expired_patient);
+        $("#expired_patient_id_val").attr("value", patient_id);
         console.log(expired_patient);
         $("#expired_form").attr("action", url);
+
+        $('#expired_availability').change(function(){
+
+            if($('#expired_availability').val() == '1') {
+                $('#expired_result_available').show(); 
+            } else {
+                $('#expired_result_available').hide(); 
+            } 
+        }); 
     });
 
     $('.rejected_button').click(function () {

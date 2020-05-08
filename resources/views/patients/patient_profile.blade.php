@@ -150,7 +150,7 @@
                     @elseif($patient_request->final_result == '1')
                       POSITIVE
                     @elseif($patient_request->final_result == '2')
-                      POSITIVE
+                      NEGATIVE
                     @elseif($patient_request->final_result == '3')
                       REJECTED
                     @endif
