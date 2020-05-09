@@ -156,7 +156,8 @@ class PatientRequestsController extends Controller
             'soft_copy' => 'max:255',
             'expired_datetime'=>'max:255',
             'specimen_no'=>'required|max:255',
-            'control_no'=>'required|max:255'
+            'control_no'=>'required|max:255',
+            
             
             
         ]);
@@ -193,6 +194,7 @@ class PatientRequestsController extends Controller
             'requested_time' => date('H:i:s'),
             'department_id' => $department_id,
             'final_result' => 0,
+            'swab_requested_datetime'=> date('Y-m-d H:i:s', strtotime($request->swab_requested_datetime))
         ]);
 
         return redirect('/patient_requests')->with('success', 'Patient request is successfully saved');
@@ -295,7 +297,8 @@ class PatientRequestsController extends Controller
         ]);
         PatientRequest::whereId($id)->update($validatedData + [
             'swab_requested_datetime' => date('Y-m-d H:i:s', strtotime($request->swab_requested_datetime)),
-            'result_availability_datetime' => date('Y-m-d H:i:s', strtotime($request->result_availability_datetime))
+            'result_availability_datetime' => date('Y-m-d H:i:s', strtotime($request->result_availability_datetime)),
+            'created_at'  => date('Y-m-d H:i:s', strtotime($request->created_datetime))
         ]);
 
         return redirect()->back()->with('success', 'Request is successfully updated');

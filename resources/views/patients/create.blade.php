@@ -28,7 +28,7 @@
       <form method="post" action="{{ route('patients.store') }}">
         @csrf
         <div class="input-group mb-3">
-          <input type="text" name="hospital_number" class="form-control" placeholder="Hospital #">
+          <input type="text" name="hospital_number" class="form-control" placeholder="Hospital #" autocomplete="off" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -37,7 +37,7 @@
         </div>
         
         <div class="input-group mb-3">
-          <input type="text" name="first_name" class="form-control" placeholder="First Name">
+          <input type="text" name="first_name" class="form-control" placeholder="First Name" autocomplete="off" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="input-group mb-3">
-          <input type="text" name="middle_name" class="form-control" placeholder="Middle Name">
+          <input type="text" name="middle_name" class="form-control" placeholder="Middle Name" autocomplete="off">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -55,7 +55,7 @@
         </div>
 
         <div class="input-group mb-3">
-          <input type="text" name="last_name" class="form-control" placeholder="Last Name">
+          <input type="text" name="last_name" class="form-control" placeholder="Last Name" autocomplete="off" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -64,7 +64,7 @@
         </div>
 
         <div class="input-group mb-3">
-          <input type="text" name="age" class="form-control" placeholder="Age">
+          <input type="text" name="age" class="form-control" placeholder="Age" autocomplete="off" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -74,7 +74,7 @@
 
 
         <div class="input-group mb-3">
-            <select name="gender" class="custom-select" id="gender">
+            <select name="gender" class="custom-select" id="gender" autocomplete="off" required>
               <option>Select Gender</option>
               <option value="M" selected>Male</option>
               <option value="F">Female</option>

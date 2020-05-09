@@ -61,6 +61,16 @@
                 </div>
             </div>
 
+            <label class="col-form-label" for="request_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fas fa-check"></i> Requested Date</label>
+            <div class="input-group mb-3">
+                <div class="input-group date" id="request_datetime" data-target-input="nearest">
+                    <input type="text" value="{{date('m/d/Y H:i A', strtotime($patient_request[0]->created_at))}}" class="form-control datetimepicker-input" name="created_datetime" data-target="#request_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar" required>
+                    <div class="input-group-append" data-target="#swab_datetime" data-toggle="datetimepicker">
+                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+
             <label class="col-form-label" for="swab_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fas fa-check"></i> Swab Date</label>
             <div class="input-group mb-3">
                 <div class="input-group date" id="swab_datetime" data-target-input="nearest">

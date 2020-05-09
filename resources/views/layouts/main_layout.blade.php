@@ -110,6 +110,7 @@
 
     $('#swab_datetime').datetimepicker();
     $('#result_availability_datetime').datetimepicker();
+    $('#request_datetime').datetimepicker();
     
   });
 

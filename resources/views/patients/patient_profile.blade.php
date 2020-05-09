@@ -263,41 +263,32 @@
                           @csrf
                           @method('PATCH')
                           <label for="first_name">First Name</label>
-                          <input type="text" class="form-control" name="first_name" id="first_name" value="{{$patient->first_name}}" placeholder="First Name">
+                          <input type="text" class="form-control" name="first_name" id="first_name" value="{{$patient->first_name}}" placeholder="First Name" autocomplete="off">
                         </div>
                         <div class="form-group">
                           <label for="middle_name">Middle Name</label>
-                          <input type="text" class="form-control" name="middle_name" id="middle_name" value="{{$patient->middle_name}}" placeholder="Middle Name">
+                          <input type="text" class="form-control" name="middle_name" id="middle_name" value="{{$patient->middle_name}}" placeholder="Middle Name" autocomplete="off">
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmalast_namel1">Last Name</label>
-                          <input type="text" class="form-control"  name="last_name"  id="last_name" value="{{$patient->last_name}}" placeholder="Last Name">
+                          <input type="text" class="form-control"  name="last_name"  id="last_name" value="{{$patient->last_name}}" placeholder="Last Name" autocomplete="off">
                         </div>
                         <div class="form-group">
                           <label for="age">Age</label>
-                          <input type="text" class="form-control"  name="age"  id="age" value="{{$patient->age}}" placeholder="Age">
+                          <input type="text" class="form-control"  name="age"  id="age" value="{{$patient->age}}" placeholder="Age" autocomplete="off">
                         </div>
                         <div class="form-group">
                           <label for="gender">Gender</label>
                           <select name="gender" class="custom-select" id="gender">
-                            @if(isset($patient->gender))
-                              @if($patient->gender == 'M')
-                                <option>Select Gender</option>
-                                <option value="M" selected>Male</option>
-                                <option value="F">Female</option>
-                              @else
-                                <option value="M">Select Gender</option>
-                                <option value="M">Male</option>
-                                <option value="F" selected>Female</option>
-                              @endif
-                            @else
-                                <option>Select Gender</option>
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
-                            @endif
+                           
+
+                            <option value="M" {{ ( $patient->gender == 'M' ) ? 'selected' : '' }}>Male</option>
+                            <option value="F" {{ ( $patient->gender == 'F' ) ? 'selected' : '' }}>Female</option>
 
 
                           </select>
+
+                          
                         </div>
                       </div>
                       <!-- /.card-body -->
