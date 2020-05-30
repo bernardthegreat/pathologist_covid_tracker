@@ -13,7 +13,9 @@ class Patient extends Model
         'middle_name', 
         'last_name',
         'age',
-        'gender'
+        'gender',
+        'latest_result',
+        'latest_disposition'
     ];
     //
     public function patient_requests()

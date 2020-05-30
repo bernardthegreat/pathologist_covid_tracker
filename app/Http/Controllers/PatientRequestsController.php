@@ -248,6 +248,7 @@ class PatientRequestsController extends Controller
     {
         //
         
+        
         $patient_request = PatientRequest::with([
             'patients', 
             'departments',
@@ -256,7 +257,6 @@ class PatientRequestsController extends Controller
             
         ])
         ->where('id', '=', $id)->get();
-        
         
         $dispositions = PatientRequestDisposition::all()->where('active', 1);
 
@@ -283,6 +283,46 @@ class PatientRequestsController extends Controller
     {
         //
 
+        if(isset($request->released_datetime))
+        {
+            $released_datetime = date('Y-m-d H:i:s', strtotime($request->released_datetime));
+            
+        } else {
+            $released_datetime = NULL;
+        }
+
+        if(isset($request->swab_requested_datetime))
+        {
+            $swab_requested_datetime = date('Y-m-d H:i:s', strtotime($request->swab_requested_datetime));
+            
+        } else {
+            $swab_requested_datetime = NULL;
+        }
+
+        if(isset($request->failed_datetime))
+        {
+            $failed_datetime = date('Y-m-d H:i:s', strtotime($request->failed_datetime));
+            
+        } else {
+            $failed_datetime = NULL;
+        }
+
+        if(isset($request->result_availability_datetime))
+        {
+            $result_availability_datetime = date('Y-m-d H:i:s', strtotime($request->result_availability_datetime));
+            
+        } else {
+            $result_availability_datetime = NULL;
+        }
+
+        if(isset($request->expired_datetime))
+        {
+            $expired_datetime = date('Y-m-d H:i:s', strtotime($request->expired_datetime));
+            
+        } else {
+            $expired_datetime = NULL;
+        }
+
         $validatedData = $request->validate([
             'specimen_no' => 'required|max:255',
             'control_no' => 'required|max:255',
@@ -292,14 +332,28 @@ class PatientRequestsController extends Controller
             'department_id' => 'max:255',
             'soft_copy' => 'max:255',
             'hcw' => 'max:255',
-            'final_result' => 'max:255'
+            'final_result' => 'max:255',
+            'remarks'=>'max:255',
+            
+            
             
         ]);
+
         PatientRequest::whereId($id)->update($validatedData + [
-            'swab_requested_datetime' => date('Y-m-d H:i:s', strtotime($request->swab_requested_datetime)),
-            'result_availability_datetime' => date('Y-m-d H:i:s', strtotime($request->result_availability_datetime)),
-            'created_at'  => date('Y-m-d H:i:s', strtotime($request->created_datetime))
+            'swab_requested_datetime' => $swab_requested_datetime,
+            'released_datetime' => $released_datetime,
+            'failed_datetime' => $failed_datetime,
+            'result_availability_datetime' => $result_availability_datetime,
+            'expired_datetime' => $expired_datetime
+            //'created_at'  => date('Y-m-d H:i:s', strtotime($request->created_datetime))
         ]);
+
+
+        Patient::where('id', $request->patient_id)->update(array(
+            'latest_result' => $request->final_result,
+            'latest_disposition' => $request->disposition_id,
+            'remarks' => $expired_datetime
+        ));
 
         return redirect()->back()->with('success', 'Request is successfully updated');
     }
@@ -333,10 +387,9 @@ class PatientRequestsController extends Controller
         ));
 
         Patient::where('id', $request->patient_id)->update(array(
-            'latest_result' => $request->final_result
+            'latest_result' => $request->final_result,
+            
         ));
-
-        
 
         return redirect()->back()->with('success', 'Patient transferred to the completed tab');
     }
@@ -353,8 +406,16 @@ class PatientRequestsController extends Controller
             $soft_copy = 0;
         }
 
+        if($request->expiration_datetime != '')
+        {
+            $expiration_datetime = date('Y-m-d H:i:s', strtotime($request->expiration_datetime));
+        } else {
+            $expiration_datetime = date('Y-m-d H:i:s');
+        }
+
+
         PatientRequest::where('id', $id)->update(array(
-            'expired_datetime' => date('Y-m-d H:i:s'),
+            'expired_datetime' => $expiration_datetime,
             'disposition_id' => 3,
             'user_id' => $request->user_id,
             'final_result' => $request->final_result,
@@ -363,7 +424,8 @@ class PatientRequestsController extends Controller
         ));
 
         Patient::where('id', $request->patient_id)->update(array(
-            'latest_result' => $request->final_result
+            'latest_result' => $request->final_result,
+            'latest_disposition' => 3
         ));
 
 
@@ -379,6 +441,11 @@ class PatientRequestsController extends Controller
             'failed_datetime' => date('Y-m-d H:i:s'),
             'final_result' => 3
         ));
+
+        Patient::where('id', $request->patient_id)->update(array(
+            'latest_result' => $request->final_result
+        ));
+
         return redirect()->back()->with('warning', 'Patient transferred to the rejected tab');
     }
 

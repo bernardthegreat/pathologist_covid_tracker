@@ -138,7 +138,7 @@ class PatientsController extends Controller
         ]);
         Patient::whereId($id)->update($validatedData);
 
-        return redirect('/patients_requests')->with('success', 'Patient is successfully updated');
+        return redirect()->back()->with('success', 'Patient is successfully updated');
     }
 
     /**

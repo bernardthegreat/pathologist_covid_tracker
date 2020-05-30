@@ -224,7 +224,7 @@
                                     {{ $patient_request->control_no }}
                                 </td>
                                 <td>
-                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
+                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->swab_requested_datetime)) }}
                                 </td>
                                 <td> 
                                   

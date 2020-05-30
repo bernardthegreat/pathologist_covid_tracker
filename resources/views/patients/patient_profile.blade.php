@@ -25,7 +25,7 @@
           <div class="col-md-4">
 
             <!-- Profile Image -->
-            <div class="card card-primary card-outline">
+            <div class="card card-primary card-outline text-center">
               <div class="card-body box-profile">
                 <div class="text-center">
                   <img class="profile-user-img img-fluid img-circle"
@@ -35,7 +35,14 @@
 
                 <h3 class="profile-username text-center">{{$patient->first_name}} {{$patient->middle_name}} {{$patient->last_name}}</h3>
 
-              
+                @if(isset($patient->remarks) && $patient->latest_disposition == '3')
+                <span class="text-center">
+                 <em style="color:red;font-weight:bold;"> <i class="fa fa-skull"></i>  {{ date('m/d/Y h:i:s A', strtotime($patient->remarks)) }} </em>
+                </span>
+                @endif
+
+                <br>
+                <br>
 
                 <div class="col-md-12">
                   <div class="info-box bg-danger">
@@ -109,8 +116,9 @@
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#history" data-toggle="tab">History</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#edit_info" data-toggle="tab">Edit Information</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#edit_info" data-toggle="tab">Edit Information</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#history" data-toggle="tab">History</a></li>
+                  
                 </ul>
               </div><!-- /.card-header -->
               
@@ -121,129 +129,8 @@
 
 
                 <div class="tab-content">
-                  <div class="active tab-pane" id="history">
-                   
-                  <table id="example2" class="table table-bordered table-hover table-striped text-center">
-                <thead>
-                <tr>
-                  <th>Specimen  #</th>
-                  <th>Requested Date</th>
-                  <th>Result</th>
-                  <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                 
-                 
-                  @foreach($patient_requests as $patient_request)   
-                <tr>
-                <td>
-                    {{ $patient_request->specimen_no }}
-                  </td>
-                  <td>
-                    {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
-                  </td>
-                
-                  <td>  
-                    @if($patient_request->final_result == '0')
-                      PENDING
-                    @elseif($patient_request->final_result == '1')
-                      POSITIVE
-                    @elseif($patient_request->final_result == '2')
-                      NEGATIVE
-                    @elseif($patient_request->final_result == '3')
-                      REJECTED
-                    @endif
-                   
-                  </td>
-                  <td>
-                      <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#modal-lg-{{$patient_request->id}}">
-                          <i class="fa fa-user">
-                          </i>
-                          View
-                      </a>
 
-
-
-                      <div class="modal fade" id="modal-lg-{{$patient_request->id}}">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">{{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }} </h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                  <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
-
-
-
-                                    <tr>
-                                      <th>Pathologist</th>
-                                      <td>
-                                      @if(isset($patient_request->user_id)) 
-                                        {{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }} {{ $patient_request->users->prefix }}
-                                      @endif
-                                      </td>
-                                    
-                                    </tr>
-
-                                    <tr>
-                                      <th>Disposition</th>
-                                      <td>{{ $patient_request->patient_request_dispositions->name }}</td>
-                                    </tr>
-
-                                    <tr>
-                                      <th>Departments</th>
-                                      <td>{{ $patient_request->departments->name }}</td>
-                                    </tr>
-                                
-                                  
-
-                                  </table>
-
-                                </div>
-
-                                  <div class="modal-footer justify-content-between">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                            </div>
-                            <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-
-                            
-                    </div>
-                    <!-- /.modal -->
-
-
-
-
-
-                  </td>
-                </tr>
-                  @endforeach
-                
-                </tbody>
-                <tfoot>
-                <tr>
-                  <th>Specimen  #</th>
-                  <th>Requested Date</th>
-                  <th>Result</th>
-                  <th></th>
-                </tr>
-                </tfoot>
-              </table>
-
-
-                    <!-- /.post -->
-                  </div>
-                  <!-- /.tab-pane -->
-                  
-                  
-                  <div class="tab-pane" id="edit_info">
+                  <div class="active tab-pane" id="edit_info">
                     
                     @if ($errors->any())
                       <div class="alert alert-danger">
@@ -299,6 +186,132 @@
                     </form>
                   </div>
                   <!-- /.tab-pane -->
+
+
+
+                  <div class="tab-pane" id="history">
+                   
+                    <table id="example2" class="table table-bordered table-hover table-striped text-center">
+                      <thead>
+                        <tr>
+                          <th>Specimen  #</th>
+                          <th>Requested Date</th>
+                          <th>Result</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      
+                      
+                        @foreach($patient_requests as $patient_request)   
+                      <tr>
+                      <td>
+                          {{ $patient_request->specimen_no }}
+                        </td>
+                        <td>
+                          {{ date('m/d/Y h:i:s A', strtotime($patient_request->swab_requested_datetime)) }}
+                        </td>
+                      
+                        <td>  
+                          @if($patient_request->final_result == '0')
+                            PENDING
+                          @elseif($patient_request->final_result == '1')
+                            POSITIVE
+                          @elseif($patient_request->final_result == '2')
+                            NEGATIVE
+                          @elseif($patient_request->final_result == '3')
+                            REJECTED
+                          @endif
+                        
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#modal-lg-{{$patient_request->id}}">
+                                <i class="fa fa-user">
+                                </i>
+                                View
+                            </a>
+
+
+
+                            <div class="modal fade" id="modal-lg-{{$patient_request->id}}">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h4 class="modal-title">{{ $patient_request->patients->first_name }} {{ $patient_request->patients->middle_name }} {{ $patient_request->patients->last_name }} </h4>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      <div class="modal-body">
+                                          
+                                        <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+
+
+
+                                          <tr>
+                                            <th>Pathologist</th>
+                                            <td>
+                                            @if(isset($patient_request->user_id)) 
+                                              {{ $patient_request->users->first_name }} {{ $patient_request->users->middle_name }} {{ $patient_request->users->last_name }} {{ $patient_request->users->prefix }}
+                                            @endif
+                                            </td>
+                                          
+                                          </tr>
+
+                                          <tr>
+                                            <th>Disposition</th>
+                                            <td>{{ $patient_request->patient_request_dispositions->name }}</td>
+                                          </tr>
+
+                                          <tr>
+                                            <th>Departments</th>
+                                            <td>{{ $patient_request->departments->name }}</td>
+                                          </tr>
+                                      
+                                        
+
+                                        </table>
+
+                                      </div>
+
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                          </div>
+                                  </div>
+                                  <!-- /.modal-content -->
+                                  </div>
+                                  <!-- /.modal-dialog -->
+
+                                  
+                          </div>
+                          <!-- /.modal -->
+
+
+
+
+
+                        </td>
+                      </tr>
+                        @endforeach
+                      
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                        <th>Specimen  #</th>
+                        <th>Requested Date</th>
+                        <th>Result</th>
+                        <th></th>
+                      </tr>
+                      </tfoot>
+                    </table>
+
+
+                    <!-- /.post -->
+                  </div>
+                  <!-- /.tab-pane -->
+                  
+                  
+                  
 
                   <!-- /.tab-pane -->
                 </div>

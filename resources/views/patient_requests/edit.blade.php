@@ -41,7 +41,7 @@
             
             <label class="col-form-label" for="control_no"><i class="fas fa-check"></i> Control Number</label>
             <div class="input-group mb-3">
-                
+                <input type="hidden" name="patient_id" value="{{$patient_request[0]->patient_id}}">
                 <input type="text" name="control_no"  id="control_no" class="form-control" autocomplete="off" value="{{$patient_request[0]->control_no}}" >
                 <div class="input-group-append">
                     <div class="input-group-text">
@@ -61,6 +61,7 @@
                 </div>
             </div>
 
+            <!--
             <label class="col-form-label" for="request_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fas fa-check"></i> Requested Date</label>
             <div class="input-group mb-3">
                 <div class="input-group date" id="request_datetime" data-target-input="nearest">
@@ -70,6 +71,7 @@
                     </div>
                 </div>
             </div>
+            -->
 
             <label class="col-form-label" for="swab_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fas fa-check"></i> Swab Date</label>
             <div class="input-group mb-3">
@@ -85,17 +87,29 @@
             <div class="input-group mb-3">
                 <div class="input-group date" id="result_availability_datetime" data-target-input="nearest" autcomplete="off">
                     <input type="text" value="{{ ( $patient_request[0]->result_availability_datetime) ? date('m/d/Y H:i A', strtotime($patient_request[0]->result_availability_datetime)) : '' }}"
-                     class="form-control datetimepicker-input" name="result_availability_datetime" data-target="#result_availability_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar" required>
+                     class="form-control datetimepicker-input" name="result_availability_datetime" data-target="#result_availability_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar" autocomplete="off">
                     <div class="input-group-append" data-target="#result_availability_datetime" data-toggle="datetimepicker">
                         <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
                     </div>
                 </div>
             </div>
-            
-            <label class="col-form-label" for="disposition"><i class="fas fa-check"></i> Disposition</label>
+
+            <label class="col-form-label" for="completed_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fas fa-check"></i> Released Date</label>
             <div class="input-group mb-3">
-                <input type="hidden" name="patient_request_id" class="form-control" value="{{$patient_request[0]->patients->id}}" autocomplete="off">
-                
+                <div class="input-group date" id="completed_datetime" data-target-input="nearest">
+                    <input type="text" value="{{ ( $patient_request[0]->released_datetime) ? date('m/d/Y H:i A', strtotime($patient_request[0]->released_datetime)) : '' }}"
+                     class="form-control datetimepicker-input" name="released_datetime" data-target="#completed_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
+                    <div class="input-group-append" data-target="#completed_datetime" data-toggle="datetimepicker">
+                        <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <label class="col-form-label" for="dispositions"><i class="fas fa-check"></i> Disposition</label>
+            <div class="input-group mb-3">
+               
                 <select name="disposition_id" class="custom-select" id="dispositions">
                 @foreach($dispositions as $disposition)
                     <option value="{{$disposition->id}}">{{$disposition->name}}</option>
@@ -104,6 +118,18 @@
 
             </div>
             
+            <div class="expiration_fields">
+                <label class="col-form-label" for="expired_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fas fa-check"></i> Expired Date</label>
+                <div class="input-group mb-3">
+                    <div class="input-group date" id="expired_datetime" data-target-input="nearest">
+                        <input type="text" value="{{ ( $patient_request[0]->expired_datetime) ? date('m/d/Y H:i A', strtotime($patient_request[0]->expired_datetime)) : '' }}"
+                        class="form-control datetimepicker-input" name="expired_datetime" data-target="#expired_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
+                        <div class="input-group-append" data-target="#expired_datetime" data-toggle="datetimepicker">
+                            <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
            
 
             <label class="col-form-label" for="status"><i class="fas fa-check"></i> Status</label>
@@ -122,7 +148,7 @@
             <div class="input-group mb-3">
                 
                 <select name="user_id" class="custom-select" id="dispuser_idsitions">
-                    <option>-- Select Pathologist --</option>
+            
                 @foreach($users as $user)
                     <option value="{{$user->id}}" {{ ( $patient_request[0]->user_id == $user->id) ? 'selected' : '' }}>{{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}, {{$user->prefix}}</option>
                 @endforeach
@@ -171,13 +197,32 @@
 
             <label class="col-form-label" for="final_result"><i class="fas fa-check"></i> Final Result</label>
             <div class="input-group mb-3">
-                <select name="final_result" class="custom-select" id="final_result">
-                    <option value="0" {{ ( $patient_request[0]->final_result == 3) ? 'selected' : '' }}>PENDING</option>
+                <select name="final_result" class="custom-select" id="final_result_value">
+                    <option value="0" {{ ( $patient_request[0]->final_result == 0) ? 'selected' : '' }}>PENDING</option>
                     <option value="1" {{ ( $patient_request[0]->final_result == 1) ? 'selected' : '' }}>POSITIVE</option>
-                    <option value="2" {{ ( $patient_request[0]->final_result == 0) ? 'selected' : '' }}>NEGATIVE</option>
-                    <option value="3" {{ ( $patient_request[0]->final_result == 2) ? 'selected' : '' }}>REJECTED</option>
+                    <option value="2" {{ ( $patient_request[0]->final_result == 2) ? 'selected' : '' }}>NEGATIVE</option>
+                    <option value="3" {{ ( $patient_request[0]->final_result == 3) ? 'selected' : '' }}>REJECTED</option>
                     
                 </select>
+            </div>
+            
+            <div class="rejected_fields" >
+                <label class="col-form-label" for="rejected_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fas fa-check"></i> Rejected Date</label>
+                <div class="input-group mb-3">
+                    <div class="input-group date" id="rejected_datetime" data-target-input="nearest">
+                        <input type="text" value="{{ ( $patient_request[0]->failed_datetime) ? date('m/d/Y H:i A', strtotime($patient_request[0]->failed_datetime)) : '' }}"
+                        class="form-control datetimepicker-input" name="failed_datetime" data-target="#rejected_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
+                        <div class="input-group-append" data-target="#rejected_datetime" data-toggle="datetimepicker">
+                            <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+            
+                <label class="col-form-label" for="rejected_textarea" ><i class="fas fa-check"></i> Rejected Remarks</label>
+                <div class="input-group mb-3">
+                    <textarea class="form-control" rows="3" name="remarks" id="rejected_textarea">{{$patient_request[0]->remarks}}</textarea>
+                </div>
+
             </div>
 
             
@@ -204,7 +249,57 @@
 <script>
 $(document).ready(function () {
  $('[rel="tooltip"]').tooltip({trigger: "hover"});
+
+
+        $("#final_result_value").change(function(){
+            var hide_rejected = $('#final_result_value').children("option:selected").val();
+            
+            if(hide_rejected == '3')
+            {
+                $('.rejected_fields').show();
+            } else {
+                $('.rejected_fields').hide();
+            }
+
+        });
+
+        var hide_rejected = $('#final_result_value').children("option:selected").val();
+            
+        if(hide_rejected == '3')
+        {
+            $('.rejected_fields').show();
+        } else {
+            $('.rejected_fields').hide();
+        }
+        
+
+        $("#dispositions").change(function(){
+            var display_expiration = $('#dispositions').children("option:selected").val();
+            
+            if(display_expiration == '3')
+            {
+                $('.expiration_fields').show();
+            } else {
+                $('.expiration_fields').hide();
+            }
+
+        });
+
+        var display_expiration = $('#dispositions').children("option:selected").val();
+            
+        if(display_expiration == '3')
+        {
+            $('.expiration_fields').show();
+        } else {
+            $('.expiration_fields').hide();
+        }
 });
+
+        
+
+        
+
+
  </script>
 
 @endsection

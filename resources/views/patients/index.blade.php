@@ -54,15 +54,28 @@
                   @foreach($patients as $patient)   
                 <tr>
                   <td> {{$patient->hospital_number}} </td>
-                  <td>  
-                  <a class="btn btn-primary btn-sm" href="/patient_requests/create/{{$patient->id}}" data-placement="top" rel="tooltip" title="Create Request">
-                    <i class="fa fa-plus-circle"></i>
-                  </a>
-                  {{$patient->first_name}} {{$patient->middle_name}} {{$patient->last_name}} </td>
                   
-
-
+                  @if($patient->latest_disposition ==  '3')
+                     
+                    <td style="color:red;font-weight:bold;">
+                      <a class="btn btn-primary btn-sm" href="/patient_requests/create/{{$patient->id}}" data-placement="top" rel="tooltip" title="Create Request">
+                        <i class="fa fa-plus-circle"></i>
+                      </a>
+                  
+                      {{$patient->first_name}} {{$patient->middle_name}} {{$patient->last_name}} 
+                      <i class="fa fa-skull"></i>
                       
+                    </td>
+                  @else
+                    <td> 
+                      <a class="btn btn-primary btn-sm" href="/patient_requests/create/{{$patient->id}}" data-placement="top" rel="tooltip" title="Create Request">
+                        <i class="fa fa-plus-circle"></i>
+                      </a>
+                  
+                      {{$patient->first_name}} {{$patient->middle_name}} {{$patient->last_name}} <i class="fa fa-plus-circle"></i>
+                      
+                    </td>
+                  @endif
 
                   <td> 
                       <a class="btn btn-primary btn-sm" href="patients/show/{{$patient->id}}">

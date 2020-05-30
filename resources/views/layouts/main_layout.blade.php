@@ -111,7 +111,11 @@
     $('#swab_datetime').datetimepicker();
     $('#result_availability_datetime').datetimepicker();
     $('#request_datetime').datetimepicker();
-    
+
+    $('#completed_datetime').datetimepicker();
+    $('#rejected_datetime').datetimepicker();
+    $('#expired_datetime').datetimepicker();
+
   });
 
   

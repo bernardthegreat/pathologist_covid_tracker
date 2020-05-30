@@ -115,7 +115,7 @@
 
     $('#result_availability_date1').datetimepicker();
     $('#result_availability_date2').datetimepicker();
-
+    $('#expiration_datetime').datetimepicker();
 
   });
 

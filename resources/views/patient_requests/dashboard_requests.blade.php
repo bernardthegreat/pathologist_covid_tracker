@@ -287,7 +287,7 @@
                                   </a>
                                 </td>
                                 <td>
-                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
+                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->swab_requested_datetime)) }}
                                 </td>
                                 <td>
                                   {{ $patient_request->control_no }}
@@ -575,7 +575,7 @@
                                 </td>
 
                                 <td>
-                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
+                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->swab_requested_datetime)) }}
                                 </td>
                                 <td>
                                   {{ $patient_request->control_no }}
@@ -736,7 +736,7 @@
                                 </td>
 
                                 <td>
-                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
+                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->swab_requested_datetime)) }}
                                 </td>
                                 <td>
                                   {{ $patient_request->control_no }}
@@ -888,7 +888,7 @@
 
 
                                 <td>
-                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->created_at)) }}
+                                  {{ date('m/d/Y h:i:s A', strtotime($patient_request->swab_requested_datetime)) }}
                                 </td>
                                 <td>
                                   {{ $patient_request->control_no }}
@@ -1662,6 +1662,18 @@
                             <div class="input-group date" id="result_availability_date1" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input" autocomplete="off" name="result_availability_datetime" data-target="#result_availability_date1" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
                                 <div class="input-group-append" data-target="#result_availability_date1" data-toggle="datetimepicker">
+                                    <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="expired_datetime">
+                          <label for="expiration_datetime_field">Expiration Date</label>
+                          <div class="form-group">
+                            <div class="input-group date" id="expiration_datetime" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" autocomplete="off" name="expiration_datetime" data-target="#expiration_datetime" data-placement="top" rel="tooltip" title="Click the icon on the right side to display the calendar" data-original-title="Click the icon on the right side to display the calendar">
+                                <div class="input-group-append" data-target="#expiration_datetime" data-toggle="datetimepicker">
                                     <div class="input-group-text" data-placement="top" rel="tooltip" title="Click this icon to display the calendar" data-original-title="Click the icon on the right side to display the calendar"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
