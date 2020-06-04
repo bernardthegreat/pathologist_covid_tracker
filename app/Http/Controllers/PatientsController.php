@@ -130,6 +130,7 @@ class PatientsController extends Controller
         //
 
         $validatedData = $request->validate([
+            'hospital_number' => 'required|max:255',
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'middle_name' => 'max:255',

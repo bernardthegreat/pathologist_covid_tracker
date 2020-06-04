@@ -143,12 +143,14 @@
                     @endif
 
                     <form role="form" method="post" action="{{ route('patients.update', $patient->id ) }}">
-
+                      @csrf
+                      @method('PATCH')
                       <div class="card-body">
-                        
                         <div class="form-group">
-                          @csrf
-                          @method('PATCH')
+                          <label for="hospital_number">Hospital #</label>
+                          <input type="text" class="form-control" name="hospital_number" id="hospital_number" value="{{$patient->hospital_number}}" placeholder="Hospital #" autocomplete="off">
+                        </div>
+                        <div class="form-group">
                           <label for="first_name">First Name</label>
                           <input type="text" class="form-control" name="first_name" id="first_name" value="{{$patient->first_name}}" placeholder="First Name" autocomplete="off">
                         </div>
